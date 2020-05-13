@@ -1,7 +1,3 @@
-<script>
-
-</script>
-
 <style>
   @keyframes blink {
     from {

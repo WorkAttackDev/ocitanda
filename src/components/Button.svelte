@@ -5,10 +5,7 @@
 
 <style>
   button:disabled {
-    background-color: gray;
-    opacity: 0.5;
-    outline: none;
-    cursor: not-allowed;
+    @apply bg-gray-400 outline-none cursor-not-allowed opacity-50;
   }
 </style>
 

@@ -1,12 +1,6 @@
 <script>
   export let className = "";
-
-  let isOpen = false;
-  // $: console.log(isOpen);
-
-  function toggleIsOpen() {
-    isOpen = !isOpen;
-  }
+  export let isOpen = false;
 </script>
 
 <style>
@@ -22,7 +16,7 @@
 </style>
 
 <div
-  on:click={toggleIsOpen}
+  on:click
   class={'flex flex-col items-center -my-2 cursor-pointer' + ' ' + className}>
   <span
     class:-rotate-45={isOpen}

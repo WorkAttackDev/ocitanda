@@ -64,6 +64,6 @@
 </svelte:head>
 
 <Hero title={post.title} tags={post.tags} cover={post.img} />
-<section class="wab-article px-20">
+<section class="wab-article max-w-screen-xl px-6 md:px-20">
   {@html post.body}
 </section>

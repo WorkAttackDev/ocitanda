@@ -12,7 +12,7 @@
 </style>
 
 <Header />
-<main class="container mx-auto py-24 px-4">
+<main class="flex flex-col max-w-screen-xl mx-auto pt-24 pb-12">
   <slot />
 </main>
 <Footer />

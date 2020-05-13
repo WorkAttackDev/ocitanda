@@ -11,7 +11,7 @@
 
 </style>
 
-<section class="flex justify-center items-center mt-8 ">
+<section class="flex justify-center items-center my-8 ">
   <Button
     disabled={pageCount <= 1}
     on:click={() => dispatch('prev')}

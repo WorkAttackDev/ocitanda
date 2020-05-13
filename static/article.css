@@ -40,6 +40,7 @@
 .wab-article a {
     color: #ff811c;
     transition: color .3s ease-out;
+    word-break: break-word;
 }
 
 .wab-article a:hover {
@@ -49,5 +50,6 @@
 /* iframe*/
 .wab-article iframe,
 .wab-article img {
-    margin: 0 auto;
+    margin: 1rem auto;
+    width: 100%;
 }

@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import PostCard from "./PostCard.svelte";
 
-  export let posts;
+  export let posts = [];
 
   const dispatch = createEventDispatcher();
 </script>
@@ -11,7 +11,7 @@
 
 </style>
 
-<section class="flex flex-wrap -m-4">
+<section class="flex flex-wrap">
   {#each posts as post}
     <PostCard on:click={() => dispatch('getpost', post.id)} {post} />
   {/each}
