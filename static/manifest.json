@@ -1,9 +1,10 @@
 {
 	"background_color": "#ffffff",
-	"theme_color": "#333333",
-	"name": "TODO",
-	"short_name": "TODO",
-	"display": "minimal-ui",
+	"theme_color": "#ff811c",
+	"name": "WorkAttack Blog",
+	"short_name": "WAB",
+	"description": "WorkAttack blog powered by dev.to and make you see your articles offline",
+	"display": "fullscreen",
 	"start_url": "/",
 	"icons": [
 		{

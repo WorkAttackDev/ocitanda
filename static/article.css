@@ -48,8 +48,13 @@
 }
 
 /* iframe*/
-.wab-article iframe,
-.wab-article img {
+.wab-article iframe {
     margin: 1rem auto;
     width: 100%;
+}
+
+/* image*/
+.wab-article img {
+    margin: 1rem auto;
+    width: auto;
 }
