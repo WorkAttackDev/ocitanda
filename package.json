@@ -2,7 +2,7 @@
 	"name": "wab",
 	"description": "Work Attack Blog",
 	"version": "0.0.1",
-	"homepage": "http://doopline.github.io/wab",
+	"homepage": "https://wab.doopline.now.sh",
 	"scripts": {
 		"build:css": "postcss static/tailwind.css -o static/main.css",
 		"watch:css": "postcss static/tailwind.css -o static/main.css",

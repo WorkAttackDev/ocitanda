@@ -597,8 +597,14 @@ video {
   src: url('/font/Lato-Regular.ttf') format("ttf");
 }
 
-html, body, #sapper {
+html,
+body,
+#sapper {
   min-height: 100vh;
+}
+
+body {
+  overscroll-behavior-y: contain;
 }
 
 .container {

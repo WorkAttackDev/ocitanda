@@ -21,12 +21,12 @@
   class="fixed z-30 flex h-16 w-full px-5 bg-primary-500 text-white shadow-xs">
   <nav class="container mx-auto flex items-center">
     <a
-      class="w-32 md:w-24 flex justify-between md:mr-8 cursor-default"
+      class="w-32 md:w-32 flex justify-between md:mr-8 cursor-default"
       href="/">
       {#if $page.path !== '/'}
         <BackArrow on:click={handleGoBack} />
       {/if}
-      <Logo />
+      <Logo className="h-12 w-20 cursor-pointer" />
     </a>
     <ul class="items-center w-4/6 -mx-2 hidden md:flex text-primary-100">
       {#each links as { name, href }}

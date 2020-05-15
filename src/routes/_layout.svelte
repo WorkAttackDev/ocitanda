@@ -7,7 +7,6 @@
 
   const { preloading } = stores();
   let showMenu = false;
-  $: console.log(showMenu);
 </script>
 
 <style>
