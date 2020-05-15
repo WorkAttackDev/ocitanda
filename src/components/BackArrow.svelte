@@ -1,4 +1,10 @@
+<script>
+  import { fly } from "svelte/transition";
+  import { circInOut } from "svelte/easing";
+</script>
+
 <svg
+  transition:fly={{ duration: 500, x: -500, easing: circInOut }}
   class="w-6 h-auto fill-current cursor-pointer"
   on:click|stopPropagation|preventDefault
   version="1.1"

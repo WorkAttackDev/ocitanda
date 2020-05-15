@@ -1,58 +1,46 @@
 <script>
-  import { fly } from "svelte/transition";
+  import { createEventDispatcher } from "svelte";
   import { stores, goto } from "@sapper/app";
-  import paginationStore from "../stores/pagination";
   import Logo from "./Logo.svelte";
   import BackArrow from "./BackArrow.svelte";
   import MenuIcon from "./MenuIcon.svelte";
 
+  import links from "../data/links";
+
+  export let showMenu = false;
+
   const { page } = stores();
-
-  const Link = (name, href) => ({ name, href });
-
-  const links = [
-    Link("Início", "/"),
-    Link("Artigos", "/page/1"),
-    Link("Sobre", "#")
-  ];
-
-  let showNavList = false;
+  const dispatch = createEventDispatcher();
 
   async function handleGoBack() {
-    if ($page.path !== "/") {
-      await goto("/");
-      return;
-    }
-
-    paginationStore.prevPage();
+    window.history.back();
   }
 </script>
 
 <header
-  class="fixed z-50 flex h-16 w-full px-5 bg-primary-500 text-white shadow-xs">
+  class="fixed z-30 flex h-16 w-full px-5 bg-primary-500 text-white shadow-xs">
   <nav class="container mx-auto flex items-center">
     <a
       class="w-32 md:w-24 flex justify-between md:mr-8 cursor-default"
       href="/">
-      {#if $page.path !== '/' || $paginationStore > 1}
+      {#if $page.path !== '/'}
         <BackArrow on:click={handleGoBack} />
       {/if}
       <Logo />
     </a>
-    {#if showNavList}
-      <ul
-        transition:fly={{ x: 500 }}
-        class="items-center w-4/6 -mx-2 hidden md:flex">
-        {#each links as { name, href }}
-          <li class="flex items-center h-8 px-2 uppercase font-bold">
-            <a {href}>{name}</a>
-          </li>
-        {/each}
-      </ul>
-    {/if}
+    <ul class="items-center w-4/6 -mx-2 hidden md:flex text-primary-100">
+      {#each links as { name, href }}
+        <li
+          class="flex items-center h-8 px-2 uppercase hover:text-white
+          transition duration-300 ease-out font-bold"
+          class:text-white={$page.path === href || ($page.path.includes(href.substr(0, 6)) && name === 'Artigos')}>
+          <a {href}>{name}</a>
+        </li>
+      {/each}
+    </ul>
     <MenuIcon
-      isOpen={showNavList}
-      on:click={() => (showNavList = !showNavList)}
-      className="w-auto ml-auto" />
+      isOpen={showMenu}
+      on:click={() => dispatch('showmenu')}
+      className="w-auto ml-auto md:hidden" />
   </nav>
 </header>

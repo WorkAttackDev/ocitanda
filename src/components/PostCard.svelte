@@ -30,7 +30,7 @@
     {/if}
     <span class="flex flex-wrap m-2">
       {#each post.tags as tag}
-        <p class="font-semibold text-primary-400 my-1 mx-2">{tag}</p>
+        <p class="font-semibold text-primary-400 my-1 mx-2">#{tag}</p>
       {/each}
     </span>
     <h1 class="text-2xl text-primary-800 font-bold mb-1 px-4">{post.title}</h1>
