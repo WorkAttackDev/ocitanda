@@ -6,7 +6,7 @@ import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import config from "sapper/config/rollup.js";
 import pkg from "./package.json";
-import sveltePreprocess from "svelte-preprocess";
+import { postcss, globalStyle } from "svelte-preprocess";
 
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
@@ -17,7 +17,7 @@ const onwarn = (warning, onwarn) =>
 		/[/\\]@sapper[/\\]/.test(warning.message)) ||
 	onwarn(warning);
 
-const preprocess = sveltePreprocess({ postcss: true });
+const preprocess = [postcss(), globalStyle()];
 
 export default {
 	client: {

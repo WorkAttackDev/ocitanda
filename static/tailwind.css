@@ -1,18 +1,14 @@
 @import "tailwindcss/base";
 
 @font-face {
-    font-family: Lato;
-    src: url('/font/Lato-Regular.ttf') format("ttf");
+    font-family: WorkSans;
+    src: url('/font/WorkSans-Regular.ttf') format("ttf");
 }
 
 html,
 body,
 #sapper {
     @apply min-h-screen;
-}
-
-body {
-    overscroll-behavior-y: contain;
 }
 
 @import "tailwindcss/components";

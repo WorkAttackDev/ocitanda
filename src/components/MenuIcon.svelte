@@ -1,34 +1,11 @@
 <script>
   export let className = "";
-  export let isOpen = false;
 </script>
 
-<style>
-  .dual::after {
-    content: "";
-    position: absolute;
-    left: 128%;
-    top: 0;
-    background-color: #ffdfc6;
-    width: 0.6rem;
-    height: 100%;
-  }
-</style>
-
-<div
-  on:click
-  class={'flex flex-col items-center -my-2 cursor-pointer' + ' ' + className}>
-  <span
-    class:-rotate-45={isOpen}
-    class:translate-y-2={isOpen}
-    class="w-10 h-px3 bg-white transform transition duration-500 ease-out" />
-  <span
-    class="dual w-6 self-start h-px3 bg-white relative transition duration-600
-    ease-out"
-    class:opacity-0={isOpen}
-    style="margin: .35rem 0;" />
-  <span
-    class:rotate-45={isOpen}
-    class:-translate-y-2={isOpen}
-    class="w-10 h-px3 bg-white transform transition duration-500 ease-out" />
-</div>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class={'w-6 h-6' + ' ' + className}
+  viewBox="0 0 48 48">
+  <path d="M0 0h48v48H0z" fill="none" />
+  <path d="M6 36h36v-4H6v4zm0-10h36v-4H6v4zm0-14v4h36v-4H6z" />
+</svg>

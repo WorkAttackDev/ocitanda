@@ -1,46 +1,12 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import { stores, goto } from "@sapper/app";
-  import Logo from "./Logo.svelte";
-  import BackArrow from "./BackArrow.svelte";
   import MenuIcon from "./MenuIcon.svelte";
-
-  import links from "../data/links";
-
-  export let showMenu = false;
-
-  const { page } = stores();
-  const dispatch = createEventDispatcher();
-
-  async function handleGoBack() {
-    window.history.back();
-  }
+  import SearchIcon from "./SearchIcon.svelte";
 </script>
 
 <header
-  class="fixed z-30 flex h-16 w-full px-5 bg-primary-500 text-white shadow-xs">
-  <nav class="container mx-auto flex items-center">
-    <a
-      class="w-32 md:w-32 flex justify-between md:mr-8 cursor-default"
-      href="/">
-      {#if $page.path !== '/'}
-        <BackArrow on:click={handleGoBack} />
-      {/if}
-      <Logo className="h-12 w-20 cursor-pointer" />
-    </a>
-    <ul class="items-center w-4/6 -mx-2 hidden md:flex text-primary-100">
-      {#each links as { name, href }}
-        <li
-          class="flex items-center h-8 px-2 uppercase hover:text-white
-          transition duration-300 ease-out font-bold"
-          class:text-white={$page.path === href || ($page.path.includes(href.substr(0, 6)) && name === 'Artigos')}>
-          <a {href}>{name}</a>
-        </li>
-      {/each}
-    </ul>
-    <MenuIcon
-      isOpen={showMenu}
-      on:click={() => dispatch('showmenu')}
-      className="w-auto ml-auto md:hidden" />
-  </nav>
+  class="fixed z-40 left-0 top-0 flex justify-between items-center w-full h-10
+  md:h-16 px-4 bg-ocitanda-khaki">
+  <MenuIcon className="md:w-8 md:h-8" />
+  <h1 class="font-bold md:text-xl">Ocitanda</h1>
+  <SearchIcon className="md:w-6 md:h-6" />
 </header>

@@ -1,16 +1,18 @@
 <script>
-  import Logo from "./Logo.svelte";
+  import InputText from "./InputText.svelte";
+  import Button from "./Button.svelte";
 </script>
 
-<style>
-
-</style>
-
-<footer class="flex items-center mt-auto px-5 bg-primary-900 h-16">
-  <section class="flex items-center container mx-auto text-white">
-    <Logo className="w-auto mr-10" />
-    <p class="text-sm md:text-base">
-      &copy; Todos direitos reservados à WorkAttack Team
+<footer class="bg-ocitanda-beige p-4">
+  <section class="container mx-auto my-8">
+    <div class="flex">
+      <InputText placeholder="Subscrever Email" />
+      <Button>Enviar</Button>
+    </div>
+  </section>
+  <section class="container mx-auto">
+    <p class="text-sm">
+      Copyright &copy;2020 Ocintanda. Todos direitos reservados.
     </p>
   </section>
 </footer>
