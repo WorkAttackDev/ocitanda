@@ -2,6 +2,12 @@
   export let className = "";
 </script>
 
+<style>
+  svg {
+    fill: #3b5998;
+  }
+</style>
+
 <svg
   class={className}
   version="1.1"
