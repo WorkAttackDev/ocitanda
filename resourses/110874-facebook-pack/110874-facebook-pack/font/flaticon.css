@@ -1,0 +1,131 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/06/2016 15:02
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-add-button:before { content: "\f100"; }
+.flaticon-add-female-user:before { content: "\f101"; }
+.flaticon-add-user-to-social-network:before { content: "\f102"; }
+.flaticon-big-and-small-hearts:before { content: "\f103"; }
+.flaticon-birthday-cake-with-candle:before { content: "\f104"; }
+.flaticon-block-user:before { content: "\f105"; }
+.flaticon-book-closed-with-a-bookmark:before { content: "\f106"; }
+.flaticon-broken-heart:before { content: "\f107"; }
+.flaticon-cake-with-a-candle:before { content: "\f108"; }
+.flaticon-calendar-day-eight:before { content: "\f109"; }
+.flaticon-capitol-building:before { content: "\f10a"; }
+.flaticon-capitol-building-circular-button:before { content: "\f10b"; }
+.flaticon-chained-hearts:before { content: "\f10c"; }
+.flaticon-chess-horse-with-five-stars:before { content: "\f10d"; }
+.flaticon-cinema-clapboard:before { content: "\f10e"; }
+.flaticon-circle-with-two-little-circles:before { content: "\f10f"; }
+.flaticon-clothes-tag:before { content: "\f110"; }
+.flaticon-comment-publication:before { content: "\f111"; }
+.flaticon-connected-double-note:before { content: "\f112"; }
+.flaticon-conversation-with-text-lines:before { content: "\f113"; }
+.flaticon-couple-picture-and-frame:before { content: "\f114"; }
+.flaticon-day-eight-calendar:before { content: "\f115"; }
+.flaticon-delete-contact:before { content: "\f116"; }
+.flaticon-delete-female-user:before { content: "\f117"; }
+.flaticon-disconnected-heart:before { content: "\f118"; }
+.flaticon-dislike-thumb:before { content: "\f119"; }
+.flaticon-edit-square-button:before { content: "\f11a"; }
+.flaticon-erase-user:before { content: "\f11b"; }
+.flaticon-facebook-app-logo:before { content: "\f11c"; }
+.flaticon-facebook-app-symbol:before { content: "\f11d"; }
+.flaticon-facebook-chat-balloons:before { content: "\f11e"; }
+.flaticon-facebook-circular-logo:before { content: "\f11f"; }
+.flaticon-facebook-group:before { content: "\f120"; }
+.flaticon-facebook-mobile-app:before { content: "\f121"; }
+.flaticon-facebook-mobile-app-1:before { content: "\f122"; }
+.flaticon-facebook-overlapping-logo:before { content: "\f123"; }
+.flaticon-facebook-speech-bubbles:before { content: "\f124"; }
+.flaticon-favorite-symbol:before { content: "\f125"; }
+.flaticon-female-user-avatar:before { content: "\f126"; }
+.flaticon-file-with-lock:before { content: "\f127"; }
+.flaticon-film-strip:before { content: "\f128"; }
+.flaticon-flag-waving-left:before { content: "\f129"; }
+.flaticon-flag-with-right-and-left-arrows:before { content: "\f12a"; }
+.flaticon-game-control-for-pc:before { content: "\f12b"; }
+.flaticon-geolocalize-placeholder:before { content: "\f12c"; }
+.flaticon-graduation-cap-circular-button:before { content: "\f12d"; }
+.flaticon-graduation-cap-with-down-arrow:before { content: "\f12e"; }
+.flaticon-graduation-hat:before { content: "\f12f"; }
+.flaticon-group-users-with-wreath:before { content: "\f130"; }
+.flaticon-hand-with-thumb-up:before { content: "\f131"; }
+.flaticon-homepage:before { content: "\f132"; }
+.flaticon-horse-head-with-three-stars:before { content: "\f133"; }
+.flaticon-house-and-a-page-with-text:before { content: "\f134"; }
+.flaticon-house-menu:before { content: "\f135"; }
+.flaticon-house-with-two-doors:before { content: "\f136"; }
+.flaticon-loudspeaker-with-sound-waves:before { content: "\f137"; }
+.flaticon-male-picture:before { content: "\f138"; }
+.flaticon-male-user-profile-picture:before { content: "\f139"; }
+.flaticon-man-and-woman-avatar:before { content: "\f13a"; }
+.flaticon-man-rectangular-image:before { content: "\f13b"; }
+.flaticon-musical-note-square-button:before { content: "\f13c"; }
+.flaticon-network-graph-presentation:before { content: "\f13d"; }
+.flaticon-new-note:before { content: "\f13e"; }
+.flaticon-one-message-on-chat:before { content: "\f13f"; }
+.flaticon-open-book-with-bookmark:before { content: "\f140"; }
+.flaticon-placeholder-on-a-map:before { content: "\f141"; }
+.flaticon-plus-square-button:before { content: "\f142"; }
+.flaticon-pointing-finger:before { content: "\f143"; }
+.flaticon-profile-picture-for-social-network:before { content: "\f144"; }
+.flaticon-public-message:before { content: "\f145"; }
+.flaticon-rectangular-speech-balloon:before { content: "\f146"; }
+.flaticon-right-hand-thumb-up:before { content: "\f147"; }
+.flaticon-rss-feeds-square-symbol:before { content: "\f148"; }
+.flaticon-rss-sign-variant:before { content: "\f149"; }
+.flaticon-rss-symbol:before { content: "\f14a"; }
+.flaticon-rss-symbol-variant-for-facebook-in-a-square:before { content: "\f14b"; }
+.flaticon-screen-with-network-graph:before { content: "\f14c"; }
+.flaticon-secure-file:before { content: "\f14d"; }
+.flaticon-shield-with-lock:before { content: "\f14e"; }
+.flaticon-shield-with-padlock:before { content: "\f14f"; }
+.flaticon-size-tag:before { content: "\f150"; }
+.flaticon-small-house-with-chimney:before { content: "\f151"; }
+.flaticon-small-pencil-writing:before { content: "\f152"; }
+.flaticon-smiley-face:before { content: "\f153"; }
+.flaticon-smiling-circular-face:before { content: "\f154"; }
+.flaticon-square-text-document:before { content: "\f155"; }
+.flaticon-star-and-document:before { content: "\f156"; }
+.flaticon-thumb-down-facing-left:before { content: "\f157"; }
+.flaticon-thumb-up:before { content: "\f158"; }
+.flaticon-thumb-up-1:before { content: "\f159"; }
+.flaticon-thumb-up-and-rectangle:before { content: "\f15a"; }
+.flaticon-travel-case:before { content: "\f15b"; }
+.flaticon-travel-list-and-baggage:before { content: "\f15c"; }
+.flaticon-travel-luggage-button:before { content: "\f15d"; }
+.flaticon-two-rectangular-speech-bubbles:before { content: "\f15e"; }
+.flaticon-user-couple:before { content: "\f15f"; }
+.flaticon-user-group-button-with-wreath:before { content: "\f160"; }
+.flaticon-user-picture:before { content: "\f161"; }
+.flaticon-vintage-joystick:before { content: "\f162"; }
+.flaticon-voice-speaker:before { content: "\f163"; }

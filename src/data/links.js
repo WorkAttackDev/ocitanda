@@ -1,6 +1,8 @@
 import Link from "../models/Link";
-export default [
+export const links = [
 	Link("Início", "/"),
-	Link("Artigos", "/page/1"),
+	Link("Produtos", "#"),
+	Link("Carrinho", "#"),
+	Link("Fornecedor", "#"),
 	Link("Sobre", "#"),
 ];

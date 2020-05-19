@@ -1,6 +1,9 @@
 <script>
+  import ProductModel from "../models/Product";
   import Product from "../components/Product.svelte";
+
   export let title = "";
+  export let products = [ProductModel()];
 </script>
 
 <style>
@@ -13,11 +16,8 @@
 <section class="ml-4 my-4">
   <h2 class="mb-4 font-bold md:text-xl">{title}</h2>
   <div class="flex overflow-x-auto">
-    <Product className="pr-4" />
-    <Product className="pr-4" />
-    <Product className="pr-4" />
-    <Product className="pr-4" />
-    <Product className="pr-4" />
-    <Product className="pr-4" />
+    {#each products as product}
+      <Product {product} className="pr-4" />
+    {/each}
   </div>
 </section>
