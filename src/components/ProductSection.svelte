@@ -14,8 +14,8 @@
 </style>
 
 <section class="ml-4 my-4">
-  <h2 class="mb-4 font-bold md:text-xl">{title}</h2>
-  <div class="flex overflow-x-auto">
+  <h2 class="mb-4 font-bold text-lg text-ocitanda-green md:text-xl">{title}</h2>
+  <div class="flex overflow-x-auto pb-4">
     {#each products as product}
       <Product {product} className="pr-4" />
     {/each}

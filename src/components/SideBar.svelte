@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { fly, fade } from "svelte/transition";
   import CloseIcon from "./CloseIcon.svelte";
+  import { links } from "../data/links";
 
   const dispatch = createEventDispatcher();
 </script>
@@ -10,28 +11,20 @@
   transition:fly={{ x: -window.innerWidth }}
   class="fixed z-50 bg-white left-0 top-0 w-3/4 h-full">
   <header
-    class="flex justify-between items-center w-full h-10 md:h-16 px-4
-    bg-ocitanda-khaki">
+    class="flex justify-between items-center w-full h-12 md:h-16 px-4
+    bg-ocitanda-green text-ocitanda-beige">
     <h1 class="font-bold md:text-xl">Ocitanda</h1>
-    <CloseIcon on:click={() => dispatch('close')} className="md:w-8 md:h-8" />
+    <CloseIcon
+      on:click={() => dispatch('close')}
+      className="md:w-8 md:h-8 fill-current" />
   </header>
-  <h3 class="uppercase text-center my-4">Menu</h3>
-  <ul class="flex flex-col text-center">
-    <li class="py-2 px-4 mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-      Início
-    </li>
-    <li class="py-2 px-4 mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-      Produtos
-    </li>
-    <li class="py-2 px-4 mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-      Cesta
-    </li>
-    <li class="py-2 px-4 mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-      Fornecedor
-    </li>
-    <li class="py-2 px-4 mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-      Sobre
-    </li>
+  <h3 class="uppercase font-bold text-ocitanda-green text-center my-4">Menu</h3>
+  <ul class="flex flex-col text-center uppercase text-sm text-ocitanda-green">
+    {#each links as { name, href }}
+      <li class="mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
+        <a class="py-2 px-4 block" {href}>{name}</a>
+      </li>
+    {/each}
   </ul>
 </aside>
 <div

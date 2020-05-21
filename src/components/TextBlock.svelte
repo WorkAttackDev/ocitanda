@@ -8,12 +8,14 @@
     width: 70%;
     bottom: -1rem;
     left: 50%;
-    @apply absolute h-1 bg-black transform -translate-x-1/2;
+    @apply absolute h-1 bg-ocitanda-khaki transform -translate-x-1/2;
   }
 </style>
 
 <article class="flex flex-col text-center items-center px-4 md:px-16 my-4">
-  <h1 class="relative font-bold mb-8 md:text-xl">{title}</h1>
+  <h1 class="relative font-bold mb-8 text-lg text-ocitanda-green md:text-xl">
+    {title}
+  </h1>
   <p>
     <slot>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium

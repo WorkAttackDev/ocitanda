@@ -12,27 +12,28 @@
 
 <style>
   .active {
-    @apply border-b-2 border-ocitanda-beige;
+    @apply border-b-2 border-ocitanda-khaki;
   }
 </style>
 
 <header
-  class="fixed z-40 left-0 top-0 w-full h-10 md:h-16 px-4 bg-ocitanda-khaki">
+  class="fixed z-40 left-0 top-0 w-full h-12 md:h-16 px-4 bg-ocitanda-green
+  text-ocitanda-beige">
   <nav class="container mx-auto h-full flex justify-between items-center">
     <MenuIcon
       on:click={() => (showSideBar = true)}
-      className="md:w-8 md:h-8 md:hidden" />
-    <h1 class="font-bold md:text-xl">Ocitanda</h1>
-    <ul class="hidden md:flex">
+      className="md:w-8 md:h-8 md:hidden fill-current text-ocitanda-beige" />
+    <h1 class="font-bold md:text-xl uppercase">Ocitanda</h1>
+    <ul class="hidden uppercase text-sm md:flex">
       {#each links as { name, href }}
-        <li class="mx-4 hover:text-ocitanda-beige" class:active={href === '/'}>
+        <li class="mx-4 hover:text-ocitanda-khaki" class:active={href === '/'}>
           <a {href}>{name}</a>
         </li>
       {/each}
     </ul>
     <SearchMajorMonotone
       on:click={() => (showSearchModal = true)}
-      class="w-4 md:w-5 " />
+      class="w-4 md:w-5 fill-current" />
   </nav>
 </header>
 

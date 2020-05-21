@@ -1,14 +1,18 @@
 @import "tailwindcss/base";
 
 @font-face {
-    font-family: WorkSans;
-    src: url('/font/WorkSans-Regular.ttf') format("ttf");
+	font-family: WorkSans;
+	src: url("/font/WorkSans-Regular.ttf") format("ttf");
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 html,
 body,
 #sapper {
-    @apply min-h-screen;
+	@apply min-h-screen;
 }
 
 @import "tailwindcss/components";
