@@ -1,0 +1,21 @@
+{
+  "name": "ocitanda",
+  "version": "1.0.0",
+  "description": "\"Ocitanda backend project\"",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "npx knex migrate:latest",
+    "rollback": "npx knex migrate:rollback"
+  },
+  "author": "\"WorkAttack\"",
+  "license": "ISC",
+  "dependencies": {
+    "knex": "^0.21.1",
+    "mysql2": "^2.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}

@@ -4,6 +4,8 @@
 
   export let items = [""];
   export let label = "Lorem";
+  export let className = "";
+  export let labelClassName = "";
 
   let showlist = false;
   let selected = items[0];
@@ -22,8 +24,8 @@
   }
 </style>
 
-<div class="flex items-center mx-4 my-2" role="combobox">
-  <p class="uppercase text-sm mr-4 whitespace-no-wrap text-ocitanda-beige">
+<div class={'flex items-center mx-4 my-2 ' + className} role="combobox">
+  <p class={`uppercase text-sm mr-4 whitespace-no-wrap ${labelClassName}`}>
     {label}
   </p>
   <div
@@ -32,7 +34,9 @@
     on:blur={() => (showlist = false)}
     role="select">
     <span class="w-full flex justify-between item-center cursor-pointer">
-      <p on:click={toogleShowList} class="mr-4 whitespace-no-wrap text-ocitanda-green">
+      <p
+        on:click={toogleShowList}
+        class="mr-4 whitespace-no-wrap text-ocitanda-green">
         {selected}
       </p>
       <SelectMinor on:click={toogleShowList} class="w-5" />

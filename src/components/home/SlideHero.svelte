@@ -10,8 +10,8 @@
     swiper = new Swiper(".swiper-container", {
       navigation: {
         nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      }
+        prevEl: ".swiper-button-prev",
+      },
     });
   });
 </script>
@@ -25,7 +25,7 @@
 </svelte:head>
 
 <section
-  class="swiper-container relative bg-ocitanda-khaki h-64 md:h-80 w-full mb-8">
+  class="swiper-container relative bg-ocitanda-khaki h-64 md:h-96 w-full mb-8">
   <div
     class="absolute z-10 w-full h-full left-0 top-0 flex flex-col items-center
     justify-center bg-black bg-opacity-50 text-white pointer-events-none">

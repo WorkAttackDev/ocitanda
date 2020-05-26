@@ -1,14 +1,91 @@
 import Product from "../models/Product";
 export const products = [
-	Product("Tomate", "Nacional", 500, "/products/tomato.jpg"),
-	Product("Cebola", "Nacional", 500, "/products/onion.jpg"),
-	Product("Melancia", "Nacional", 500, "/products/water-melon.jpg"),
-	Product("Alface", "Nacional", 500, "/products/lettuce.jpg"),
-	Product("Banana", "Nacional", 500, "/products/banana.jpg"),
-	Product("Feijão", "Nacional", 500, "/products/bean.jpg"),
-	Product("Feijão Verde", "Nacional", 500, "/products/green-bean.jpg"),
-	Product("Laranja", "Nacional", 500, "/products/orange.jpg"),
-	Product("Arroz", "Nacional", 500, "/products/rice.jpg"),
-	Product("Morangos", "Nacional", 500, "/products/strawberry.jpg"),
-	Product("Cenoras", "Nacional", 500, "/products/carrot.jpg"),
+	Product(
+		"1",
+		"Tomate",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/tomato.jpg"
+	),
+	Product(
+		"2",
+		"Cebola",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/onion.jpg"
+	),
+	Product(
+		"3",
+		"Melancia",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Aldeia Nova",
+		"/products/water-melon.jpg"
+	),
+	Product(
+		"4",
+		"Alface",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/lettuce.jpg"
+	),
+	Product(
+		"5",
+		"Banana",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/banana.jpg"
+	),
+	Product(
+		"6",
+		"Feijão",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Lorem Ipsum Dolor",
+		"/products/bean.jpg"
+	),
+	Product(
+		"7",
+		"Feijão Verde",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/green-bean.jpg"
+	),
+	Product(
+		"8",
+		"Laranja",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/orange.jpg"
+	),
+	Product(
+		"9",
+		"Arroz",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/rice.jpg"
+	),
+	Product(
+		"10",
+		"Morangos",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/strawberry.jpg"
+	),
+	Product(
+		"11",
+		"Cenoras",
+		"Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
+		500,
+		"Ocitanda",
+		"/products/carrot.jpg"
+	),
 ];
