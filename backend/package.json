@@ -1,21 +1,33 @@
 {
-  "name": "ocitanda",
-  "version": "1.0.0",
-  "description": "\"Ocitanda backend project\"",
-  "main": "index.js",
-  "scripts": {
-    "migrate": "npx knex migrate:latest",
-    "rollback": "npx knex migrate:rollback"
-  },
-  "author": "\"WorkAttack\"",
-  "license": "ISC",
-  "dependencies": {
-    "knex": "^0.21.1",
-    "mysql2": "^2.1.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2"
-  }
+	"name": "ocitanda",
+	"version": "1.0.0",
+	"description": "\"Ocitanda backend project\"",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon index.js",
+		"start": "node index.js",
+		"migrate": "npx knex migrate:latest",
+		"rollback": "npx knex migrate:rollback",
+		"seed": "npx knex seed:run",
+		"rms": "npm run rollback && npm run migrate && npm run seed"
+	},
+	"author": "WorkAttack",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^4.0.1",
+		"compression": "^1.7.4",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"express-validator": "^6.5.0",
+		"helmet": "^3.22.0",
+		"knex": "^0.21.1",
+		"morgan": "^1.10.0",
+		"mysql2": "^2.1.0"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb-base": "^14.1.0",
+		"eslint-plugin-import": "^2.20.2",
+		"nodemon": "^2.0.4"
+	}
 }

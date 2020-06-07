@@ -1,13 +1,13 @@
 export default (
-	id = "",
-	title = "",
+	id = 0,
+	name = "",
 	desc = "",
 	price = 0,
 	producer = "",
 	img = ""
 ) => ({
 	id,
-	title,
+	name,
 	desc,
 	price,
 	producer,

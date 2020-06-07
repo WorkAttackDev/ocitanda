@@ -12,7 +12,7 @@ html {
 html,
 body,
 #sapper {
-	@apply min-h-screen;
+	@apply min-h-full h-full;
 }
 
 @import "tailwindcss/components";

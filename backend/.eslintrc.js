@@ -16,5 +16,7 @@ module.exports = {
 		'linebreak-style': 0,
 		'no-tabs': 0,
 		indent: 0,
+		'comma-dangle': 0,
+		'implicit-arrow-linebreak': 0,
 	},
 };

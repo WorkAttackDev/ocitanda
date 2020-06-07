@@ -35,14 +35,14 @@
     on:click={() => dispatch('open')}
     class="w-full h-56 object-cover"
     src={product.img}
-    alt={product.title} />
+    alt={product.name} />
   <div class="flex flex-col p-4 bg-ocitanda-beige">
     <h1 class="font-bold text-ocitanda-green tracking-wide mb-4 truncate">
-      {product.title}
+      {product.name}
     </h1>
     <p class="text-ocitanda-gold font-bold mb-4 self-end">{product.price} Kz</p>
-    {#if product.qty}
-      <QuantityBox qty={product.qty} />
+    {#if product.count}
+      <QuantityBox qty={product.count} />
     {:else}
       <Button>Comprar</Button>
     {/if}

@@ -1,8 +1,10 @@
 <script context="module">
-  import { products } from "../../data/products";
+  import Product from "../../models/Product";
+  import { fetchProductById } from "../../api";
   export async function preload(page) {
     const { id } = page.params;
-    const product = products.find((_p) => _p.id === id);
+
+    const product = await fetchProductById(id);
 
     if (!product) throw new Error("product not found");
 
@@ -14,7 +16,6 @@
   //   import { goto } from "@sapper/app";
   import Content from "../../components/product-page/Content.svelte";
   import Image from "../../components/product-page/Image.svelte";
-  import Product from "../../models/Product";
 
   export let product = Product();
 
@@ -22,10 +23,10 @@
 </script>
 
 <svelte:head>
-  <title>{`Ocitanda - ${product.title}`}</title>
+  <title>{`Ocitanda - ${product.name}`}</title>
 </svelte:head>
 
 <section class="flex flex-col p-4 md:flex-row">
-  <Image className="w-full md:w-1/2" src={product.img} alt={product.title} />
-  <Content className="w-full md:w-1/2" {product} />
+  <Image className="w-full md:w-2/5" src={product.img} alt={product.name} />
+  <Content className="w-full md:w-3/5" {product} />
 </section>
