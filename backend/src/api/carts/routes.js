@@ -11,12 +11,11 @@ router.get("/", async (req, res) => {
 
 router.get("/:userId", async (req, res, next) => {
 	const { userId } = req.params;
-	const cartItems = await getByUserId(userId);
 	try {
+		const cartItems = await getByUserId(userId);
 		res.json(cartItems);
-		return next();
 	} catch (error) {
-		return next(error);
+		next(error);
 	}
 });
 

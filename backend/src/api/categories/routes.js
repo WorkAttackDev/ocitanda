@@ -1,28 +1,35 @@
 const router = require('express').Router();
 
-const tableNames = require('../../constants/tableNames');
-const { findAll, getById } = require('../globalQueries');
+const { handleValidationError, isId } = require('../validations');
 
-router.get('/', async (req, res) => {
-	const categories = await findAll(tableNames.category);
-	res.json(categories);
+const Category = require('./model');
+
+router.get('/', async (req, res, next) => {
+	try {
+		const categories = await Category.query();
+		res.json(categories);
+	} catch (error) {
+		next(error);
+	}
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', [isId], async (req, res, next) => {
+	handleValidationError(req, res, next);
 	const { id } = req.params;
-	const category = await getById(id, tableNames.category);
 	try {
-		// eslint-disable-next-line no-restricted-globals
-		if (isNaN(id)) {
-			const error = new Error('Invalid ID');
-			res.status(422);
-			throw error;
+		const category = await Category.query()
+			.select()
+			.where('id', id)
+			.first();
+
+		if (!category) {
+			res.status(404);
+			res.json({});
 		} else {
-			if (category) return res.json(category);
-			return next();
+			res.json(category);
 		}
 	} catch (error) {
-		return next(error);
+		next(error);
 	}
 });
 

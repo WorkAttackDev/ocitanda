@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { SelectMinor } from "svelte-polaris-icons";
   import { slide } from "svelte/transition";
 
@@ -7,11 +8,16 @@
   export let className = "";
   export let labelClassName = "";
 
+  const dispatch = createEventDispatcher();
+
   let showlist = false;
   let selected = items[0];
 
   const toogleShowList = () => (showlist = !showlist);
-  const onSelectItem = (item = "") => (selected = item);
+  const onSelectItem = (item = "") => {
+    selected = item;
+    dispatch("select", item);
+  };
 </script>
 
 <style>

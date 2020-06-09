@@ -1,8 +1,10 @@
 import Product from "./models/Product";
 import Cart from "./models/Cart";
 
-export const api = "https://www.ocitanda.com/api";
-export const serverImages = "https://www.ocitanda.com/images";
+// export const api = "https://www.ocitanda.com/api";
+// export const serverImages = "https://www.ocitanda.com/images";
+export const api = "http://localhost:5050/api";
+export const serverImages = "http://localhost:5050/images";
 
 export const fetchProducts = async () => {
 	let res = await fetch(api + "/products");

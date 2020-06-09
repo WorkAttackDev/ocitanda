@@ -1,0 +1,100 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "title": "User",
+    "description": "The user Schrema",
+    "required": [
+        "email",
+        "name",
+        "password",
+        "phone",
+        "image_url"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "$id": "#/properties/id",
+            "type": "integer",
+            "title": "id",
+            "description": "the user id"
+        },
+        "email": {
+            "$id": "#/properties/email",
+            "type": "string",
+            "title": "email",
+            "description": "The user email"
+        },
+        "name": {
+            "$id": "#/properties/name",
+            "type": "string",
+            "title": "name",
+            "description": "the user name",
+            "examples": [
+                "Denilson Costa"
+            ]
+        },
+        "password": {
+            "$id": "#/properties/password",
+            "type": "string", 
+            "description": "the user password",
+            "examples": [
+                "$2b$12$qbMEm2ab.F74hAlZl6Bnq.Pt/u.0lLX3BpakhJh7xZlDzBcpYLe7u"
+            ]
+        },
+        "last_login": {
+            "$id": "#/properties/last_login",
+            "type": "null",
+            "title": "last_login ",
+            "description": "last login",
+            "default": null,
+            "examples": [
+                null
+            ]
+        },
+        "phone": {
+            "$id": "#/properties/phone",
+            "type": "string",
+            "title": "phone number",
+            "description": "Phone Number",
+            "examples": [
+                "997267270"
+            ]
+        },
+        "image_url": {
+            "$id": "#/properties/image_url",
+            "type": "string",
+            "title": "image_url",
+            "description": "Aplication Image",
+            "examples": [
+                "https://wwfjdkfjksdjflk.com/fkdsfk"
+            ]
+        },
+        "created_at": {
+            "$id": "#/properties/created_at",
+            "type": "string",
+            "title": "created_at",
+            "description": "the creation date of user",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "updated_at": {
+            "$id": "#/properties/updated_at",
+            "type": "string",
+            "title": "updated_at",
+            "description": "the user update date",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "deleted_at": {
+            "$id": "#/properties/deleted_at",
+            "type": "string",
+            "title": "deleted_at",
+            "description": "The deleted user date",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        }
+    }
+}

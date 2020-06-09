@@ -1,28 +1,34 @@
 const router = require('express').Router();
 
-const tableNames = require('../../constants/tableNames');
-const { findAll, getById } = require('../globalQueries');
+const { handleValidationError, isId } = require('../validations');
+const Province = require('./model');
 
-router.get('/', async (req, res) => {
-	const provinces = await findAll(tableNames.province);
-	res.json(provinces);
+router.get('/', async (req, res, next) => {
+	try {
+		const provinces = await Province.query().select();
+		res.json(provinces);
+	} catch (error) {
+		next(error);
+	}
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', [isId], async (req, res, next) => {
+	handleValidationError(req, res, next);
 	const { id } = req.params;
-	const province = await getById(id, tableNames.province);
 	try {
-		// eslint-disable-next-line no-restricted-globals
-		if (isNaN(id)) {
-			const error = new Error('Invalid ID');
-			res.status(422);
-			throw error;
+		const province = await Province.query()
+			.select()
+			.where('id', id)
+			.first();
+
+		if (!province) {
+			res.status(404);
+			res.json({});
 		} else {
-			if (province) return res.json(province);
-			return next();
+			res.json(province);
 		}
 	} catch (error) {
-		return next(error);
+		next(error);
 	}
 });
 

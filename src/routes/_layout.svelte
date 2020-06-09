@@ -3,7 +3,7 @@
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
 
-  const ready = false;
+  const ready = true;
 </script>
 
 <style>

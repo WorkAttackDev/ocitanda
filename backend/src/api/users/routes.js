@@ -1,28 +1,31 @@
 const router = require('express').Router();
 
-const tableNames = require('../../constants/tableNames');
-const { findAll, getById } = require('../globalQueries');
+// const tableNames = require('../../constants/tableNames');
+// const { findAll, getById } = require('../globalQueries');
+const User = require('./model');
 
-router.get('/', async (req, res) => {
-	const users = await findAll(tableNames.user);
-	res.json(users);
+router.get('/', async (req, res, next) => {
+	try {
+		const users = await User.query().select();
+		res.json(users);
+	} catch (error) {
+		next(error);
+	}
 });
 
 router.get('/:id', async (req, res, next) => {
 	const { id } = req.params;
-	const user = await getById(id, tableNames.user);
 	try {
-		// eslint-disable-next-line no-restricted-globals
-		if (isNaN(id)) {
-			const error = new Error('Invalid ID');
-			res.status(422);
-			throw error;
+		const user = await User.query().select().where('id', id).first();
+
+		if (!user) {
+			res.status(404);
+			res.json({});
 		} else {
-			if (user) return res.json(user);
-			return next();
+			res.json(user);
 		}
 	} catch (error) {
-		return next(error);
+		next(error);
 	}
 });
 

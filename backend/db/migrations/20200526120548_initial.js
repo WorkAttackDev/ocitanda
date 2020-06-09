@@ -27,9 +27,10 @@ exports.up = async (knex) => {
 			table.increments().notNullable();
 			table.string("email", 254).notNullable().unique();
 			table.string("name", 200).notNullable();
-			table.string("password", 127).notNullable();
+			table.string("password", 200).notNullable();
 			table.datetime("last_login");
 			table.string("phone", 9).notNullable();
+			table.enu("gender", ["M", "F", "O"]).notNullable();
 			table.string("image_url", 200);
 			addDefaultColumns(table);
 		}),

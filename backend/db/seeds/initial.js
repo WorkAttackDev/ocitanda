@@ -1,13 +1,13 @@
 // eslint-disable-next-line no-unused-vars
-const Knex = require("knex");
-const bcrypt = require("bcrypt");
-const crypto = require("crypto");
-const orderedTables = require("../../src/constants/orderedTables");
-const tableNames = require("../../src/constants/tableNames");
+const Knex = require('knex');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const orderedTables = require('../../src/constants/orderedTables');
+const tableNames = require('../../src/constants/tableNames');
 
 //	dummy
 
-const products = require("../../src/dummy/products");
+const products = require('../../src/dummy/products');
 
 /**
  * @param {Knex} knex
@@ -18,50 +18,50 @@ exports.seed = async (knex) => {
 		return knex(tableName).del();
 	}, Promise.resolve());
 
-	const password = crypto.randomBytes(15).toString("hex");
+	const password = crypto.randomBytes(15).toString('hex');
 
 	const provinces = [
-		"Luanda",
-		"Cabinda",
-		"Cunene",
-		"Malanje",
-		"Zaire",
-		"Moxico",
-		"Huambo",
-		"Benguela",
-		"Uíge",
-		"Kuando Kubango",
-		"Lunda Norte",
-		"Lunda Sul",
-		"Kwanza Norte",
-		"Kwanza Sul",
-		"Bié",
-		"Lubango",
+		'Luanda',
+		'Cabinda',
+		'Cunene',
+		'Malanje',
+		'Zaire',
+		'Moxico',
+		'Huambo',
+		'Benguela',
+		'Uíge',
+		'Kuando Kubango',
+		'Lunda Norte',
+		'Lunda Sul',
+		'Kwanza Norte',
+		'Kwanza Sul',
+		'Bié',
+		'Lubango',
 	].map((name) => ({ name }));
 
-	const categories = ["Legumes", "Frutas", "Peixes"].map((name) => ({
+	const categories = ['Legumes', 'Frutas', 'Peixes'].map((name) => ({
 		name,
 	}));
 
 	const user = [
 		{
-			email: "denilson2770@gmail.com",
-			name: "Denilson Costa",
+			email: 'denilson2770@gmail.com',
+			name: 'Denilson Costa',
 			password: await bcrypt.hash(password, 12),
-			phone: "997267270",
-			image_url: "https://wwfjdkfjksdjflk.com/fkdsfk",
+			phone: '997267270',
+			image_url: 'https://wwfjdkfjksdjflk.com/fkdsfk',
 		},
 		{
-			email: "loremFarm@gmail.com",
-			name: "Farm roll",
+			email: 'loremFarm@gmail.com',
+			name: 'Farm roll',
 			password: await bcrypt.hash(password, 12),
-			phone: "993228333",
-			image_url: "https://wwfjdkfjksdjflk.com/fkdsfk",
+			phone: '993228333',
+			image_url: 'https://wwfjdkfjksdjflk.com/fkdsfk',
 		},
 	];
 
 	const address = {
-		location: "Gamek, Vila",
+		location: 'Gamek, Vila',
 		province_id: 1,
 		user_id: 1,
 	};
@@ -72,7 +72,7 @@ exports.seed = async (knex) => {
 	};
 
 	const producer = {
-		owner: "The company owner",
+		owner: 'The company owner',
 		user_id: 2,
 	};
 
@@ -111,7 +111,7 @@ exports.seed = async (knex) => {
 		},
 	];
 
-	console.log("user created ", password);
+	console.log('user created ', password);
 
 	await knex(tableNames.user).insert(user);
 	await knex(tableNames.province).insert(provinces);

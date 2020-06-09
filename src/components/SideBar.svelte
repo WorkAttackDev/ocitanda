@@ -27,7 +27,9 @@
     <ul class="flex flex-col text-center uppercase text-sm text-ocitanda-green">
       {#each links as { name, href }}
         <li class="mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-          <a class="py-2 px-4 block" {href}>{name}</a>
+          <a on:click={() => dispatch('close')} class="py-2 px-4 block" {href}>
+            {name}
+          </a>
         </li>
       {/each}
     </ul>

@@ -1,28 +1,55 @@
 const router = require('express').Router();
 
-const tableNames = require('../../constants/tableNames');
-const { findAll, getById } = require('../globalQueries');
+const { isId, handleValidationError } = require('../validations');
+const Consumer = require('./model');
 
-router.get('/', async (req, res) => {
-	const consumers = await findAll(tableNames.consumer);
-	res.json(consumers);
+const userAllowedColumns = [
+	'id',
+	'email',
+	'name',
+	'phone',
+	'last_login',
+	'image_url',
+	'created_at',
+	'updated_at',
+	'deleted_at',
+];
+
+router.get('/', async (req, res, next) => {
+	try {
+		const consumers = await Consumer.query()
+			.select('id', 'birth_date')
+			.withGraphFetched('user')
+			.modifyGraph('user', (builder) => {
+				builder.select(...userAllowedColumns);
+			});
+
+		res.json(consumers);
+	} catch (error) {
+		next(error);
+	}
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', [isId], async (req, res, next) => {
+	handleValidationError(req, res, next);
 	const { id } = req.params;
-	const consumer = await getById(id, tableNames.consumer);
 	try {
-		// eslint-disable-next-line no-restricted-globals
-		if (isNaN(id)) {
-			const error = new Error('Invalid ID');
-			res.status(422);
-			throw error;
+		const consumer = await Consumer.query()
+			.select('id', 'birth_date')
+			.findById(id)
+			.withGraphFetched('user')
+			.modifyGraph('user', (builder) => {
+				builder.select(...userAllowedColumns);
+			})
+			.first();
+		if (!consumer) {
+			res.status(404);
+			res.json({});
 		} else {
-			if (consumer) return res.json(consumer);
-			return next();
+			res.json(consumer);
 		}
 	} catch (error) {
-		return next(error);
+		next(error);
 	}
 });
 

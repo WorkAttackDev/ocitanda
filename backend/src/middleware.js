@@ -13,7 +13,7 @@ function errorHandler(error, req, res, next) {
 		stack:
 			process.env.NODE_ENV === 'production' ? 'error stack' : error.stack,
 	});
-	next(error);
+	// next(error);
 }
 
 module.exports = {
