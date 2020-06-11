@@ -96,11 +96,18 @@
     items={['Masculino', 'Femenino', 'Outro']}
     on:selectitem={(e) => (gender = e.detail)} />
   <Button className="my-4">Atualizar Conta</Button>
+  <Button
+    type="button"
+    on:click={async () => await goto('/forgot-password')}
+    className="my-4 bg-ocitanda-gold">
+    Atualizar palavra-passe
+  </Button>
 </form>
 
+{#if readyToUpdate}
 <Alert
-  show={readyToUpdate}
   on:resolve={onUpdateUser}
   on:close={() => (readyToUpdate = false)}>
   Desejá Salvar as alterações?
 </Alert>
+{/if}

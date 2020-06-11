@@ -6,15 +6,16 @@
   import { goto } from "@sapper/app";
   import Button from "./../components/Button.svelte";
   import AuthForm from "../components/auth/AuthForm.svelte";
+  import { login } from "../util";
 
-  import { login } from "../api";
+  import { signin } from "../api";
 
   let errorMsg = "";
   let loading = false;
 
   const errors = {
     "network problem": "Problema na conexão.",
-    "validation error": "Erro de validação."
+    "validation error": "Erro de validação.",
   };
 
   onMount(async () => {
@@ -23,24 +24,14 @@
 
   const onLogin = async ({ detail }) => {
     loading = true;
-    const res = await login(detail);
+    const res = await signin(detail);
     console.log(res);
     if (res.error) {
       loading = false;
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
 
-    const data = res.data;
-    const remainMilliseconds = 60 * 60 * 4000;
-    const expiryDate = new Date(new Date() + remainMilliseconds);
-    const authInfo = {
-      token: data.token,
-      consumer: data.consumer,
-      expiryDate,
-      isAuth: true
-    };
-    user.login(authInfo);
-    localStorage.setItem("user", JSON.stringify(authInfo));
+    login(res.data, user);
     loading = false;
     await goto("/", { replaceState: true });
   };
@@ -68,4 +59,6 @@
   on:close={() => (errorMsg = '')}
   on:click={async () => await goto('/signup')} />
 
-<LoadingOverlay {loading} />
+{#if loading}
+  <LoadingOverlay />
+{/if}

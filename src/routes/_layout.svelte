@@ -32,4 +32,6 @@
   <ComingSoon />
 {/if}
 
-<LoadingOverlay loading={$preloading} />
+{#if $preloading}
+  <LoadingOverlay />
+{/if}

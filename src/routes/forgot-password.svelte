@@ -1,21 +1,28 @@
 <script>
+  import { vNotEmpty, vEmail } from "./../lib/validation.js";
+  import { goto } from "@sapper/app";
+  import { forgotPassword } from "../api";
 	import NotificationSuccess from './../components/NotificationSuccess.svelte';
   import NotificationError from "./../components/NotificationError.svelte";
-  import { vNotEmpty, vEmail } from "./../lib/validation.js";
   import InputText from "./../components/InputText.svelte";
-  import { goto } from "@sapper/app";
   import Button from "./../components/Button.svelte";
-  import { forgotPassword } from "../api";
+import LoadingOverlay from "./../components/LoadingOverlay.svelte";
 
   let errorMsg = "",
-    email = "", success = false;
+    email = "", success = false, loading = false;
 
   const onSendEmail = async () => {
+    loading = true;
     if (vEmail.validator(email)) {
       const res = await forgotPassword(email);
-      if(res.error) return errorMsg = res.msg;
+      if(res.error){
+    loading = false;
+
+        return errorMsg = res.msg;
+      } 
       console.log(res.data.message);
       success = true;
+    loading = false;
     }
   };
 </script>
@@ -48,4 +55,8 @@
     title="Email enviado"
     msg="O seu email de atualização de palavra-passe, foi enviado com sucesso!"
     on:close={()=> success = false} />
+{/if}
+
+{#if loading}
+<LoadingOverlay />
 {/if}

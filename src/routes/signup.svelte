@@ -1,12 +1,14 @@
 <script>
   import { goto } from "@sapper/app";
-  import Button from "./../components/Button.svelte";
   import { signup } from "./../api.js";
+  import { user } from "./../stores/user.js";
+  import { login } from "../util";
+  import Button from "./../components/Button.svelte";
   import NotificationError from "../components/NotificationError.svelte";
   import AuthForm from "../components/auth/AuthForm.svelte";
-  import { user } from "./../stores/user.js";
+  import LoadingOverlay from "./../components/LoadingOverlay.svelte";
 
-  let errorMsg = "";
+  let errorMsg = "", loading = false;;
 
   const errors = {
     "user already exists": "Já existe um usuário com este email.",
@@ -14,23 +16,16 @@
   };
 
   const onCreateUser = async ({ detail }) => {
+     loading = true;
     const res = await signup(detail);
     console.log(res);
     if (res.error) {
+     loading = false;
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
 
-    const data = res.data;
-    const remainMilliseconds = 60 * 60 * 4000;
-    const expiryDate = new Date(new Date() + remainMilliseconds);
-    const authInfo = {
-      token: data.token,
-      consumer: data.consumer,
-      expiryDate,
-      isAuth: true
-    };
-    user.login(authInfo);
-    localStorage.setItem("user", JSON.stringify(authInfo));
+    login(res.data, user);
+     loading = false;
     await goto("/", { replaceState: true });
   };
 </script>
@@ -53,3 +48,7 @@
   {errorMsg}
   show={errorMsg}
   title="Erro ao criar conta" />
+
+{#if loading}
+<LoadingOverlay />
+{/if}

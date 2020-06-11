@@ -1,6 +1,5 @@
 <script>
   import { scale, fade } from "svelte/transition";
-  export let loading = false;
 </script>
 
 <style>
@@ -34,7 +33,6 @@
   }
 </style>
 
-{#if loading}
   <span
     transition:fade
     class="fixed z-50 top-0 left-0 flex items-center justify-center w-full
@@ -46,4 +44,3 @@
       <div />
     </div>
   </span>
-{/if}
