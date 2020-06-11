@@ -16,7 +16,7 @@
   const toogleShowList = () => (showlist = !showlist);
   const onSelectItem = (item = "") => {
     selected = item;
-    dispatch("select", item);
+    dispatch("selectitem", item);
   };
 </script>
 

@@ -69,6 +69,7 @@ exports.seed = async (knex) => {
 	const costumer = {
 		birth_date: new Date(),
 		user_id: 1,
+		gender: 'M'
 	};
 
 	const producer = {

@@ -4,6 +4,7 @@
   import ProductGrid from "../../components/products/ProductGrid.svelte";
   import Pagination from "../../components/products/Pagination.svelte";
   import { fetchProducts, fetchCategories } from "../../api";
+import Loading from "../../components/Loading.svelte";
 
   let categories = ["Todos"];
   let products = [];
@@ -35,7 +36,7 @@
     label="Ordenar por" />
 </section>
 {#if fetching}
-  <p class="text-4xl">Carregando...</p>
+  <Loading />
 {:else}
   <ProductGrid {products} />
 {/if}

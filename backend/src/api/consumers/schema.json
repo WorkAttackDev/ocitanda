@@ -3,7 +3,11 @@
 	"type": "object",
 	"title": "Consumer",
 	"description": "The Consumer Schrema",
-	"required": ["birth_date", "user_id"],
+	"required": [
+		"birth_date",
+		"gender",
+		"user_id"
+	],
 	"additionalProperties": false,
 	"properties": {
 		"user_id": {
@@ -17,28 +21,43 @@
 			"type": "string",
 			"title": "birth date",
 			"description": "the birth date of user",
-			"examples": ["2020-06-02T14:04:36.000Z"]
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		},
+		"gender": {
+			"$id": "#/properties/birth_date",
+			"type": "string",
+			"title": "gender",
+			"description": "the gender of user",
+			"examples": ["M"]
 		},
 		"created_at": {
 			"$id": "#/properties/created_at",
 			"type": "string",
 			"title": "created_at",
 			"description": "the creation date of user",
-			"examples": ["2020-06-02T14:04:36.000Z"]
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
 		},
 		"updated_at": {
 			"$id": "#/properties/updated_at",
 			"type": "string",
 			"title": "updated_at",
 			"description": "the user update date",
-			"examples": ["2020-06-02T14:04:36.000Z"]
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
 		},
 		"deleted_at": {
 			"$id": "#/properties/deleted_at",
 			"type": "string",
 			"title": "deleted_at",
 			"description": "The deleted user date",
-			"examples": ["2020-06-02T14:04:36.000Z"]
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
 		}
 	}
 }

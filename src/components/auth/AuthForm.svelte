@@ -1,34 +1,39 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
   import Button from "../Button.svelte";
   import InputText from "../InputText.svelte";
   import SelectDropdown from "../SelectDropdown.svelte";
-  import { vEmail, vAlpha, vNotEmpty } from "../../lib/validation";
+  import { vEmail, vAlpha, vNotEmpty, vLength } from "../../lib/validation";
 
   export let type = "signup" || "login";
 
+  const dispatch = createEventDispatcher();
   let name = "",
     surname = "",
     email = "",
     birthDate = "",
     phone = "",
-    gender = "",
+    gender = "M",
     password = "",
     verifPassword = "";
 
-  $: console.log(name);
-
   const onCreateUser = () => {
-    console.log(
-      name,
-      surname,
+    const user = {
+      name: `${name} ${surname}`,
       email,
       birthDate,
       phone,
-      gender,
+      gender: gender[0],
       password,
-      verifPassword
-    );
+      imageUrl: "/ocitanda.jpg",
+    };
+    dispatch("create", user);
   };
+
+  const isEqualPassword = (otherValue) => ({
+    errorMsg: "Palavra-Passes diferentes",
+    validator: (value) => value === otherValue
+  })
 </script>
 
 {#if type === 'signup'}
@@ -76,14 +81,14 @@
       className="justify-between"
       label="Género"
       items={['Masculino', 'Femenino', 'Outro']}
-      on:select={e => (gender = e.detail)} />
+      on:selectitem={e => (gender = e.detail)} />
     <InputText
       className="mb-4"
       type="password"
       placeholder="Palavra-Passe"
       value={password}
       disabled
-      validators={[vNotEmpty]}
+      validators={[vNotEmpty, vLength(8)]}
       on:validated={e => (password = e.detail)} />
     <InputText
       className="mb-4"
@@ -91,7 +96,7 @@
       placeholder="Verificar Palavra-Passe"
       value={verifPassword}
       disabled
-      validators={[vNotEmpty]}
+      validators={[vNotEmpty, vLength(8), isEqualPassword(password)]}
       on:validated={e => (verifPassword = e.detail)} />
     <Button>Criar Conta</Button>
   </form>

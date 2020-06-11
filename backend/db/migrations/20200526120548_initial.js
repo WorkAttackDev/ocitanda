@@ -30,7 +30,6 @@ exports.up = async (knex) => {
 			table.string("password", 200).notNullable();
 			table.datetime("last_login");
 			table.string("phone", 9).notNullable();
-			table.enu("gender", ["M", "F", "O"]).notNullable();
 			table.string("image_url", 200);
 			addDefaultColumns(table);
 		}),
@@ -56,6 +55,7 @@ exports.up = async (knex) => {
 	await knex.schema.createTable(tableNames.consumer, (table) => {
 		table.increments().notNullable();
 		table.dateTime("birth_date").notNullable();
+		table.enu("gender", ["M", "F", "O"]).notNullable();
 		references(table, tableNames.user);
 	});
 

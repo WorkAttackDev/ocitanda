@@ -9,6 +9,6 @@
   <span
     class="flex flex-col justify-between w-full uppercase text-ocitanda-gold text-center text-xs">
     <a href="#">Esqueceu a Palavra-passe?</a>
-    <a href="#">Criar conta</a>
+    <a href="/signup">Criar conta</a>
   </span>
 </section>

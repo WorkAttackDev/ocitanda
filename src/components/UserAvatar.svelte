@@ -1,8 +1,11 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
   export let dropDownMode = false;
   export let loggedIn = false;
 
   const display = dropDownMode ? "hidden lg:flex" : "flex";
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -19,9 +22,9 @@
     <h1 class="text-2xl text-center">Nome de Usuário</h1>
   {:else}
     <div class="flex flex-col items-center bg-ocitanda-beige py-2 lg:hidden">
-      <a href="/login" class="text-ocitanda-green">Iniciar Sessão</a>
+      <a href="/login" on:click={()=> dispatch("close")} class="text-ocitanda-green">Iniciar Sessão</a>
       <small>ou</small>
-      <a href="/signup" class="text-ocitanda-green">Criar Conta</a>
+      <a href="/signup" on:click={()=> dispatch("close")} class="text-ocitanda-green">Criar Conta</a>
     </div>
   {/if}
 </article>

@@ -18,7 +18,7 @@ const userAllowedColumns = [
 router.get('/', async (req, res, next) => {
 	try {
 		const consumers = await Consumer.query()
-			.select('id', 'birth_date')
+			.select('id', 'birth_date', 'gender')
 			.withGraphFetched('user')
 			.modifyGraph('user', (builder) => {
 				builder.select(...userAllowedColumns);

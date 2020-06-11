@@ -20,7 +20,7 @@
       className="md:w-8 md:h-8 fill-current" />
   </header>
   <div class="overflow-y-auto h-full pb-12">
-    <UserAvatar />
+    <UserAvatar on:close />
     <h3 class="uppercase font-bold text-ocitanda-green text-center my-4">
       Menu
     </h3>

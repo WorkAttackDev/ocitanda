@@ -4,7 +4,7 @@ module.exports = {
 	development: {
 		client: 'mysql2',
 		connection: {
-			host: '',
+			host: '127.0.0.1',
 			user: 'root',
 			password: 'root',
 			database: 'ocitanda',
@@ -19,7 +19,7 @@ module.exports = {
 	production: {
 		client: 'mysql2',
 		connection: {
-			host: '127.0.0.1',
+			host: 'srv2mozdomains.com',
 			user: 'ocitanda_denilson',
 			password: 'OC2020#2020',
 			database: 'ocitanda_e-commerce',

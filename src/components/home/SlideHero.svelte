@@ -28,7 +28,7 @@
   class="swiper-container relative bg-ocitanda-khaki h-64 md:h-96 w-full mb-8">
   <div
     class="absolute z-10 w-full h-full left-0 top-0 flex flex-col items-center
-    justify-center bg-black bg-opacity-50 text-white pointer-events-none">
+    justify-center bg-black bg-opacity-50 text-white pointer-events-none px-8 text-center">
     <h1 class="text-4xl ">25% de Desconto</h1>
     <h3 class="text-xl">Em todos os Vegetais</h3>
   </div>

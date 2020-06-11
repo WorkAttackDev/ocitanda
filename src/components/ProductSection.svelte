@@ -1,4 +1,5 @@
 <script>
+	import Loading from './Loading.svelte';
   import { goto } from "@sapper/app";
   import ProductModel from "../models/Product";
   import Product from "../components/Product.svelte";
@@ -20,7 +21,7 @@
 <section class="ml-4 my-4">
   <h2 class="mb-4 font-bold text-lg text-ocitanda-green md:text-xl">{title}</h2>
   {#if fetching}
-    <p class="text-4xl">Carregando...</p>
+    <Loading />
   {:else}
     <div class="flex overflow-x-auto pb-4">
       {#each products as product}
@@ -28,6 +29,8 @@
           on:open={() => onOpenProduct(product.id)}
           {product}
           className="pr-4" />
+          {:else}
+            <p class="mx-auto">Nebhum produto Encontrado!</p>
       {/each}
     </div>
   {/if}

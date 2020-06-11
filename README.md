@@ -1,15 +1,27 @@
-# WorkAttack Blog powered by Dev.to API.
+# Ocitanda E-commerce made by WorkAttack.
 
-this is a blog were yo ca read the dev.to article even if you are offline.
+this is the oficial ocitanda e-commerce
 
 
-##Todo
+## TODO
 
-[x] fix the back button logic.
-[-] inprove the responsivity.
-[x] add hover effect on links.
-[x] add hash on tags.
-[x] add the side up menu.
-[-] add the logo to the page.
-[] add search by tag.
-[] create the about page.
+* [] whe the user exists made a button to redirect to login.
+* [-] inprove the responsivity.
+* [-] inprove notification component.
+* [] work on login.
+* [] work on recover password.
+* [] work on send email.
+* [] work on user page.
+* [] work on user data update.
+* [] work on delete user.
+* [] work on create producer.
+* [] work on  delete producer.
+* [] work on update producer.
+* [] add real products.
+* [] add producer dashboard.
+* [] work on checkout.
+* [] work on about.
+* [] work on verify email.
+* [] work on add to Cart.
+* [] work on remove from the cart.
+

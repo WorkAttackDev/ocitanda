@@ -22,7 +22,7 @@
       <InstagramIcon className="w-5 md:w-6 mr-4" />
       <p class="font-bold text-ocitanda-green text-sm uppercase">@Ocitanda</p>
     </div>
-    <InputText placeholder="Subscrever Email" />
+    <InputText placeholder="Subscrever Email" value="" />
   </section>
   <section class="container mx-auto text-ocitanda-green">
     <p class="text-sm text-center">

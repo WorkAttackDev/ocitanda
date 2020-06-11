@@ -22,5 +22,5 @@
   });
 </script>
 
-<ProductSection title="Meus Produtos" {products} />
+<ProductSection title="Meus Produtos" {products} {fetching} />
 <PriceBox {total} Subtotal={total} />

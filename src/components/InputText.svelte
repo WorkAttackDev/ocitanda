@@ -14,7 +14,7 @@
   const dispatch = createEventDispatcher();
   let errorStack = "";
 
-  const validateInput = e => {
+  const validateInput = (e) => {
     const value = e.target.value.trim();
 
     const isAllValid = validators.every(({ validator, errorMsg }) => {
@@ -26,7 +26,6 @@
       errorStack = "";
       return true;
     });
-    console.log(isAllValid);
 
     dispatch("validated", isAllValid ? value : "");
   };
@@ -42,6 +41,7 @@
   class:error={errorStack}
   class={'relative flex rounded-sm py-2 px-3 bg-ocitanda-beige border-b-2 md:border-b-3 border-gray-400 hover:border-ocitanda-green ' + className}>
   <input
+    autocomplete
     {type}
     {value}
     class="flex-grow md:text-lg leading-6 align-middle transition-colors
