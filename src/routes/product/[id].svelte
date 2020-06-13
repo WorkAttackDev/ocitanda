@@ -6,7 +6,7 @@
 
     const product = await fetchProductById(id);
 
-    if (!product) throw new Error("product not found");
+    if (product.error) product = {};
 
     return { product };
   }
@@ -19,14 +19,17 @@
 
   export let product = Product();
 
-  let isOnline;
 </script>
 
 <svelte:head>
-  <title>{`Ocitanda - ${product.name}`}</title>
+  <title>{`Ocitanda - ${product ? product.name : "Produto não encontrado."}`}</title>
 </svelte:head>
 
 <section class="flex flex-col p-4 md:flex-row">
-  <Image className="w-full md:w-2/5" src={product.img} alt={product.name} />
-  <Content className="w-full md:w-3/5" {product} />
+  {#if !product}
+    <p>Produto não encontrado!</p>
+  {:else}
+    <Image className="w-full md:w-2/5" src={product.img} alt={product.name} />
+    <Content className="w-full md:w-3/5" {product} />
+  {/if}
 </section>

@@ -5,7 +5,7 @@ this is the oficial ocitanda e-commerce
 
 ## TODO
 
-* [] whe the user exists made a button to redirect to login.
+* [-] whe the user exists made a button to redirect to login.
 * [-] inprove the responsivity.
 * [-] inprove notification component.
 * [] work on login.

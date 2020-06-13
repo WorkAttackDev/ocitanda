@@ -4,7 +4,7 @@
   import ProductGrid from "../../components/products/ProductGrid.svelte";
   import Pagination from "../../components/products/Pagination.svelte";
   import { fetchProducts, fetchCategories } from "../../api";
-import Loading from "../../components/Loading.svelte";
+  import Loading from "../../components/Loading.svelte";
 
   let categories = ["Todos"];
   let products = [];
@@ -12,16 +12,13 @@ import Loading from "../../components/Loading.svelte";
   let order = ["Nome (A-Z)", "Nome (Z-A)", "Caros", "Baratos"];
 
   onMount(async () => {
-    try {
-      let fetching = true;
-      categories = ["Todos", ...(await fetchCategories())];
-      products = await fetchProducts();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      fetching = false;
-      console.log("terminou");
+    categories = ["Todos", ...(await fetchCategories())];
+    products = await fetchProducts();
+    if (products.error || categories.error) {
+      products = [];
+      categories = ["Todos"];
     }
+    fetching = false;
   });
 </script>
 

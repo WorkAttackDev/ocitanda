@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from "svelte";
   import Button from "../Button.svelte";
   import InputText from "../InputText.svelte";
   import SelectDropdown from "../SelectDropdown.svelte";
@@ -8,6 +8,7 @@
   export let type = "signup" || "login";
 
   const dispatch = createEventDispatcher();
+
   let name = "",
     surname = "",
     email = "",
@@ -25,15 +26,29 @@
       phone,
       gender: gender[0],
       password,
-      imageUrl: "/ocitanda.jpg",
+      imageUrl: "/ocitanda.jpg"
     };
-    dispatch("create", user);
+    if (
+      Object.values(user).every(_field => vNotEmpty.validator(_field) === true)
+    )
+      dispatch("create", user);
   };
 
-  const isEqualPassword = (otherValue) => ({
+  const onLogin = () => {
+    const user = {
+      email,
+      password
+    };
+    if (
+      Object.values(user).every(_field => vNotEmpty.validator(_field) === true)
+    )
+      dispatch("login", user);
+  };
+
+  const isEqualPassword = otherValue => ({
     errorMsg: "Palavra-Passes diferentes",
-    validator: (value) => value === otherValue
-  })
+    validator: value => value === otherValue
+  });
 </script>
 
 {#if type === 'signup'}
@@ -101,9 +116,22 @@
     <Button>Criar Conta</Button>
   </form>
 {:else}
-  <form class="flex flex-col my-4">
-    <InputText className="mb-4" placeholder="Nome de Usuário ou Email" />
-    <InputText className="mb-4" type="password" placeholder="Palavra-Passe" />
+  <form class="flex flex-col my-4" on:submit|preventDefault={onLogin}>
+    <InputText
+      value={email}
+      className="mb-4"
+      placeholder="Email"
+      disabled
+      validators={[vNotEmpty, vEmail]}
+      on:validated={e => (email = e.detail)} />
+    <InputText
+      value={password}
+      className="mb-4"
+      type="password"
+      placeholder="Palavra-Passe"
+      disabled
+      validators={[vNotEmpty, vLength(8)]}
+      on:validated={e => (password = e.detail)} />
     <Button>Iniciar Sessão</Button>
   </form>
 {/if}

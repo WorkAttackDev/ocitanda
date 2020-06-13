@@ -47,7 +47,7 @@
     class="flex-grow md:text-lg leading-6 align-middle transition-colors
     duration-300 bg-ocitanda-beige outline-none"
     {placeholder}
-    on:blur={validateInput} />
+    on:input={validateInput} />
   <button
     type="submit"
     {disabled}

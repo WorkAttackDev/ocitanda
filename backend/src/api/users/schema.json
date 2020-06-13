@@ -48,7 +48,7 @@
             "description": "last login",
             "default": null,
             "examples": [
-                null
+                "2020-06-02T14:04:36.000Z"
             ]
         },
         "phone": {
@@ -69,6 +69,22 @@
                 "https://wwfjdkfjksdjflk.com/fkdsfk"
             ]
         },
+        "reset_password_expires_date": {
+			"$id": "#/properties/reset_password_expires_date",
+			"type": "number",
+			"title": "expires date",
+			"description": "the expires date of the password",
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		},
+		"reset_password_token": {
+			"$id": "#/properties/reset_password_token",
+			"type": "string",
+			"title": "token",
+			"description": "the token of the password to reset",
+			"examples": ["13123$#%&6565656"]
+		},
         "created_at": {
             "$id": "#/properties/created_at",
             "type": "string",

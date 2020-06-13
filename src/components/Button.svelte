@@ -10,6 +10,9 @@
     top: -1rem;
     right: 1rem;
   }
+  button:disabled {
+    @apply bg-gray-400 text-gray-600 cursor-not-allowed;
+  }
 </style>
 
 <button

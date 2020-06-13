@@ -1,4 +1,5 @@
 <script>
+	import { user } from './../stores/user.js';
   import { onMount } from "svelte";
   import ProductSection from "../components/ProductSection.svelte";
   import PriceBox from "../components/cart/PriceBox.svelte";
@@ -11,14 +12,9 @@
   $: total = products.reduce((prev, curr) => prev + curr.price, 0);
 
   onMount(async () => {
-    try {
-      products = await fetchUserCartItems(1);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      fetching = false;
-      console.log("terminou");
-    }
+    products = await fetchUserCartItems(1, $user.token);
+    if(products.error) products = [];
+    fetching = false;
   });
 </script>
 

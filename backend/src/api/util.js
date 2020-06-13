@@ -1,21 +1,29 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const sign = (payload) =>
-	new Promise((resolve, reject) => {
-		jwt.sign(
-			payload,
-			process.env.JWT_SECRET,
-			{
-				expiresIn: '1d',
-			},
-			(err, token) => {
-				if (err) return reject(err);
+  new Promise((resolve, reject) => {
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "4h",
+      },
+      (err, token) => {
+        if (err) return reject(err);
+        return resolve(token);
+      }
+    );
+  });
 
-				return resolve(token);
-			}
-		);
-	});
+const throwErrorIf = (res, condition, errorMsg, status = 500) => {
+  if (condition) {
+    const error = new Error(errorMsg);
+    res.status(status);
+    throw error;
+  }
+};
 
 module.exports = {
-	sign,
+  sign,
+  throwErrorIf
 };

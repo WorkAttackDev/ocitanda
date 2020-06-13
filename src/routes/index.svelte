@@ -10,14 +10,10 @@
   let fetching = true;
 
   onMount(async () => {
-    try {
-      products = await fetchProducts();
-    } catch (err) {
-      console.error(err);
-    } finally {
-      fetching = false;
-      console.log("terminou");
-    }
+    products = await fetchProducts();
+    if(products.error) products = [];
+    fetching = false;
+    console.log("terminou");
   });
 </script>
 

@@ -2,8 +2,9 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const { body } = require("express-validator");
 const { handleValidationError } = require("../validations");
-const { sign } = require("../util");
+const { sign, throwErrorIf } = require("../util");
 const { format } = require("fecha");
+const {sendEmail} = require('../email');
 
 const User = require("../users/model");
 const Consumer = require("../consumers/model");
@@ -22,18 +23,9 @@ const signupValidation = [
   body("birthDate").not().isEmpty().toDate(),
 ];
 
-const throwErrorIf = (res, condition, errorMsg, status = 500) => {
-  if (condition) {
-    const error = new Error(errorMsg);
-    res.status(status);
-    throw error;
-  }
-};
-
 router.post("/signup", signupValidation, async (req, res, next) => {
   handleValidationError(req, res, next);
   const { name, email, birthDate, imageUrl, gender, phone } = req.body;
-  console.log(birthDate);
   const trx = await Consumer.startTransaction();
 
   try {
@@ -45,7 +37,7 @@ router.post("/signup", signupValidation, async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-    const { user } = await Consumer.query(trx).insertGraph({
+    const consumer = await Consumer.query(trx).insertGraph({
       birth_date: format(birthDate, "YYYY-MM-DD HH:mm:ss"),
       gender,
 
@@ -60,15 +52,21 @@ router.post("/signup", signupValidation, async (req, res, next) => {
 
     await trx.commit();
 
-    delete user.password;
+    delete consumer.user.password;
 
     const token = await sign({
-      id: user.id,
-      name: user.name,
-      email: user.email,
+      userId: consumer.id,
+      name: consumer.user.name,
+      email: consumer.user.email,
     });
+    
+    
+    res.status(201);
+    res.json({ consumer, token });
 
-    res.json({ user, token });
+    const info = await sendEmail(consumer.user.email);
+    console.log(info, consumer.user.email);
+    
   } catch (error) {
     await trx.rollback();
     next(error);
@@ -79,23 +77,31 @@ router.post("/login", loginValidation, async (req, res, next) => {
   handleValidationError(req, res, next);
   const { email, password } = req.body;
   try {
-    const user = await User.query().where({ email }).first();
+    const user = await User.query()
+      .where({ email: email.toLowerCase() })
+      .first();
 
-    throwErrorIf(res, !user, "user does not exists", 403);
+    throwErrorIf(res, !user, "user does not exists", 404);
 
     const isValidPassword = await bcrypt.compare(password, user.password);
 
-    throwErrorIf(res, !isValidPassword, "invalid password", 403);
+    throwErrorIf(res, !isValidPassword, "invalid password", 401);
 
-    delete user.password;
+    const consumer = await Consumer.query()
+      .where({ user_id: user.id })
+      .withGraphFetched("user")
+      .first();
+
+    delete consumer.user.password;
 
     const token = await sign({
-      id: user.id,
-      name: user.name,
-      email: user.email,
+      userId: consumer.id,
+      name: consumer.user.name,
+      email: consumer.user.email,
     });
-    res.status(201);
-    res.json({ user, token });
+
+    res.status(200);
+    res.json({ userId: consumer.id, token });
   } catch (error) {
     next(error);
   }
