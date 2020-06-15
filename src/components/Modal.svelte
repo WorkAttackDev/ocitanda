@@ -16,10 +16,10 @@
 <section
   transition:scale
   class="fixed flex flex-col transform -translate-x-1/2 -translate-y-1/2 z-50
-  bg-white w-full h-full md:w-auto md:h-40 md:rounded shadow-xl p-5">
+  bg-white w-full h-full overflow-x-auto md:w-auto md:h-40 md:rounded shadow-xl p-5">
   <MobileCancelMajorMonotone
     on:click={() => dispatch('close')}
-    class="w-5 ml-auto mb-8 md:w-6" />
+    class="w-5 min-h-5 ml-auto mb-8 md:w-6" />
   <slot />
 </section>
 

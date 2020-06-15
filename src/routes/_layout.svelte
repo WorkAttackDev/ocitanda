@@ -1,8 +1,19 @@
 <script>
+  import { onMount } from "svelte";
+  import { user } from "./../stores/user.js";
+  import { stores } from "@sapper/app";
+
   import ComingSoon from "./../components/coming/ComingSoon.svelte";
   import Header from "../components/Header.svelte";
+  import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import Footer from "../components/Footer.svelte";
 
+  onMount(() => {
+    const authInfo = JSON.parse(localStorage.getItem("user"));
+    if (authInfo) user.login(authInfo);
+  });
+
+  const { preloading } = stores();
   const ready = true;
 </script>
 
@@ -20,3 +31,5 @@
 {:else}
   <ComingSoon />
 {/if}
+
+<LoadingOverlay loading={$preloading} />

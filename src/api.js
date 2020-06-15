@@ -61,7 +61,7 @@ export const fetchUserCartItems = async (userId, authToken) => {
     let res = await axios.get(api + "/carts/" + userId, {
       headers: { Authorization: "Bearer " + authToken },
     });
-    let data = await res.data;
+    let data = res.data;
     return data.map(
       ({
         id,
@@ -98,8 +98,19 @@ export const fetchUserCartItems = async (userId, authToken) => {
 export const fetchCategories = async () => {
   try {
     let res = await axios.get(api + "/categories");
-    let data = await res.data;
+    let data = res.data;
     return data.map(({ name }) => name);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getConsumer = async (userId, authToken) => {
+  try {
+    let res = await axios.get(api + `/consumers/${userId}`, {
+      headers: { Authorization: "Bearer " + authToken },
+    });
+    return res;
   } catch (error) {
     return handleError(error);
   }
@@ -112,6 +123,17 @@ export const signup = async (user) => {
     let res = await axios.post(api + "/auth/signup", {
       ...user,
     });
+    return res;
+  } catch (err) {
+    return handleError(err);
+  }
+};
+
+export const updateConsumer = async (consumer) => {
+  console.log(consumer);
+
+  try {
+    let res = await axios.put(api + "/auth/update", consumer);
     return res;
   } catch (err) {
     return handleError(err);
@@ -155,12 +177,11 @@ export const verifyResetToken = async (token) => {
   }
 };
 
-
-export const resetPassword = async (password,token) => {
+export const resetPassword = async (password, token) => {
   try {
     let res = await axios.put(api + "/forgot-password", {
       password,
-      token
+      token,
     });
     return res;
   } catch (err) {

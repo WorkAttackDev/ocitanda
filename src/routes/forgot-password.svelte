@@ -38,12 +38,10 @@
   </form>
 </section>
 
-{#if errorMsg}
-  <NotificationError
+  <NotificationError show={errorMsg}
     title="Erro ao Recuperar Senha"
     {errorMsg}
     on:close={() => (errorMsg = '')} />
-{/if}
 
 {#if success}
   <NotificationSuccess

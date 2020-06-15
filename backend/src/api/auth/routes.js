@@ -1,13 +1,14 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const { body } = require("express-validator");
-const { handleValidationError } = require("../validations");
+const { handleValidationError, isId } = require("../validations");
 const { sign, throwErrorIf } = require("../util");
 const { format } = require("fecha");
-const {sendEmail} = require('../email');
+const { sendEmail } = require("../email");
 
 const User = require("../users/model");
 const Consumer = require("../consumers/model");
+const { isAuth } = require("../../middleware");
 
 const loginValidation = [
   body("email", "Incorrect email").isString().isEmail(),
@@ -16,6 +17,16 @@ const loginValidation = [
 
 const signupValidation = [
   ...loginValidation,
+  body("name").isString().notEmpty().trim(),
+  body("phone").isString().isLength({ min: 9, max: 9 }).isNumeric(),
+  body("imageUrl").isString().not().isEmpty(),
+  body("gender").isString().not().isEmpty().isLength({ max: 1 }),
+  body("birthDate").not().isEmpty().toDate(),
+];
+
+const updateValidation = [
+  body("id", "Incorrect id").isInt(),
+  body("email", "Incorrect email").isString().isEmail(),
   body("name").isString().notEmpty().trim(),
   body("phone").isString().isLength({ min: 9, max: 9 }).isNumeric(),
   body("imageUrl").isString().not().isEmpty(),
@@ -53,20 +64,20 @@ router.post("/signup", signupValidation, async (req, res, next) => {
     await trx.commit();
 
     delete consumer.user.password;
+    delete consumer.user.reset_password_token;
+    delete consumer.user.reset_password_expires_date;
 
     const token = await sign({
       userId: consumer.id,
       name: consumer.user.name,
       email: consumer.user.email,
     });
-    
-    
+
     res.status(201);
     res.json({ consumer, token });
 
     const info = await sendEmail(consumer.user.email);
     console.log(info, consumer.user.email);
-    
   } catch (error) {
     await trx.rollback();
     next(error);
@@ -93,6 +104,8 @@ router.post("/login", loginValidation, async (req, res, next) => {
       .first();
 
     delete consumer.user.password;
+    delete consumer.user.reset_password_token;
+    delete consumer.user.reset_password_expires_date;
 
     const token = await sign({
       userId: consumer.id,
@@ -101,8 +114,60 @@ router.post("/login", loginValidation, async (req, res, next) => {
     });
 
     res.status(200);
-    res.json({ userId: consumer.id, token });
+    res.json({ consumer, token });
   } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/update", updateValidation, async (req, res, next) => {
+  console.log(req.body);
+  handleValidationError(req, res, next);
+  const { id, name, email, birthDate, imageUrl, gender, phone } = req.body;
+  const trx = await Consumer.startTransaction();
+
+  try {
+    const existUser = await Consumer.query(trx).findById(id).first();
+
+    throwErrorIf(res, !existUser, "user don't exists", 404);
+
+    await User.query(trx).findById(existUser.user_id).patch({
+      name,
+      email: email.toLowerCase(),
+      phone,
+      image_url: imageUrl,
+    });
+
+    await Consumer.query(trx)
+      .findById(id)
+      .patch({
+        birth_date: format(birthDate, "YYYY-MM-DD HH:mm:ss"),
+        gender,
+      });
+
+    const consumer = await Consumer.query(trx)
+      .findById(id)
+      .withGraphFetched("user")
+      .first();
+
+    await trx.commit();
+
+    delete consumer.user.password;
+    delete consumer.user.reset_password_token;
+    delete consumer.user.reset_password_expires_date;
+
+    const token = await sign({
+      userId: consumer.id,
+      name: consumer.user.name,
+      email: consumer.user.email,
+    });
+
+    res.status(200);
+    res.json({ consumer, token });
+    // const info = await sendEmail(consumer.user.email);
+    // console.log(info, consumer.user.email);
+  } catch (error) {
+    await trx.rollback();
     next(error);
   }
 });

@@ -30,4 +30,4 @@
 <div
   on:click={() => dispatch('close')}
   transition:fade
-  class="fixed z-40 w-full h-full bg-black opacity-50" />
+  class="fixed top-0 left-0 z-40 w-full h-full bg-black opacity-50" />

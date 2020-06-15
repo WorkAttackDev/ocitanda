@@ -7,11 +7,11 @@
   export let label = "Lorem";
   export let className = "";
   export let labelClassName = "";
+  export let selected = items[0];
 
   const dispatch = createEventDispatcher();
 
   let showlist = false;
-  let selected = items[0];
 
   const toogleShowList = () => (showlist = !showlist);
   const onSelectItem = (item = "") => {

@@ -14,7 +14,7 @@
   const dispatch = createEventDispatcher();
   let errorStack = "";
 
-  const validateInput = (e) => {
+  const validateInput = e => {
     const value = e.target.value.trim();
 
     const isAllValid = validators.every(({ validator, errorMsg }) => {
@@ -48,19 +48,21 @@
     duration-300 bg-ocitanda-beige outline-none"
     {placeholder}
     on:input={validateInput} />
-  <button
-    type="submit"
-    {disabled}
-    class="text-ocitanda-khaki text-2xl leading-6 align-middle transition-colors
-    duration-300">
-    <slot>
-      {#if typeSearch}
-        <SearchMajorMonotone class="w-4 text-gray-500 fill-current" />
-      {:else}
-        <ArrowRightMinor class="w-4 text-gray-500 fill-current" />
-      {/if}
-    </slot>
-  </button>
+  {#if !disabled}
+    <button
+      type="submit"
+      {disabled}
+      class="text-ocitanda-khaki text-2xl leading-6 align-middle
+      transition-colors duration-300">
+      <slot>
+        {#if typeSearch}
+          <SearchMajorMonotone class="w-4 text-gray-500 fill-current" />
+        {:else}
+          <ArrowRightMinor class="w-4 text-gray-500 fill-current" />
+        {/if}
+      </slot>
+    </button>
+  {/if}
 </div>
 
 {#if errorStack}

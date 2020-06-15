@@ -19,6 +19,6 @@
   {disabled}
   on:click
   class:scrollTop
-  class={'px-4 py-2 bg-ocitanda-green text-ocitanda-beige ' + className}>
+  class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize ' + className}>
   <slot>lorem ipum</slot>
 </button>

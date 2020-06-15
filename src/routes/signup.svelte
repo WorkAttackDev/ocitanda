@@ -2,14 +2,15 @@
   import { goto } from "@sapper/app";
   import Button from "./../components/Button.svelte";
   import { signup } from "./../api.js";
-  import Notification from "../components/Notification.svelte";
+  import NotificationError from "../components/NotificationError.svelte";
   import AuthForm from "../components/auth/AuthForm.svelte";
+  import { user } from "./../stores/user.js";
 
   let errorMsg = "";
 
   const errors = {
     "user already exists": "Já existe um usuário com este email.",
-    "validation error": "Erro de validação.",
+    "validation error": "Erro de validação."
   };
 
   const onCreateUser = async ({ detail }) => {
@@ -18,6 +19,19 @@
     if (res.error) {
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
+
+    const data = res.data;
+    const remainMilliseconds = 60 * 60 * 4000;
+    const expiryDate = new Date(new Date() + remainMilliseconds);
+    const authInfo = {
+      token: data.token,
+      consumer: data.consumer,
+      expiryDate,
+      isAuth: true
+    };
+    user.login(authInfo);
+    localStorage.setItem("user", JSON.stringify(authInfo));
+    await goto("/", { replaceState: true });
   };
 </script>
 
@@ -34,14 +48,8 @@
   </span>
 </section>
 
-{#if errorMsg}
-  <Notification on:close={() => (errorMsg = '')}>
-    <h1 class="font-bold text-red-700 w">Erro ao criar conta</h1>
-    <p class="text-red-500 w">{errorMsg}</p>
-    {#if errorMsg === 'Já existe um usuário com este email.'}
-      <Button className="my-2" on:click={async () => await goto('/login')}>
-        Iniciar Sessão
-      </Button>
-    {/if}
-  </Notification>
-{/if}
+<NotificationError
+  on:close={() => (errorMsg = '')}
+  {errorMsg}
+  show={errorMsg}
+  title="Erro ao criar conta" />

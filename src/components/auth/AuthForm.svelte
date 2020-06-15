@@ -60,14 +60,14 @@
       placeholder="Nome"
       value={name}
       disabled
-      validators={[vNotEmpty]}
+      validators={[vNotEmpty, vAlpha]}
       on:validated={e => (name = e.detail)} />
     <InputText
       className="mb-4"
       placeholder="Sobrenome"
       value={surname}
       disabled
-      validators={[vNotEmpty]}
+      validators={[vNotEmpty, vAlpha]}
       on:validated={e => (surname = e.detail)} />
     <InputText
       className="mb-4"

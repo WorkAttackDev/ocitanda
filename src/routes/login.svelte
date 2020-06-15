@@ -1,4 +1,5 @@
 <script>
+  import LoadingOverlay from "./../components/LoadingOverlay.svelte";
   import NotificationError from "./../components/NotificationError.svelte";
   import { onMount } from "svelte";
   import { user } from "./../stores/user.js";
@@ -9,6 +10,7 @@
   import { login } from "../api";
 
   let errorMsg = "";
+  let loading = false;
 
   const errors = {
     "network problem": "Problema na conexão.",
@@ -20,20 +22,27 @@
   });
 
   const onLogin = async ({ detail }) => {
+    loading = true;
     const res = await login(detail);
     console.log(res);
     if (res.error) {
+      loading = false;
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
 
     const data = res.data;
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("userId", data.userId);
     const remainMilliseconds = 60 * 60 * 4000;
     const expiryDate = new Date(new Date() + remainMilliseconds);
-    localStorage.setItem("expiryDate", expiryDate.toISOString());
-    user.login(true, data.token, data.userId);
-    await goto("/");
+    const authInfo = {
+      token: data.token,
+      consumer: data.consumer,
+      expiryDate,
+      isAuth: true
+    };
+    user.login(authInfo);
+    localStorage.setItem("user", JSON.stringify(authInfo));
+    loading = false;
+    await goto("/", { replaceState: true });
   };
 </script>
 
@@ -51,11 +60,12 @@
   </span>
 </section>
 
-{#if errorMsg}
-  <NotificationError
-    buttonText="Criar Conta"
-    title="Erro ao iniciar sessão"
-    {errorMsg}
-    on:close={() => (errorMsg = '')}
-    on:click={async () => await goto('/signup')} />
-{/if}
+<NotificationError
+  show={errorMsg}
+  buttonText="Criar Conta"
+  title="Erro ao iniciar sessão"
+  {errorMsg}
+  on:close={() => (errorMsg = '')}
+  on:click={async () => await goto('/signup')} />
+
+<LoadingOverlay {loading} />

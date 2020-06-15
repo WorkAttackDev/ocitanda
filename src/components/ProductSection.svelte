@@ -30,7 +30,7 @@
           {product}
           className="pr-4" />
           {:else}
-            <p class="mx-auto">Nebhum produto Encontrado!</p>
+            <p class="mx-auto">Nenhum produto Encontrado!</p>
       {/each}
     </div>
   {/if}

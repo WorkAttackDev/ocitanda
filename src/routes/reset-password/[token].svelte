@@ -82,9 +82,8 @@
     on:close={async () => await goto('/login')} />
 {/if}
 
-{#if errorMsg}
-  <NotificationError
-    title="Erro ao Erro ao atualizar Palavra-Passe"
-    {errorMsg}
-    on:close={() => (errorMsg = '')} />
-{/if}
+<NotificationError
+  show={errorMsg}
+  title="Erro ao Erro ao atualizar Palavra-Passe"
+  {errorMsg}
+  on:close={() => (errorMsg = '')} />
