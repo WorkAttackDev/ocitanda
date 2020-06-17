@@ -10,16 +10,29 @@
   let products = [];
   let fetching = true;
   let order = ["Nome (A-Z)", "Nome (Z-A)", "Caros", "Baratos"];
+  let page = 1,
+    limit = 10;
+
+    $:console.log(products);
+    
 
   onMount(async () => {
     categories = ["Todos", ...(await fetchCategories())];
-    products = await fetchProducts();
-    if (products.error || categories.error) {
-      products = [];
-      categories = ["Todos"];
-    }
-    fetching = false;
+    if (categories.error) categories = ["Todos"];
+    await fetchProductsBlock();
   });
+
+  const fetchProductsBlock = async (page) => {
+    fetching = true;
+    products = await fetchProducts(limit, page || 1);
+    if (products.error) products = [];
+    fetching = false;
+  };
+
+  const onPagination = async (next) => {
+    next ? (page += 1) : page <= 1 ? page : (page -= 1);
+    await fetchProductsBlock(page);
+  };
 </script>
 
 <section class="relative flex flex-wrap mb-4 pb-2 bg-ocitanda-green">
@@ -37,4 +50,8 @@
 {:else}
   <ProductGrid {products} />
 {/if}
-<Pagination />
+<Pagination
+  pageCount={page}
+  lastPage={products.length < limit}
+  on:next={() => onPagination(true)}
+  on:prev={() => onPagination(false)} />

@@ -5,7 +5,7 @@ import axios from "axios";
 // export const api = "https://www.ocitanda.com/api";
 // export const serverImages = "https://www.ocitanda.com/images";
 export const api = "http://localhost:5050/api";
-export const serverImages = "http://localhost:5050/images";
+export const serverImages = "http://localhost:5050/";
 
 const handleError = (err) => {
 	if (!err.response) return { error: true, msg: "Network Problem" };
@@ -16,9 +16,14 @@ const handleError = (err) => {
 	};
 };
 
-export const fetchProducts = async () => {
+export const fetchProducts = async (limit, page) => {
 	try {
-		let res = await axios.get(api + "/products");
+		let res = await axios.get(api + "/products", {
+			params: {
+				limit,
+				page
+			}
+		});
 		return res.data.map(
 			({ name, id, quantity, price, image_url, description }) =>
 				Product(

@@ -6,6 +6,8 @@ this is the oficial ocitanda e-commerce
 ## TODO
 
 * [x] work on send email.
+* [x] work on user data update.
+* [x] work on delete user.
 * [-] whe the user exists made a button to redirect to login.
 * [-] inprove the responsivity.
 * [-] inprove notification component.
@@ -13,8 +15,6 @@ this is the oficial ocitanda e-commerce
 * [-] work on recover password.
 * [-] work on user page.
 * [] work on about.
-* [] work on user data update.
-* [] work on delete user.
 * [] work on create producer.
 * [] work on delete producer.
 * [] work on update producer.
@@ -25,4 +25,6 @@ this is the oficial ocitanda e-commerce
 * [] work on add to Cart.
 * [] work on remove from the cart.
 * [] Work on subscription email.
+* [] Work on authentication with sapper.
+* [] Work on refresh token.
 

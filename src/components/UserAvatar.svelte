@@ -9,6 +9,9 @@
 
   const dispatch = createEventDispatcher();
 
+  let showImage = !!$user.consumer.user;
+
+
   const onLogout = async () => {
     localStorage.setItem("user", JSON.stringify({}));
     user.logout();
@@ -32,9 +35,16 @@
   class={'relative ' + display + ' flex-col items-center p-4 overflow-x-hidden '}>
   <figure
     on:click={onAvatarClick}
-    class="w-16 h-16 rounded-full bg-ocitanda-khaki mb-2 lg:mb-0 lg:w-8 lg:h-8" />
+    class="w-16 h-16 rounded-full bg-ocitanda-khaki mb-2 lg:mb-0 lg:w-8 lg:h-8">
+    {#if showImage}
+      <img
+        class="w-full h-full object-cover"
+        src={$user.consumer.user.image_url}
+        alt={$user.consumer.user.name} />
+    {/if}
+  </figure>
   {#if $user.isAuth}
-    <h1 class="text-lg text-center mb-2">{$user.consumer.user.name || ""}</h1>
+    <h1 class="text-lg text-center mb-2">{$user.consumer.user.name || ''}</h1>
   {/if}
   <div class="flex flex-col items-center bg-ocitanda-beige py-2 lg:hidden">
     {#if $user.isAuth}

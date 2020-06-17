@@ -4,9 +4,9 @@
     "title": "User",
     "description": "The user Schrema",
     "required": [
-        "email",
+        "price",
         "name",
-        "password",
+        "description",
         "phone",
         "image_url"
     ],
@@ -16,48 +16,57 @@
             "$id": "#/properties/id",
             "type": "integer",
             "title": "id",
-            "description": "the user id"
+            "description": "the product id"
         },
-        "email": {
-            "$id": "#/properties/email",
-            "type": "string",
-            "title": "email",
-            "description": "The user email"
+        "price": {
+            "$id": "#/properties/price",
+            "type": "number",
+            "title": "price",
+            "description": "The product price"
         },
         "name": {
             "$id": "#/properties/name",
             "type": "string",
             "title": "name",
-            "description": "the user name",
+            "description": "the product name",
             "examples": [
-                "Denilson Costa"
+                "Arroz"
             ]
         },
-        "password": {
-            "$id": "#/properties/password",
-            "type": "string", 
-            "description": "the user password",
+        "quantity": {
+            "$id": "#/properties/quantity",
+            "type": "integer",
+            "description": "the product quantity",
             "examples": [
-                "$2b$12$qbMEm2ab.F74hAlZl6Bnq.Pt/u.0lLX3BpakhJh7xZlDzBcpYLe7u"
+                100,
+                1000
             ]
         },
-        "last_login": {
-            "$id": "#/properties/last_login",
-            "type": "null",
-            "title": "last_login ",
-            "description": "last login",
-            "default": null,
-            "examples": [
-                null
-            ]
-        },
-        "phone": {
-            "$id": "#/properties/phone",
+        "description": {
+            "$id": "#/properties/description",
             "type": "string",
-            "title": "phone number",
-            "description": "Phone Number",
+            "title": "description",
+            "description": "last login",
             "examples": [
-                "997267270"
+                "Lorem ipsum dolor"
+            ]
+        },
+        "producer_id": {
+            "$id": "#/properties/producer_id",
+            "type": "integer",
+            "title": "producer id",
+            "description": "producer id",
+            "examples": [
+                1, 2
+            ]
+        },
+        "category_id": {
+            "$id": "#/properties/category_id",
+            "type": "integer",
+            "title": "category id",
+            "description": "category id",
+            "examples": [
+                1, 2
             ]
         },
         "image_url": {

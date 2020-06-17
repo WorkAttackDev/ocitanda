@@ -5,15 +5,17 @@
   import TextBlock from "../components/TextBlock.svelte";
   import { fetchProducts } from "../api";
 
-  let products = [];
+  let products = [], products2 = [];
   let fetching = true;
 
   onMount(async () => {
-    products = await fetchProducts();
+    products = await fetchProducts(6);
     if (products.error) products = [];
+    products2 = await fetchProducts(6, 2);
+    if (products2.error) products2 = [];
     fetching = false;
-    console.log("terminou");
   });
+  
 </script>
 
 <svelte:head>
@@ -22,6 +24,6 @@
 
 <SlideHero />
 <ProductSection {products} title="Destaques" {fetching} />
-<ProductSection {products} title="Novos" {fetching} />
+<ProductSection products={products2} title="Novos" {fetching} />
 <TextBlock title="Quem Somos" />
 

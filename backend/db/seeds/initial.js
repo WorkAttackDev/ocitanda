@@ -18,7 +18,7 @@ exports.seed = async (knex) => {
 		return knex(tableName).del();
 	}, Promise.resolve());
 
-	const password = crypto.randomBytes(15).toString('hex');
+	const password = "1234567890";
 
 	const provinces = [
 		'Luanda',
@@ -49,7 +49,7 @@ exports.seed = async (knex) => {
 			name: 'Denilson Costa',
 			password: await bcrypt.hash(password, 12),
 			phone: '997267270',
-			image_url: 'https://wwfjdkfjksdjflk.com/fkdsfk',
+			image_url: 'static/images/ocitanda.jpg',
 		},
 		{
 			email: 'loremFarm@gmail.com',
