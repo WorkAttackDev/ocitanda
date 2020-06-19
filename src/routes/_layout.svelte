@@ -10,7 +10,11 @@
 
   onMount(() => {
     const authInfo = JSON.parse(localStorage.getItem("user"));
-    if (authInfo) user.login(authInfo);
+    console.log(authInfo);
+    
+    if (authInfo && new Date(authInfo.expiryDate) > new Date()){
+      user.login(authInfo);
+    } 
   });
 
   const { preloading } = stores();

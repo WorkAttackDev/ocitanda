@@ -15,6 +15,7 @@
 
   const toogleShowList = () => (showlist = !showlist);
   const onSelectItem = (item = "") => {
+    if (selected === item) return;
     selected = item;
     dispatch("selectitem", item);
   };
@@ -37,7 +38,6 @@
   <div
     class="relative flex py-1 px-2 bg-ocitanda-beige"
     tabindex="0"
-    on:blur={() => (showlist = false)}
     role="select">
     <span class="w-full flex justify-between item-center cursor-pointer">
       <p
@@ -50,11 +50,13 @@
     {#if showlist}
       <ul
         tabindex="0"
+        autofocus
+        on:blur={() => (showlist = false)}
         transition:slide
         class="absolute z-30 left-0 flex flex-col w-full bg-ocitanda-beige">
         {#each items as item}
           <li
-            on:click={() => onSelectItem(item)}
+            on:click|preventDefault={() => onSelectItem(item)}
             class="p-2 border-b-2 border-gray-200 cursor-pointer"
             class:active={item === selected}>
             {item}

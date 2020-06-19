@@ -3,6 +3,7 @@ const { body, query } = require("express-validator");
 
 const { handleValidationError, isId } = require("../validations");
 const Product = require("./model");
+const Category = require("../categories/model");
 
 const productValidation = [
   body(["name", "description"]).isString().not().isEmpty(),
@@ -29,12 +30,38 @@ router.get("/", async (req, res, next) => {
     !isNaN(req.query.limit) && req.query.limit > 2 ? req.query.limit : 10;
   const page =
     !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+  const order =
+    !isNaN(req.query.order) && req.query.order > 0 && req.query.order <= 4
+      ? req.query.order
+      : 1;
 
+  const orderTable = {
+    1: { col: "name", dir: "asc" },
+    2: { col: "name", dir: "desc" },
+    3: { col: "price", dir: "asc" },
+    4: { col: "price", dir: "desc" },
+  };
   try {
-    const products = await Product.query()
-      .offset(page * limit)
-      .limit(limit);
-    res.json(products);
+    const category = !(req.query.category.toLowerCase() === "todos")
+      ? await Category.query().where({ name: req.query.category }).first()
+      : null;
+
+    let products;
+
+    if (category) {
+      products = await Product.query()
+        .where("category_id", category.id)
+        .offset(page * limit)
+        .limit(limit)
+        .orderBy(orderTable[order].col, orderTable[order].dir);
+      res.json(products);
+    } else {
+      products = await Product.query()
+        .offset(page * limit)
+        .limit(limit)
+        .orderBy(orderTable[order].col, orderTable[order].dir);
+      res.json(products);
+    }
   } catch (err) {
     next(err);
   }

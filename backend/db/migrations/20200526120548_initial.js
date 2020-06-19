@@ -46,27 +46,30 @@ exports.up = async (knex) => {
       addDefaultColumns(table);
     }),
   ]);
-
+  
   await knex.schema.createTable(tableNames.address, (table) => {
     table.increments().notNullable();
     table.string("location", 60).notNullable();
     references(table, tableNames.province);
     references(table, tableNames.user);
+    addDefaultColumns(table);
   });
-
+  
   await knex.schema.createTable(tableNames.consumer, (table) => {
     table.increments().notNullable();
     table.dateTime("birth_date").notNullable();
     table.enu("gender", ["M", "F", "O"]).notNullable();
     references(table, tableNames.user);
+    addDefaultColumns(table);
   });
-
+  
   await knex.schema.createTable(tableNames.producer, (table) => {
     table.increments().notNullable();
     table.string("owner", 50).notNullable();
     references(table, tableNames.user);
+    addDefaultColumns(table);
   });
-
+  
   await knex.schema.createTable(tableNames.product, (table) => {
     table.increments().notNullable();
     table.string("name").notNullable();
@@ -76,21 +79,23 @@ exports.up = async (knex) => {
     table.string("image_url", 200).notNullable();
     references(table, tableNames.producer);
     references(table, tableNames.category);
+    addDefaultColumns(table);
   });
-
+  
   await knex.schema.createTable(tableNames.purchase, (table) => {
     table.increments().notNullable();
     table.date("purchase_date").notNullable();
     table.integer("quantity").notNullable();
     references(table, tableNames.consumer);
     references(table, tableNames.product);
+    addDefaultColumns(table);
   });
-
+  
   await knex.schema.createTable(tableNames.cart_item, (table) => {
     table.increments().notNullable();
-    table.integer("count").notNullable();
     references(table, tableNames.consumer);
     references(table, tableNames.product);
+    addDefaultColumns(table);
   });
 };
 

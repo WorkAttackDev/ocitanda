@@ -1,5 +1,5 @@
 <script>
-	import { user } from './../stores/user.js';
+  import { user } from "./../stores/user.js";
   import { onMount } from "svelte";
   import ProductSection from "../components/ProductSection.svelte";
   import PriceBox from "../components/cart/PriceBox.svelte";
@@ -11,11 +11,19 @@
   let fetching = true;
   $: total = products.reduce((prev, curr) => prev + curr.price, 0);
 
+  $: fetchBlock($user.token);
+
   onMount(async () => {
-    products = await fetchUserCartItems(1, $user.token);
-    if(products.error) products = [];
-    fetching = false;
+    await fetchBlock($user.token);
   });
+
+  async function fetchBlock(token) {
+    if(!token) return fetching = false;
+    fetching = true;
+    products = await fetchUserCartItems(1, token);
+    if (products.error) products = [];
+    fetching = false;
+  }
 </script>
 
 <ProductSection title="Meus Produtos" {products} {fetching} />

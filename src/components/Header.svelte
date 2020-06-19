@@ -45,12 +45,14 @@
     </h1>
     <ul class="hidden uppercase text-sm lg:flex md:mr-auto">
       {#each links as { name, href }}
-        <li class="mx-4 hover:text-ocitanda-khaki" class:active={href === '/'}>
+        <li class="mx-4 hover:text-ocitanda-khaki" class:active={href === $page.path}>
           <a {href}>{name}</a>
         </li>
       {/each}
     </ul>
-    <UserAvatar dropDownMode />
+    {#if $page.path !== '/consumer'}
+      <UserAvatar dropDownMode />
+    {/if}
     <CartMajorMonotone
       on:click={onGotoCart}
       class="w-4 fill-current ml-auto mr-8 md:w-5" />

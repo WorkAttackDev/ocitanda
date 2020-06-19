@@ -2,18 +2,20 @@ const router = require("express").Router();
 
 const tableNames = require("../../constants/tableNames");
 const { findAll } = require("../globalQueries");
-const { getByUserId } = require("./queries");
 const { isAuth } = require("../../middleware");
+const Cart = require("./model");
 
-router.get("/", isAuth, async (req, res) => {
+router.use(isAuth);
+
+router.get("/", async (req, res) => {
   const cartItem = await findAll(tableNames.cart_item);
   res.json(cartItem);
 });
 
-router.get("/:userId", isAuth, async (req, res, next) => {
-  const { userId } = req.params;
+router.get("/:consumerId", async (req, res, next) => {
+  const { consumerId } = req.params;
   try {
-    const cartItems = await getByUserId(userId);
+    const cartItems = await Cart.query().where({consumer_id: consumerId}).withGraphFetched("product");
     res.json(cartItems);
   } catch (error) {
     next(error);

@@ -224,7 +224,7 @@ module.exports = [
     "Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
     "static/images/products/guava.jpg",
     1,
-    1
+    2
   ),
   Product(
     "Caranguejo",
@@ -233,7 +233,7 @@ module.exports = [
     "Nacional. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed, voluptatem molestiae? Quia repudiandae ullam ipsa id error molestias sunt, pariatur repellendus eius, dicta maxime ad eaque! Enim iusto sequi laboriosam.",
     "static/images/products/caranguejo.jpg",
     1,
-    1
+    3
   ),
   Product(
     "Camarão",

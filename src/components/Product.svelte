@@ -33,7 +33,7 @@
 <article class={'prod-w shadow-sm' + ' ' + className}>
   <img
     on:click={() => dispatch('open')}
-    class="w-full h-56 object-cover"
+    class="w-full h-56 object-cover cursor-pointer"
     src={product.img}
     alt={product.name} />
   <div class="flex flex-col p-4 bg-ocitanda-beige">

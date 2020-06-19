@@ -13,14 +13,20 @@
   let errorMsg = "";
   let loading = false;
 
+    $: isLogin($user.isAuth);
+
   const errors = {
     "network problem": "Problema na conexão.",
     "validation error": "Erro de validação.",
   };
-
+  
   onMount(async () => {
     if ($user.isAuth) await goto("/");
   });
+
+  const isLogin = async (isAuth) => {
+      if (isAuth) await goto("/");
+  }
 
   const onLogin = async ({ detail }) => {
     loading = true;
