@@ -10,25 +10,20 @@
 
   onMount(() => {
     const authInfo = JSON.parse(localStorage.getItem("user"));
-    console.log(authInfo);
-    
-    if (authInfo && new Date(authInfo.expiryDate) > new Date()){
+
+    if (authInfo && new Date(authInfo.expiryDate) > new Date()) {
       user.login(authInfo);
-    } 
+    }
   });
 
   const { preloading } = stores();
   const ready = true;
 </script>
 
-<style>
-
-</style>
-
 {#if ready}
   <Header />
   <main
-    class="flex container flex-col max-w-screen-xl mx-auto pt-12 md:pt-16 pb-10">
+    class="flex container flex-col max-w-screen-xl mx-auto pt-12 md:pt-16 pb-10 ">
     <slot />
   </main>
   <Footer />

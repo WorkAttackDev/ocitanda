@@ -10,10 +10,7 @@
   let timeoutId,
     allowResolve = true;
 
-  $: console.log(allowResolve);
-
   if (waitToResolve > 500 && !timeoutId) {
-    console.log("enter");
     allowResolve = false;
     timeoutId = setTimeout(() => {
       allowResolve = true;

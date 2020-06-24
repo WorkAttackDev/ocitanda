@@ -31,7 +31,6 @@
   const onLogin = async ({ detail }) => {
     loading = true;
     const res = await signin(detail);
-    console.log(res);
     if (res.error) {
       loading = false;
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);

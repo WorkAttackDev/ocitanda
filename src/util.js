@@ -1,9 +1,9 @@
-import { serverImages } from "./api";
+import { api} from "./api";
 
 export const login = (data, userStore) => {
   const remainMilliseconds = 60 * 60 * 2000;
   const expiryDate = new Date(new Date().getTime() + remainMilliseconds);
-  data.consumer.user.image_url = serverImages + data.consumer.user.image_url;
+  data.consumer.user.image_url = api + data.consumer.user.image_url;
   const authInfo = {
     token: data.token,
     consumer: data.consumer,

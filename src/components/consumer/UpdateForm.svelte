@@ -28,7 +28,6 @@
 
   const onSubmitForm = () => {
     if (valid) {
-      console.log("valid: ", valid);
       readyToUpdate = true;
     }
   };

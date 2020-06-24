@@ -5,5 +5,5 @@ export const links = [
 	Link("Carrinho", "/cart"),
 	Link("Fornecedor", "#"),
 	Link("Nutrição", "#"),
-	Link("Sobre", "#"),
+	Link("Sobre", "/about"),
 ];

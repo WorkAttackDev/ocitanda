@@ -20,7 +20,6 @@ import LoadingOverlay from "./../components/LoadingOverlay.svelte";
 
         return errorMsg = res.msg;
       } 
-      console.log(res.data.message);
       success = true;
     loading = false;
     }

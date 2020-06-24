@@ -4,7 +4,6 @@
   import InstagramIcon from "./InstagramIcon.svelte";
   import Button from "./Button.svelte";
   import { ArrowUpMinor } from "svelte-polaris-icons";
-
 </script>
 
 <style>
@@ -14,7 +13,9 @@
 </style>
 
 <footer class="relative p-4 mt-auto">
-<Button  scrollTop on:click={()=> window.scrollTo(0,0)}><ArrowUpMinor class="w-5 fill-current" /></Button>
+  <Button scrollTop on:click={() => window.scrollTo(0, 0)}>
+    <ArrowUpMinor class="w-5 fill-current" />
+  </Button>
   <section
     class="container mx-auto mb-8 mt-4 md:flex md:items-center md:justify-around">
     <div class="flex justify-center mb-8 md:mb-0">

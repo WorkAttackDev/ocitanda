@@ -35,7 +35,6 @@
     wantDelete = false;
     loading = true;
     const res = await deleteConsumer($user.consumer.id, $user.token);
-    console.log(res);
     if (res.error) {
       loading = false;
       return (errorMsg = "Erro ao Eliminar a sua conta!");
