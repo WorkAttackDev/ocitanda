@@ -1,7 +1,6 @@
 <script context="module">
-  import NotificationError from "./../../components/NotificationError.svelte";
+  import Notification from "./../../components/Notification.svelte";
   import { resetPassword } from "./../../api.js";
-  import NotificationSuccess from "./../../components/NotificationSuccess.svelte";
   import { goto } from "@sapper/app";
   import { verifyResetToken } from "../../api";
   export async function preload(page) {
@@ -33,9 +32,9 @@
     vNotEmpty.validator(verifPassword.trim()) &&
     password === verifPassword;
 
-  const isEqualPassword = otherValue => ({
+  const isEqualPassword = (otherValue) => ({
     errorMsg: "Palavra-Passes diferentes",
-    validator: value => value === otherValue
+    validator: (value) => value === otherValue,
   });
 
   const onResetPassword = async () => {
@@ -62,7 +61,7 @@
       value={password}
       disabled
       validators={[vNotEmpty, vLength(8)]}
-      on:validated={e => (password = e.detail)} />
+      on:validated={(e) => (password = e.detail)} />
     <InputText
       className="mb-4"
       type="password"
@@ -70,20 +69,23 @@
       value={verifPassword}
       disabled
       validators={[vNotEmpty, vLength(8), isEqualPassword(password)]}
-      on:validated={e => (verifPassword = e.detail)} />
+      on:validated={(e) => (verifPassword = e.detail)} />
     <Button disabled={!valid}>Atualizar Palavra-Passe</Button>
   </form>
 </section>
 
 {#if success}
-  <NotificationSuccess
+  <Notification
     title="Atualizado com Sucesso"
     msg={sucessMsg}
+    type="success"
     on:close={async () => await goto('/login')} />
 {/if}
 
-<NotificationError
-  show={errorMsg}
-  title="Erro ao Erro ao atualizar Palavra-Passe"
-  {errorMsg}
-  on:close={() => (errorMsg = '')} />
+{#if errorMsg}
+  <Notification
+    title="Erro ao Erro ao atualizar Palavra-Passe"
+    msg={errorMsg}
+    type="error"
+    on:close={() => (errorMsg = '')} />
+{/if}

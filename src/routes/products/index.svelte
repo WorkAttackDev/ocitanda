@@ -2,20 +2,13 @@
   import { fetchProducts, fetchCategories } from "../../api";
 
   export async function preload(page) {
-    const [pageNum, category, order] = page.params.data;
-
-    if (isNaN(pageNum) || typeof category !== "string")
-      throw new Error("Invalid params");
-
-    const limit = 10;
-
     let categories = ["Todos", ...(await fetchCategories())];
     if (categories.error) categories = ["Todos"];
 
-    let products = await fetchProducts(limit, pageNum, category, order);
+    let products = await fetchProducts(10, 1, "Todos", 1);
     if (products.error) products = [];
 
-    return { page: +pageNum, category, categories, products, limit, order: order || 1 };
+    return { categories, products };
   }
 </script>
 
@@ -27,7 +20,9 @@
   import Pagination from "../../components/products/Pagination.svelte";
   import Loading from "../../components/Loading.svelte";
 
-  export let categories, products, category = "Todos",
+  export let categories, products;
+
+  let category = "Todos",
     fetching = true,
     limit = 10,
     page = 1,
@@ -67,7 +62,7 @@
 {#if fetching}
   <Loading />
 {:else}
-   <ProductSection {products} vertical {fetching} />
+  <ProductSection {products} vertical {fetching} />
 {/if}
 <Pagination
   pageCount={page}

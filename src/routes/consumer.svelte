@@ -6,10 +6,10 @@
   import UserAvatar from "../components/UserAvatar.svelte";
   import ActionBox from "../components/user/ActionBox.svelte";
   import ProductSection from "../components/ProductSection.svelte";
-  import NotificationError from "../components/NotificationError.svelte";
+  import Notification from "../components/Notification.svelte";
   import Modal from "../components/Modal.svelte";
   import UpdateForm from "../components/consumer/UpdateForm.svelte";
-  import { products } from "../data/products";
+  // import { products } from "../data/products";
   import { updateConsumer, deleteConsumer } from "../api";
   import { user } from "../stores/user";
   import { login } from "../util";
@@ -26,7 +26,7 @@
       loading = false;
       return (errorMsg = "Erro ao Atualizar os seus dados!");
     }
-    login(res.data, user);
+    await login(res.data);
     loading = false;
     await goto("/", { replaceState: true });
   };
@@ -46,19 +46,20 @@
 </script>
 
 <section>
-  <UserAvatar loggedIn AvatarClassName="md:w-20 md:h-20 lg:w-32 lg:h-32
-  " />
+  <UserAvatar loggedIn AvatarClassName="md:w-20 md:h-20 lg:w-32 lg:h-32 " />
   <ActionBox
     on:edit={() => (edit = true)}
     on:delete={() => (wantDelete = true)} />
-  <ProductSection title="Histórico de Compra" products={products.slice(1, 6)} />
+  <ProductSection title="Histórico de Compra" products={[]} />
 </section>
 
-<NotificationError
-  on:close={() => (errorMsg = '')}
-  title="Erro ao carregar dados"
-  {errorMsg}
-  show={errorMsg} />
+{#if errorMsg}
+  <Notification
+    on:close={() => (errorMsg = '')}
+    title="Erro ao carregar dados"
+    type="error"
+    msg={errorMsg} />
+{/if}
 
 {#if edit}
   <Modal on:close={() => (edit = false)}>

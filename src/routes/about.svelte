@@ -26,7 +26,7 @@
   ];
 </script>
 
-<section class="flex flex-col">
+<section class="flex flex-col overflow-x-hidden">
   <PageHeader />
   <AboutInfo />
   <article class="flex flex-col justify-center items-center md:flex-row">

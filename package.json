@@ -5,7 +5,6 @@
 	"homepage": "https://www.ocitanda.com",
 	"scripts": {
 		"build:css": "postcss static/tailwind.css -o static/main.css",
-		"watch:css": "postcss static/tailwind.css -o static/main.css",
 		"dev": "sapper dev",
 		"build": "npm run build:css && sapper build --legacy",
 		"export": "sapper export --legacy",

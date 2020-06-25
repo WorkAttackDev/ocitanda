@@ -26,10 +26,12 @@
       phone,
       gender: gender[0],
       password,
-      imageUrl: "/ocitanda.jpg"
+      imageUrl: "/ocitanda.jpg",
     };
     if (
-      Object.values(user).every(_field => vNotEmpty.validator(_field) === true)
+      Object.values(user).every(
+        (_field) => vNotEmpty.validator(_field) === true
+      )
     )
       dispatch("create", user);
   };
@@ -37,17 +39,19 @@
   const onLogin = () => {
     const user = {
       email,
-      password
+      password,
     };
     if (
-      Object.values(user).every(_field => vNotEmpty.validator(_field) === true)
+      Object.values(user).every(
+        (_field) => vNotEmpty.validator(_field) === true
+      )
     )
       dispatch("login", user);
   };
 
-  const isEqualPassword = otherValue => ({
+  const isEqualPassword = (otherValue) => ({
     errorMsg: "Palavra-Passes diferentes",
-    validator: value => value === otherValue
+    validator: (value) => value === otherValue,
   });
 </script>
 
@@ -61,21 +65,21 @@
       value={name}
       disabled
       validators={[vNotEmpty, vAlpha]}
-      on:validated={e => (name = e.detail)} />
+      on:validated={(e) => (name = e.detail)} />
     <InputText
       className="mb-4"
       placeholder="Sobrenome"
       value={surname}
       disabled
       validators={[vNotEmpty, vAlpha]}
-      on:validated={e => (surname = e.detail)} />
+      on:validated={(e) => (surname = e.detail)} />
     <InputText
       className="mb-4"
       placeholder="Email"
       value={email}
       disabled
       validators={[vNotEmpty, vEmail]}
-      on:validated={e => (email = e.detail)} />
+      on:validated={(e) => (email = e.detail)} />
     <InputText
       className="mb-4"
       placeholder="Data de Nascimento"
@@ -83,7 +87,7 @@
       value={birthDate}
       disabled
       validators={[vNotEmpty]}
-      on:validated={e => (birthDate = e.detail)} />
+      on:validated={(e) => (birthDate = e.detail)} />
     <InputText
       className="mb-4"
       placeholder="Número de Telefone"
@@ -91,12 +95,12 @@
       type="phone"
       value={phone}
       validators={[vNotEmpty]}
-      on:validated={e => (phone = e.detail)} />
+      on:validated={(e) => (phone = e.detail)} />
     <SelectDropdown
       className="justify-between"
       label="Género"
       items={['Masculino', 'Femenino', 'Outro']}
-      on:selectitem={e => (gender = e.detail)} />
+      on:selectitem={(e) => (gender = e.detail)} />
     <InputText
       className="mb-4"
       type="password"
@@ -104,7 +108,7 @@
       value={password}
       disabled
       validators={[vNotEmpty, vLength(8)]}
-      on:validated={e => (password = e.detail)} />
+      on:validated={(e) => (password = e.detail)} />
     <InputText
       className="mb-4"
       type="password"
@@ -112,7 +116,7 @@
       value={verifPassword}
       disabled
       validators={[vNotEmpty, vLength(8), isEqualPassword(password)]}
-      on:validated={e => (verifPassword = e.detail)} />
+      on:validated={(e) => (verifPassword = e.detail)} />
     <Button>Criar Conta</Button>
   </form>
 {:else}
@@ -123,7 +127,7 @@
       placeholder="Email"
       disabled
       validators={[vNotEmpty, vEmail]}
-      on:validated={e => (email = e.detail)} />
+      on:validated={(e) => (email = e.detail)} />
     <InputText
       value={password}
       className="mb-4"
@@ -131,7 +135,7 @@
       placeholder="Palavra-Passe"
       disabled
       validators={[vNotEmpty, vLength(8)]}
-      on:validated={e => (password = e.detail)} />
+      on:validated={(e) => (password = e.detail)} />
     <Button>Iniciar Sessão</Button>
   </form>
 {/if}

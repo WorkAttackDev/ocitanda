@@ -3,11 +3,11 @@
   import { SelectMinor } from "svelte-polaris-icons";
   import { slide } from "svelte/transition";
 
-  export let items = [""];
-  export let label = "Lorem";
-  export let className = "";
-  export let labelClassName = "";
-  export let selected = items[0];
+  export let items = [""],
+    label = "Lorem",
+    className = "",
+    labelClassName = "",
+  anchor = false, selected = items[0];
 
   const dispatch = createEventDispatcher();
 
@@ -54,14 +54,24 @@
         on:blur={() => (showlist = false)}
         transition:slide
         class="absolute z-30 left-0 flex flex-col w-full bg-ocitanda-beige">
-        {#each items as item}
-          <li
-            on:click|preventDefault={() => onSelectItem(item)}
-            class="p-2 border-b-2 border-gray-200 cursor-pointer"
-            class:active={item === selected}>
-            {item}
-          </li>
-        {/each}
+        {#if !anchor}
+          {#each items as item}
+            <li
+              on:click|preventDefault={() => onSelectItem(item)}
+              class="p-2 border-b-2 border-gray-200 cursor-pointer"
+              class:active={item === selected}>
+              {item}
+            </li>
+          {/each}
+        {:else}
+          {#each items as item}
+            <li
+              class="border-b-2 border-gray-200 cursor-pointer p-0"
+              class:active={item === selected}>
+              <a class="p-2" href={item.href}>{item.text}</a>
+            </li>
+          {/each}
+        {/if}
       </ul>
     {/if}
   </div>

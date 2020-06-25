@@ -18,6 +18,7 @@ export default (
 	quantity,
 	producerId,
 	price,
+	originalPrice: price,
 	name,
 	img: imageUrl,
 	desc: description,

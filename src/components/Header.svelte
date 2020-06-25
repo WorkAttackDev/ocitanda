@@ -24,6 +24,10 @@
   .active {
     @apply border-b-2 border-ocitanda-khaki;
   }
+
+  header :global(svg) {
+    @apply cursor-pointer transition duration-300;
+  }
 </style>
 
 <header
@@ -33,19 +37,24 @@
     {#if $page.path.substring(0, 9) === '/product/'}
       <ArrowLeftMinor
         on:click={() => window.history.back()}
-        class="w-6 md:w-7 md:mr-8 fill-current" />
+        class="w-6 md:w-7 md:mr-8 fill-current hover:text-ocitanda-khaki" />
     {:else}
       <MenuIcon
         on:click={() => (showSideBar = true)}
-        className="md:w-8 lg:hidden fill-current text-ocitanda-beige" />
+        className="md:w-8 lg:hidden fill-current text-ocitanda-beige
+        hover:text-ocitanda-khaki" />
     {/if}
 
-    <h1 class="font-bold uppercase ml-auto -mr-8 md:text-xl lg:ml-0 lg:mr-auto">
+    <a
+      href="/"
+      class="font-bold uppercase ml-auto -mr-8 md:text-xl lg:ml-0 lg:mr-auto">
       Ocitanda
-    </h1>
+    </a>
     <ul class="hidden uppercase text-sm lg:flex md:mr-auto">
       {#each links as { name, href }}
-        <li class="mx-4 hover:text-ocitanda-khaki" class:active={href === $page.path}>
+        <li
+          class="mx-4 hover:text-ocitanda-khaki"
+          class:active={href === $page.path}>
           <a {href}>{name}</a>
         </li>
       {/each}
@@ -55,10 +64,10 @@
     {/if}
     <CartMajorMonotone
       on:click={onGotoCart}
-      class="w-4 fill-current ml-auto mr-8 md:w-5" />
+      class="w-4 fill-current ml-auto mr-8 md:w-5 hover:text-ocitanda-khaki" />
     <SearchMajorMonotone
       on:click={() => (showSearchModal = true)}
-      class="w-4 md:w-5 fill-current" />
+      class="w-4 md:w-5 fill-current hover:text-ocitanda-khaki" />
   </nav>
 </header>
 

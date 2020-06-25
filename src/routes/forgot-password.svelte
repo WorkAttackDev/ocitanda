@@ -2,26 +2,27 @@
   import { vNotEmpty, vEmail } from "./../lib/validation.js";
   import { goto } from "@sapper/app";
   import { forgotPassword } from "../api";
-	import NotificationSuccess from './../components/NotificationSuccess.svelte';
-  import NotificationError from "./../components/NotificationError.svelte";
+  import Notification from "./../components/Notification.svelte";
   import InputText from "./../components/InputText.svelte";
   import Button from "./../components/Button.svelte";
-import LoadingOverlay from "./../components/LoadingOverlay.svelte";
+  import LoadingOverlay from "./../components/LoadingOverlay.svelte";
 
   let errorMsg = "",
-    email = "", success = false, loading = false;
+    email = "",
+    success = false,
+    loading = false;
 
   const onSendEmail = async () => {
     loading = true;
     if (vEmail.validator(email)) {
       const res = await forgotPassword(email);
-      if(res.error){
-    loading = false;
+      if (res.error) {
+        loading = false;
 
-        return errorMsg = res.msg;
-      } 
+        return (errorMsg = res.msg);
+      }
       success = true;
-    loading = false;
+      loading = false;
     }
   };
 </script>
@@ -39,23 +40,27 @@ import LoadingOverlay from "./../components/LoadingOverlay.svelte";
       placeholder="Email"
       disabled
       validators={[vNotEmpty, vEmail]}
-      on:validated={e => (email = e.detail)} />
+      on:validated={(e) => (email = e.detail)} />
     <Button>Enviar Email</Button>
   </form>
 </section>
 
-  <NotificationError show={errorMsg}
+{#if errorMsg}
+  <Notification
     title="Erro ao Recuperar Senha"
-    {errorMsg}
+    msg={errorMsg}
+    type="error"
     on:close={() => (errorMsg = '')} />
+{/if}
 
 {#if success}
-  <NotificationSuccess
+  <Notification
     title="Email enviado"
     msg="O seu email de atualização de palavra-passe, foi enviado com sucesso!"
-    on:close={()=> success = false} />
+    type="success"
+    on:close={() => (success = false)} />
 {/if}
 
 {#if loading}
-<LoadingOverlay />
+  <LoadingOverlay />
 {/if}

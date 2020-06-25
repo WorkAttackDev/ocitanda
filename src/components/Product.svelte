@@ -1,15 +1,8 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import Button from "./Button.svelte";
   import Product from "../models/Product";
-  import QuantityBox from "./QuantityBox.svelte";
 
-  export let className = "";
-  export let product = Product();
-
-  const dispatch = createEventDispatcher();
-
-  const openProduct = async (id = "") => await goto("/product/" + id);
+  export let className = "",
+    product = Product();
 </script>
 
 <style>
@@ -27,12 +20,12 @@
 
   .prod-w {
     min-width: 14rem;
+    max-width: 18rem;
   }
 </style>
 
 <article class={'prod-w shadow-sm' + ' ' + className}>
   <img
-    on:click={() => dispatch('open')}
     class="w-full h-56 object-cover cursor-pointer"
     src={product.img}
     alt={product.name} />
@@ -41,10 +34,6 @@
       {product.name}
     </h1>
     <p class="text-ocitanda-gold font-bold mb-4 self-end">{product.price} Kz</p>
-    {#if product.count}
-      <QuantityBox qty={product.count} />
-    {:else}
-      <Button>Comprar</Button>
-    {/if}
+    <slot />
   </div>
 </article>

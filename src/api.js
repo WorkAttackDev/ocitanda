@@ -2,9 +2,8 @@ import Product from "./models/Product";
 import Cart from "./models/Cart";
 import axios from "axios";
 
-export const api = "https://www.ocitanda.com/api/";
-// export const api = "http://localhost:5050/api";
-// export const serverImages = "http://localhost:5050/";
+// export const api = "https://www.ocitanda.com/api/";
+export const api = "http://localhost:5050/api/";
 
 const handleError = (err) => {
 	if (!err.response) return { error: true, msg: "Network Problem" };
@@ -76,7 +75,7 @@ export const fetchUserCartItems = async (userId, authToken) => {
 		return data.map((_d) =>
 			Cart(
 				_d.id,
-				0,
+				1,
 				_d.consumer_id,
 				_d.product_id,
 				_d.product.quantity,
@@ -139,8 +138,6 @@ export const signup = async (user) => {
 };
 
 export const updateConsumer = async (consumer) => {
-	console.log(consumer);
-
 	try {
 		let res = await axios.put(api + "auth/update", consumer);
 		return res;
@@ -150,8 +147,6 @@ export const updateConsumer = async (consumer) => {
 };
 
 export const signin = async (user) => {
-	console.log(user);
-
 	try {
 		let res = await axios.post(api + "auth/login", {
 			...user,
@@ -191,6 +186,34 @@ export const resetPassword = async (password, token) => {
 		let res = await axios.put(api + "forgot-password", {
 			password,
 			token,
+		});
+		return res;
+	} catch (err) {
+		return handleError(err);
+	}
+};
+
+export const addToCart = async (productId, consumerId, authToken) => {
+	console.log(productId, consumerId);
+	try {
+		let res = await axios.post(
+			api + "carts",
+			{
+				productId,
+				consumerId,
+			},
+			{ headers: { Authorization: "Bearer " + authToken } }
+		);
+		return res;
+	} catch (err) {
+		return handleError(err);
+	}
+};
+
+export const removeFromCart = async (cartId, authToken) => {
+	try {
+		let res = await axios.delete(api + `carts/${cartId}`, {
+			headers: { Authorization: "Bearer " + authToken },
 		});
 		return res;
 	} catch (err) {

@@ -9,9 +9,9 @@
     }
 </style>
 
-<header transition:fade class="relative flex flex-col justify-center">
+<header in:fade class="relative flex flex-col justify-center">
   <span
-    transition:fly={{ x: 500, duration: 1000 }}
+    in:fly={{ x: 500, duration: 1000 }}
     class="relative z-10 flex flex-col p-8 bg-ocitanda-green bg-opacity-50
     text-white">
     <h1 class="text-4xl font-bold">{title}</h1>

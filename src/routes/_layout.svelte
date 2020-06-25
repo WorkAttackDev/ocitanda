@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { user } from "./../stores/user.js";
+  import { cart } from "./../stores/cart";
   import { stores } from "@sapper/app";
 
   import ComingSoon from "./../components/coming/ComingSoon.svelte";
@@ -8,11 +9,13 @@
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import Footer from "../components/Footer.svelte";
 
-  onMount(() => {
+  onMount(async () => {
     const authInfo = JSON.parse(localStorage.getItem("user"));
 
     if (authInfo && new Date(authInfo.expiryDate) > new Date()) {
-      user.login(authInfo);
+      await user.login(authInfo);
+      await cart.initCart(authInfo.consumer.id, authInfo.token);
+    } else {
     }
   });
 
@@ -23,7 +26,8 @@
 {#if ready}
   <Header />
   <main
-    class="flex container flex-col max-w-screen-xl mx-auto pt-12 md:pt-16 pb-10 ">
+    class="flex container flex-col max-w-screen-xxl mx-auto pt-12 md:pt-16 pb-10
+    ">
     <slot />
   </main>
   <Footer />

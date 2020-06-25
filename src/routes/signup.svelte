@@ -4,27 +4,28 @@
   import { user } from "./../stores/user.js";
   import { login } from "../util";
   import Button from "./../components/Button.svelte";
-  import NotificationError from "../components/NotificationError.svelte";
+  import Notification from "../components/Notification.svelte";
   import AuthForm from "../components/auth/AuthForm.svelte";
   import LoadingOverlay from "./../components/LoadingOverlay.svelte";
 
-  let errorMsg = "", loading = false;;
+  let errorMsg = "",
+    loading = false;
 
   const errors = {
     "user already exists": "Já existe um usuário com este email.",
-    "validation error": "Erro de validação."
+    "validation error": "Erro de validação.",
   };
 
   const onCreateUser = async ({ detail }) => {
-     loading = true;
+    loading = true;
     const res = await signup(detail);
     if (res.error) {
-     loading = false;
+      loading = false;
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
 
-    login(res.data, user);
-     loading = false;
+    await login(res.data);
+    loading = false;
     await goto("/", { replaceState: true });
   };
 </script>
@@ -42,12 +43,14 @@
   </span>
 </section>
 
-<NotificationError
-  on:close={() => (errorMsg = '')}
-  {errorMsg}
-  show={errorMsg}
-  title="Erro ao criar conta" />
+{#if errorMsg}
+  <Notification
+    on:close={() => (errorMsg = '')}
+    msg={errorMsg}
+    type="error"
+    title="Erro ao criar conta" />
+{/if}
 
 {#if loading}
-<LoadingOverlay />
+  <LoadingOverlay />
 {/if}

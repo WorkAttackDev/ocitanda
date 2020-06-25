@@ -1,15 +1,14 @@
 <script>
+import {createEventDispatcher} from "svelte";
   import { goto } from "@sapper/app";
   import SelectDropdown from "../SelectDropdown.svelte";
   import Button from "../Button.svelte";
   import QuantityBox from "../QuantityBox.svelte";
   import Product from "../../models/Product";
 
-  export let product = Product();
-  export let className = "";
+  export let product = Product(), className = "", isOnCart;
 
-  const qty = [1, 2, 3, 4, 5, 6];
-  let selectedQty = 1;
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -27,10 +26,16 @@
   </h3>
   <p class="mb-4">{product.desc}</p>
   <span class="flex flex-col">
-    <p class="text-2xl font-bold text-ocitanda-gold">{product.price} Kz</p>
-    <QuantityBox qty={product.count || 1} />
+    <p class="text-2xl font-bold text-ocitanda-gold mb-4">{product.price} Kz</p>
+    <!-- <QuantityBox qty={product.count || 1} /> -->
   </span>
-  <Button on:click={async () => await goto('/cart')} className="mt-4">
+  {#if isOnCart}
+  <Button href="/cart">
+    Ir ao Carrinho
+  </Button>
+  {:else}
+  <Button on:click={()=> dispatch("add")} className="mt-4">
     Adicionar ao Carrinho
   </Button>
+  {/if}
 </article>

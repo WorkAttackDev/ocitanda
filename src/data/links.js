@@ -1,9 +1,9 @@
 import Link from "../models/Link";
 export const links = [
 	Link("Início", "/"),
-	Link("Produtos", `products/1/Todos`),
+	Link("Produtos", `/products`),
 	Link("Carrinho", "/cart"),
-	Link("Fornecedor", "#"),
-	Link("Nutrição", "#"),
+	Link("Fornecedor", "/producer"),
+	// Link("Nutrição", "#"),
 	Link("Sobre", "/about"),
 ];

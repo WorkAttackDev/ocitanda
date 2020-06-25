@@ -1,7 +1,13 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+  import { PaymentsMajorMonotone } from "svelte-polaris-icons";
+  import Button from "../Button.svelte";
+
   export let total = 0,
     tax = 0,
     Subtotal = 0;
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <article
@@ -19,4 +25,8 @@
     <p class="font-bold md:mr-8 text-lg">Total:</p>
     <p class="text-lg">{total} Kz</p>
   </span>
+  <Button on:click={() => dispatch('checkout')}>
+    <PaymentsMajorMonotone class="fill-current w-4 mr-2" />
+    finalizar compra
+  </Button>
 </article>

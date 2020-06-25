@@ -1,7 +1,8 @@
 <script>
-  export let className = "";
-  export let disabled = false;
-  export let scrollTop = false;
+  export let className = "",
+    disabled = false,
+    scrollTop = false,
+    href = "";
 </script>
 
 <style>
@@ -10,15 +11,26 @@
     top: -1rem;
     right: 1rem;
   }
-  button:disabled {
-    @apply bg-gray-400 text-gray-600 cursor-not-allowed;
+  button:disabled,
+  .disabled {
+    @apply bg-gray-400 text-gray-600 cursor-not-allowed pointer-events-none;
   }
 </style>
 
-<button
-  {disabled}
-  on:click
-  class:scrollTop
-  class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green ' + className}>
-  <slot>lorem ipum</slot>
-</button>
+{#if !href}
+  <button
+    {disabled}
+    on:click
+    class:scrollTop
+    class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow' + className}>
+    <slot>lorem ipum</slot>
+  </button>
+{:else}
+  <a
+    rel="prefetch"
+    class:disabled
+    href={disabled ? '' : href}
+    class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green ' + className}>
+    <slot>lorem ipum</slot>
+  </a>
+{/if}

@@ -1,30 +1,47 @@
 <script>
+  import { goto } from "@sapper/app";
+  import { cart } from "./../stores/cart.js";
   import { user } from "./../stores/user.js";
   import { onMount } from "svelte";
-  import ProductSection from "../components/ProductSection.svelte";
-  import PriceBox from "../components/cart/PriceBox.svelte";
   import { fetchUserCartItems } from "../api";
+  import ProductSection from "../components/ProductSection.svelte";
+  import Notification from "../components/Notification.svelte";
+  import Button from "../components/Button.svelte";
+  import CheckoutBox from "../components/cart/CheckoutBox.svelte";
+  import Modal from "../components/Modal.svelte";
 
-  let total = 0;
-
-  let products = [];
-  let fetching = true;
-  $: total = products.reduce((prev, curr) => prev + curr.price, 0);
+  let fetching = true, wantCheckout = false;
 
   $: fetchBlock($user.token);
+  $: products = $cart.products;
+  $: total = $cart.total;
 
   onMount(async () => {
     await fetchBlock($user.token);
   });
 
   async function fetchBlock(token) {
-    if(!token) return fetching = false;
+    if (!token) return (fetching = false);
     fetching = true;
-    products = await fetchUserCartItems(1, token);
-    if (products.error) products = [];
+    cart.initCart($user.consumer.id, token);
     fetching = false;
   }
 </script>
 
 <ProductSection title="Meus Produtos" {products} {fetching} />
-<PriceBox {total} Subtotal={total} />
+<CheckoutBox on:checkout={()=> wantCheckout = true} {total} Subtotal={total} />
+
+{#if !$user.token}
+  <Notification
+    title="Informação"
+    msg="Crie uma conta, para adicionar produtos ao carrinho"
+    on:close={async () => await goto('/')}
+    buttonText="Criar Conta"
+    href="/signup" />
+{/if}
+
+{#if wantCheckout}
+  <Modal on:close={()=> wantCheckout = false}>
+    <h1>Brevemente poderá realizar pagamentos atravéz do nosso site.</h1>
+  </Modal>
+{/if}

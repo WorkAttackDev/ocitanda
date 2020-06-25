@@ -11,6 +11,7 @@ module.exports = {
 			md: "768px",
 			lg: "1024px",
 			xl: "1280px",
+			xxl: "1440px",
 		},
 		colors: {
 			transparent: "transparent",
@@ -273,6 +274,7 @@ module.exports = {
 			full: "100%",
 			...theme("spacing"),
 			screen: "100vh",
+			"11/12": "91.666667%",
 		}),
 		maxWidth: (theme, { breakpoints }) => ({
 			none: "none",

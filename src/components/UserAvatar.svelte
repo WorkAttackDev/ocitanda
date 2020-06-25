@@ -1,7 +1,9 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { goto, stores } from "@sapper/app";
   import { user } from "./../stores/user.js";
-  import { createEventDispatcher } from "svelte";
+  import { cart } from "./../stores/cart.js";
+  import { logout } from "../util";
 
   export let dropDownMode = false;
   export let AvatarClassName = "";
@@ -12,8 +14,7 @@
   const dispatch = createEventDispatcher();
 
   const onLogout = async () => {
-    localStorage.setItem("user", JSON.stringify({}));
-    user.logout();
+    await logout();
     await goto("/login", { replaceState: true });
     dispatch("close");
   };
