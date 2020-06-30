@@ -46,8 +46,8 @@
 
   <h1
     class="text-2xl font-bold w-11/12"
-    class:error={type === 'error'}
-    class:success={type === 'success'}>
+    class:error={type.toLowerCase() === 'error'}
+    class:success={type.toLowerCase() === 'success'}>
     {title}
   </h1>
   <p class="text-lg lg:text-xl">{msg}</p>

@@ -601,15 +601,9 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (min-width: 1280px) {
-  html {
-    font-size: 20px;
-  }
-}
-
 @media (min-width: 1440px) {
   html {
-    font-size: 23px;
+    font-size: 20px;
   }
 }
 

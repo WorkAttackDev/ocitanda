@@ -43,6 +43,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Ocitanda - Iniciar Sessão</title>
+</svelte:head>
+
 <section class="p-4 mx-auto xs:w-3/4 md:w-1/2">
   <h1 class="text-3xl text-center text-ocitanda-green">Ocitanda</h1>
   <p class="text-center text-ocitanda-green">

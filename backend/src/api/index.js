@@ -10,6 +10,7 @@ const purchasesRoutes = require('./purchases/routes');
 const cartsRoutes = require('./carts/routes');
 const authRoutes = require('./auth/routes');
 const forgotPasswordRoutes = require('./forgot-password/routes');
+const subscribersRoutes = require('./subscribers/routes');
 
 router.get('/', (req, res) => {
 	res.json({ message: 'API endpoint' });
@@ -25,6 +26,7 @@ router.use('/products', productsRoutes);
 router.use('/purchases', purchasesRoutes);
 router.use('/carts', cartsRoutes);
 router.use('/auth', authRoutes);
+router.use('/subscribers', subscribersRoutes);
 router.use('/forgot-password', forgotPasswordRoutes);
 
 module.exports = router;

@@ -97,6 +97,12 @@ exports.up = async (knex) => {
     references(table, tableNames.product);
     addDefaultColumns(table);
   });
+
+  await knex.schema.createTable(tableNames.subscriber, (table) => {
+    table.increments().notNullable();
+    table.string("email", 254).notNullable().unique();
+    addDefaultColumns(table);
+  });
 };
 
 /**

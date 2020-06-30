@@ -28,6 +28,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Ocitanda - Carrinho</title>
+</svelte:head>
+
 <ProductSection title="Meus Produtos" {products} {fetching} />
 <CheckoutBox on:checkout={()=> wantCheckout = true} {total} Subtotal={total} />
 

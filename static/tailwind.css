@@ -9,15 +9,9 @@ html {
 	scroll-behavior: smooth;
 }
 
-@screen xl {
-	html {
-		font-size: 20px;
-	}
-}
-
 @screen xxl {
 	html {
-		font-size: 23px;
+		font-size: 20px;
 	}
 }
 

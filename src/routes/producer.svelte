@@ -1,12 +1,32 @@
 <script>
-    import PageHeader from "../components/PageHeader.svelte";
+  import ContactBox from "../components/ContactBox.svelte";
+  import PageHeader from "../components/PageHeader.svelte";
+  import InfoSection from "../components/producer/InfoSection.svelte";
 </script>
 
 <style>
-    
+
 </style>
 
+<svelte:head>
+  <title>Ocitanda - Produtor</title>
+</svelte:head>
+
 <section class="flex flex-col overflow-hidden">
-<PageHeader title="Um meio para os fornrcedores" subTitle="Criamos laços com os nossos  fornecedores" imgSrc="/greenhouse-X1.jpg" imgAlt="greenhouse">
-</PageHeader>
+  <PageHeader
+    title="Um meio para os fornrcedores"
+    subTitle="Criamos laços com os nossos fornecedores"
+    imgSrc="/greenhouse-X1.jpg"
+    imgAlt="greenhouse" />
+
+  <InfoSection
+    title="Nossa relação com os produtores"
+    src="/agri-1.jpg"
+    alt="agriculture" />
+  <InfoSection
+    title="Desde a platação até a conheita"
+    src="/agri-2.jpg"
+    alt="agriculture" reverse />
+  
+   <ContactBox />
 </section>

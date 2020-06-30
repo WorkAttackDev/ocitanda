@@ -30,7 +30,6 @@ router.post(
 	"/",
 	[body("consumerId").isInt({ min: 1 }), body("productId").isInt({ min: 1 })],
 	async (req, res, next) => {
-		console.log(req.body.productId, req.body.consumerId);
 		handleValidationError(req, res, next);
 		const { consumerId, productId } = req.body;
 		try {

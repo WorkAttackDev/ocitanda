@@ -1,0 +1,51 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "title": "subscriber",
+    "description": "The subscriber Schrema",
+    "required": [
+        "email"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "$id": "#/properties/id",
+            "type": "integer",
+            "title": "id",
+            "description": "the subscriber id"
+        },
+        "email": {
+            "$id": "#/properties/email",
+            "type": "string",
+            "title": "email",
+            "description": "The subscriber email."
+        },
+        "created_at": {
+            "$id": "#/properties/created_at",
+            "type": "string",
+            "title": "created_at",
+            "description": "the creation date of subscriber",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "updated_at": {
+            "$id": "#/properties/updated_at",
+            "type": "string",
+            "title": "updated_at",
+            "description": "the subscriber update date",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "deleted_at": {
+            "$id": "#/properties/deleted_at",
+            "type": "string",
+            "title": "deleted_at",
+            "description": "The deleted subscriber date",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        }
+    }
+}

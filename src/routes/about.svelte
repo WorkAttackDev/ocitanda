@@ -26,6 +26,10 @@
   ];
 </script>
 
+<svelte:head>
+  <title>Ocitanda - Sobre</title>
+</svelte:head>
+
 <section class="flex flex-col overflow-x-hidden">
   <PageHeader />
   <AboutInfo />

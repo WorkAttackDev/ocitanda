@@ -3,7 +3,36 @@
   import FacebookIcon from "./FacebookIcon.svelte";
   import InstagramIcon from "./InstagramIcon.svelte";
   import Button from "./Button.svelte";
+  import isEmail from "validator/lib/isEmail";
+  import { vEmail } from "../lib/validation";
+  import { subscribeEmail } from "../api";
   import { ArrowUpMinor } from "svelte-polaris-icons";
+  import { notification } from "../stores/notification";
+  import { loading } from "../stores/loading";
+
+  let email = "";
+
+  const sendEmail = async () => {
+    if (isEmail(email)) {
+      loading.show();
+      const res = await subscribeEmail(email);
+      loading.close();
+      if (!res.error) {
+        email = "";
+        return notification.show(
+          "success",
+          "Subscrito com sucesso, verifique o seu email.",
+          "Subscrito com sucesso"
+        );
+      }
+    }
+
+    notification.show(
+      "error",
+      "Ocorreu um erro ao subscrever o seu email, tente novamente.",
+      "Error ao subscrever"
+    );
+  };
 </script>
 
 <style>
@@ -23,8 +52,20 @@
       <InstagramIcon className="w-5 md:w-6 mr-4" />
       <p class="font-bold text-ocitanda-green text-sm uppercase">@Ocitanda</p>
     </div>
-    <InputText placeholder="Subscrever Email" value="" />
+    <form on:submit|preventDefault={async () => await sendEmail()}>
+      <InputText
+        on:send={async () => await sendEmail()}
+        placeholder="Subscrever Email"
+        validators={[vEmail]}
+        value={email}
+        on:validated={(e) => (e.detail ? (email = e.detail) : null)} />
+    </form>
   </section>
+  <ul class="flex justify-center mb-4 font-semibold uppercase text-xs text-gray-600">
+    <li>
+      <a class="hover:text-ocitanda-gold" href="/cookies">política de cookies</a>
+    </li>
+  </ul>
   <section class="container mx-auto text-ocitanda-green">
     <p class="text-sm text-center">
       Copyright &copy;2020

@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-  <title>Ocitanda</title>
+  <title>Ocitanda - E-commerce</title>
 </svelte:head>
 
 <SlideHero />

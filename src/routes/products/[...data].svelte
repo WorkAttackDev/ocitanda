@@ -50,6 +50,10 @@
   ];
 </script>
 
+<svelte:head>
+  <title>Ocitanda - Produtos pagina {page}</title>
+</svelte:head>
+
 <section class="relative flex flex-wrap mb-4 pb-2 bg-ocitanda-green">
   <SelectDropdown
     labelClassName="text-ocitanda-beige"

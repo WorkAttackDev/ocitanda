@@ -10,6 +10,7 @@ this is the oficial ocitanda e-commerce
 -   [x] work on about.
 -   [x] work on add to Cart.
 -   [x] work on remove from the cart.
+-   [x] Work on subscription email.
 -   [-] whe the user exists made a button to redirect to login.
 -   [-] inprove the responsivity.
 -   [-] inprove notification component.
@@ -23,6 +24,5 @@ this is the oficial ocitanda e-commerce
 -   [] add real products.
 -   [] add admin dashboard.
 -   [] work on verify email.
--   [] Work on subscription email.
 -   [] Work on authentication with sapper.
 -   [] Work on refresh token.

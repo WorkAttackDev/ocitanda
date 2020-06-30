@@ -2,12 +2,15 @@
   import { onMount } from "svelte";
   import { user } from "./../stores/user.js";
   import { cart } from "./../stores/cart";
+  import { notification } from "./../stores/notification";
+  import { loading } from "./../stores/loading";
   import { stores } from "@sapper/app";
 
   import ComingSoon from "./../components/coming/ComingSoon.svelte";
   import Header from "../components/Header.svelte";
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import Footer from "../components/Footer.svelte";
+  import Notification from "../components/Notification.svelte";
 
   onMount(async () => {
     const authInfo = JSON.parse(localStorage.getItem("user"));
@@ -35,6 +38,14 @@
   <ComingSoon />
 {/if}
 
-{#if $preloading}
+{#if $preloading || $loading}
   <LoadingOverlay />
+{/if}
+
+{#if $notification.msg}
+  <Notification
+    title={$notification.title}
+    msg={$notification.msg}
+    type={$notification.type}
+    on:close={() => notification.close()} />
 {/if}

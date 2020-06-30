@@ -58,7 +58,7 @@
         {#if typeSearch}
           <SearchMajorMonotone class="w-4 text-gray-500 fill-current" />
         {:else}
-          <ArrowRightMinor class="w-4 text-gray-500 fill-current" />
+          <ArrowRightMinor on:click={()=> dispatch("send")} class="w-4 text-gray-500 fill-current" />
         {/if}
       </slot>
     </button>

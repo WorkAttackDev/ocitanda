@@ -45,6 +45,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Ocitanda - {$user.consumer.name}</title>
+</svelte:head>
+
 <section>
   <UserAvatar loggedIn AvatarClassName="md:w-20 md:h-20 lg:w-32 lg:h-32 " />
   <ActionBox

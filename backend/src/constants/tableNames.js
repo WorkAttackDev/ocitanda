@@ -8,4 +8,5 @@ module.exports = {
 	category: "category",
 	purchase: "purchase",
 	cart_item: "cart_item",
+	subscriber: "subscriber",
 };
