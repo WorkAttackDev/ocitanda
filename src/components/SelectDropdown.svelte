@@ -7,7 +7,8 @@
     label = "Lorem",
     className = "",
     labelClassName = "",
-  anchor = false, selected = items[0];
+    anchor = false,
+    selected = items[0];
 
   const dispatch = createEventDispatcher();
 
@@ -36,21 +37,17 @@
     {label}
   </p>
   <div
+    on:click={toogleShowList}
     class="relative flex py-1 px-2 bg-ocitanda-beige"
     tabindex="0"
     role="select">
     <span class="w-full flex justify-between item-center cursor-pointer">
-      <p
-        on:click={toogleShowList}
-        class="mr-4 whitespace-no-wrap text-ocitanda-green">
-        {selected}
-      </p>
-      <SelectMinor on:click={toogleShowList} class="w-5" />
+      <p class="mr-4 whitespace-no-wrap text-ocitanda-green">{selected}</p>
+      <SelectMinor class="w-5" />
     </span>
     {#if showlist}
       <ul
         tabindex="0"
-        autofocus
         on:blur={() => (showlist = false)}
         transition:slide
         class="absolute z-30 left-0 flex flex-col w-full bg-ocitanda-beige">
@@ -66,9 +63,9 @@
         {:else}
           {#each items as item}
             <li
-              class="border-b-2 border-gray-200 cursor-pointer p-0"
+              class="border-b-2 border-gray-200 cursor-pointer p-0 w-full"
               class:active={item === selected}>
-              <a class="p-2" href={item.href}>{item.text}</a>
+              <a class="p-2 w-full block" href={item.href}>{item.text}</a>
             </li>
           {/each}
         {/if}

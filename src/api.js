@@ -3,7 +3,15 @@ import Cart from "./models/Cart";
 import axios from "axios";
 
 // export const api = "https://www.ocitanda.com/api/";
-export const api = "http://localhost:5050/api/";
+export const site =
+  process.env.NODE_ENV !== "development"
+    ? "https://www.ocitanda.com/"
+    : "http://localhost:3000/";
+
+export const api =
+  process.env.NODE_ENV !== "development"
+    ? "https://www.ocitanda.com/api/"
+    : "http://localhost:5050/api/";
 
 const handleError = (err) => {
   if (!err.response) return { error: true, msg: "Network Problem" };
@@ -14,6 +22,12 @@ const handleError = (err) => {
   };
 };
 
+const axiosInstance = axios.create({
+  baseURL: api,
+  timeout: 3000,
+  // headers: {'X-Custom-Header': 'foobar'}
+});
+
 export const fetchProducts = async (
   limit = 10,
   page = 1,
@@ -21,7 +35,7 @@ export const fetchProducts = async (
   order = 1
 ) => {
   try {
-    let res = await axios.get(api + "products", {
+    let res = await axiosInstance.get("products", {
       params: {
         limit,
         page,
@@ -34,14 +48,25 @@ export const fetchProducts = async (
         Product(id, name, description, price, "Ocitanda", api + image_url)
     );
   } catch (error) {
-    console.log(error, error.response);
+    return handleError(error);
+  }
+};
+
+export const fetchProductsBySlug = async (slug) => {
+  try {
+    let res = await axiosInstance.get("products/search/" + slug);
+    return res.data.map(
+      ({ name, id, quantity, price, image_url, description }) =>
+        Product(id, name, description, price, "Ocitanda", api + image_url)
+    );
+  } catch (error) {
     return handleError(error);
   }
 };
 
 export const fetchProductById = async (id) => {
   try {
-    const res = await axios.get(api + "products/" + id);
+    const res = await axiosInstance.get("products/" + id);
     const data = res.data;
 
     const product = Product(
@@ -61,7 +86,7 @@ export const fetchProductById = async (id) => {
 
 export const fetchUserCartItems = async (userId, authToken) => {
   try {
-    let res = await axios.get(api + "carts/" + userId, {
+    let res = await axiosInstance.get("carts/" + userId, {
       headers: { Authorization: "Bearer " + authToken },
     });
     let data = res.data;
@@ -87,7 +112,7 @@ export const fetchUserCartItems = async (userId, authToken) => {
 
 export const fetchCategories = async () => {
   try {
-    let res = await axios.get(api + "categories");
+    let res = await axiosInstance.get("categories");
     let data = res.data;
     return data.map(({ name }) => name);
   } catch (error) {
@@ -97,7 +122,7 @@ export const fetchCategories = async () => {
 
 export const getConsumer = async (userId, authToken) => {
   try {
-    let res = await axios.get(api + `/consumers/${userId}`, {
+    let res = await axiosInstance.get(`/consumers/${userId}`, {
       headers: { Authorization: "Bearer " + authToken },
     });
     return res;
@@ -106,11 +131,18 @@ export const getConsumer = async (userId, authToken) => {
   }
 };
 
-export const deleteConsumer = async (userId, authToken) => {
+export const getConsumerbyEmail = async (email) => {
   try {
-    let res = await axios.delete(api + `consumers/${userId}`, {
-      headers: { Authorization: "Bearer " + authToken },
-    });
+    let res = await axiosInstance.get(`/consumers/email/${email}`);
+    return res;
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const deleteConsumer = async (userId) => {
+  try {
+    let res = await axiosInstance.delete(`consumers/${userId}`);
     return res;
   } catch (error) {
     return handleError(error);
@@ -121,7 +153,7 @@ export const signup = async (user) => {
   console.log(user);
 
   try {
-    let res = await axios.post(api + "auth/signup", {
+    let res = await axiosInstance.post("auth/signup", {
       ...user,
     });
     return res;
@@ -132,7 +164,7 @@ export const signup = async (user) => {
 
 export const updateConsumer = async (consumer) => {
   try {
-    let res = await axios.put(api + "auth/update", consumer);
+    let res = await axiosInstance.put("auth/update", consumer);
     return res;
   } catch (err) {
     return handleError(err);
@@ -141,8 +173,42 @@ export const updateConsumer = async (consumer) => {
 
 export const signin = async (user) => {
   try {
-    let res = await axios.post(api + "auth/login", {
+    let res = await axiosInstance.post("auth/login", {
       ...user,
+    });
+    return res;
+  } catch (err) {
+    return handleError(err);
+  }
+};
+
+export const googleSignin = async () => {
+  try {
+    let res = await axiosInstance.get("auth/google");
+    return res;
+  } catch (err) {
+    console.log(err);
+    return handleError(err);
+  }
+};
+
+export const sendVerifyEmail = async (email) => {
+  try {
+    let res = await axiosInstance.post("verify-email", {
+      email,
+    });
+    return res;
+  } catch (err) {
+    return handleError(err);
+  }
+};
+
+export const verifyEmail = async (token) => {
+  try {
+    let res = await axiosInstance.get("verify-email", {
+      params: {
+        token,
+      },
     });
     return res;
   } catch (err) {
@@ -152,7 +218,7 @@ export const signin = async (user) => {
 
 export const forgotPassword = async (email) => {
   try {
-    let res = await axios.post(api + "forgot-password", {
+    let res = await axiosInstance.post("forgot-password", {
       email,
     });
     return res;
@@ -163,7 +229,7 @@ export const forgotPassword = async (email) => {
 
 export const verifyResetToken = async (token) => {
   try {
-    let res = await axios.get(api + "forgot-password", {
+    let res = await axiosInstance.get("forgot-password", {
       params: {
         token,
       },
@@ -176,7 +242,7 @@ export const verifyResetToken = async (token) => {
 
 export const resetPassword = async (password, token) => {
   try {
-    let res = await axios.put(api + "forgot-password", {
+    let res = await axiosInstance.put("forgot-password", {
       password,
       token,
     });
@@ -186,28 +252,21 @@ export const resetPassword = async (password, token) => {
   }
 };
 
-export const addToCart = async (productId, consumerId, authToken) => {
-  console.log(productId, consumerId);
+export const addToCart = async (productId, consumerId) => {
   try {
-    let res = await axios.post(
-      api + "carts",
-      {
-        productId,
-        consumerId,
-      },
-      { headers: { Authorization: "Bearer " + authToken } }
-    );
+    let res = await axiosInstance.post("carts", {
+      productId,
+      consumerId,
+    });
     return res;
   } catch (err) {
     return handleError(err);
   }
 };
 
-export const removeFromCart = async (cartId, authToken) => {
+export const removeFromCart = async (cartId) => {
   try {
-    let res = await axios.delete(api + `carts/${cartId}`, {
-      headers: { Authorization: "Bearer " + authToken },
-    });
+    let res = await axiosInstance.delete(`carts/${cartId}`);
     return res;
   } catch (err) {
     return handleError(err);
@@ -216,7 +275,7 @@ export const removeFromCart = async (cartId, authToken) => {
 
 export const subscribeEmail = async (email) => {
   try {
-    let res = await axios.post(api + `subscribers`, {
+    let res = await axiosInstance.post(`subscribers`, {
       email,
     });
     return res;

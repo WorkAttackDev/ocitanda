@@ -9,4 +9,5 @@ module.exports = {
 	purchase: "purchase",
 	cart_item: "cart_item",
 	subscriber: "subscriber",
+	api: "api",
 };

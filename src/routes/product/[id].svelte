@@ -14,8 +14,10 @@
 
 <script>
   import { onMount } from "svelte";
+  import { stores } from "@sapper/app";
   import { cart } from "../../stores/cart";
-  import { user } from "../../stores/user";
+  import { loading } from "../../stores/loading";
+  import { notification } from "../../stores/notification";
   import { addToCart } from "../../api";
   import Content from "../../components/product-page/Content.svelte";
   import Image from "../../components/product-page/Image.svelte";
@@ -23,8 +25,10 @@
   import LoadingOverlay from "../../components/LoadingOverlay.svelte";
 
   export let product = Product();
-  let isOnCart = false,
-    loading = false;
+
+  const { session } = stores();
+
+  let isOnCart = false;
 
   let errorMsg = "",
     successMsg = "";
@@ -36,19 +40,30 @@
   const addProductToCart = async (e, productId) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!$user.token)
-      return (errorMsg =
-        "Crie uma conta ou inicie sessão para adicionar ao carrinho.");
+    if (!$session.isAuth)
+      return notification.show(
+        "error",
+        "Crie uma conta ou inicie sessão para adicionar ao carrinho.",
+        "Erro adicionar produto ao carrinho"
+      );
 
-    loading = true;
-    const res = await addToCart(productId, $user.consumer.id, $user.token);
+    loading.show();
+    const res = await addToCart(productId, $session.user.id);
     if (res.error) {
-      errorMsg = "Ocorreu um erro ao adicionar o produto, tente novamente.";
+      notification.show(
+        "error",
+        "Ocorreu um erro ao adicionar o produto, tente novamente.",
+        "Erro adicionar produto ao carrinho"
+      );
     } else {
-      successMsg = "O produto foi adicionado ao seu carrrinho.";
-      cart.initCart($user.consumer.id, $user.token);
+      notification.show(
+        "success",
+        "O produto foi adicionado ao seu carrrinho.",
+        "Adicionado com sucesso"
+      );
+      cart.initCart($session.user.id);
     }
-    loading = false;
+    loading.close();
   };
 </script>
 
@@ -70,23 +85,3 @@
       {isOnCart} />
   {/if}
 </section>
-
-{#if errorMsg}
-  <Notification
-    on:close={() => (errorMsg = '')}
-    msg={errorMsg}
-    type="error"
-    title="Erro adicionar produto ao carrinho" />
-{/if}
-
-{#if successMsg}
-  <Notification
-    title="Adicionado com sucesso"
-    msg={successMsg}
-    type="success"
-    on:close={() => (successMsg = '')} />
-{/if}
-
-{#if loading}
-  <LoadingOverlay />
-{/if}

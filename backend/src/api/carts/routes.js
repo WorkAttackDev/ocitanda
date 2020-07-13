@@ -7,8 +7,6 @@ const { findAll } = require("../globalQueries");
 const { isAuth } = require("../../middleware");
 const Cart = require("./model");
 
-router.use(isAuth);
-
 router.get("/", async (req, res) => {
 	const cartItem = await findAll(tableNames.cart_item);
 	res.json(cartItem);

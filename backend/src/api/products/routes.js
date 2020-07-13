@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { body, query } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const { handleValidationError, isId } = require("../validations");
 const Product = require("./model");
@@ -67,8 +67,28 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get(
+  "/search/:slug",
+  [param("slug", "invalid slug").isAlphanumeric()],
+  async (req, res, next) => {
+    handleValidationError(req, res, next);
+    const { slug } = req.params;
+
+    try {
+      const products = await Product.query()
+        .where("name", "like", `%${slug}%`)
+        .limit(100)
+        .orderBy("name", "asc");
+
+      res.json(products);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 router.get("/:id", [isId], async (req, res, next) => {
-  if (handleValidationError(req, next)) return null;
+  handleValidationError(req, res, next);
 
   const { id } = req.params;
   try {

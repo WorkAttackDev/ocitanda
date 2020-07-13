@@ -20,6 +20,13 @@ const resetPasswordHTML = (link) => `
   <p>Se não pediu por este email, por favor ignore.</p>
 `;
 
+const verifyEmailHTML = (link) => `
+  <h1>Este link serve para verificar o seu email</h1>
+  <p>Click no Link para validar o seu email.</p>
+  <a href="${link}">${link}</a>
+  <p>Se não pediu por este email, por favor ignore.</p>
+`;
+
 const transport = nodemailer.createTransport({
   host: "mail.ocitanda.com",
   port: 465,
@@ -46,8 +53,16 @@ const resetPasswordEmail = async (to, recoverLink) =>
   await transport.sendMail({
     from: `"Ocitanda" <${process.env.OCITANDA_EMAIL}>`,
     to,
-    subject: "Link para recoperar a palavra-passe",
+    subject: "Link para recuperar a palavra-passe",
     html: resetPasswordHTML(recoverLink),
+  });
+
+const verifyEmail = async (to, recoverLink) =>
+  await transport.sendMail({
+    from: `"Ocitanda" <${process.env.OCITANDA_EMAIL}>`,
+    to,
+    subject: "Link para verificar email",
+    html: verifyEmailHTML(recoverLink),
   });
 
 const subscribeEmail = async (to) =>
@@ -62,4 +77,5 @@ module.exports = {
   sendEmail,
   resetPasswordEmail,
   subscribeEmail,
+  verifyEmail
 };

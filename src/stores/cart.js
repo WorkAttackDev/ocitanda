@@ -53,8 +53,8 @@ function createCart() {
 			total: getTotal(products),
 		});
 
-	const removeProduct = async (cartId, token) => {
-		let res = await removeFromCart(cartId, token);
+	const removeProduct = async (cartId) => {
+		let res = await removeFromCart(cartId);
 		if (res.error) return res;
 		update((_cart) => {
 			const products = _cart.products.filter(
@@ -64,8 +64,8 @@ function createCart() {
 		});
 	};
 
-	const initCart = async (consumerId, token) => {
-		let products = await fetchUserCartItems(consumerId, token);
+	const initCart = async (consumerId) => {
+		let products = await fetchUserCartItems(consumerId);
 		if (products.error) products = [];
 		addProducts(products);
 	};

@@ -1,7 +1,6 @@
 <script>
-  import { goto } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
   import { cart } from "./../stores/cart.js";
-  import { user } from "./../stores/user.js";
   import { onMount } from "svelte";
   import { fetchUserCartItems } from "../api";
   import ProductSection from "../components/ProductSection.svelte";
@@ -10,20 +9,21 @@
   import CheckoutBox from "../components/cart/CheckoutBox.svelte";
   import Modal from "../components/Modal.svelte";
 
+  const {session} = stores();
   let fetching = true, wantCheckout = false;
 
-  $: fetchBlock($user.token);
+  $: fetchBlock();
   $: products = $cart.products;
   $: total = $cart.total;
 
   onMount(async () => {
-    await fetchBlock($user.token);
+    await fetchBlock();
   });
 
-  async function fetchBlock(token) {
-    if (!token) return (fetching = false);
+  async function fetchBlock() {
+    if (!$session.isAuth) return (fetching = false);
     fetching = true;
-    cart.initCart($user.consumer.id, token);
+    cart.initCart($session.user.id);
     fetching = false;
   }
 </script>
@@ -35,7 +35,7 @@
 <ProductSection title="Meus Produtos" {products} {fetching} />
 <CheckoutBox on:checkout={()=> wantCheckout = true} {total} Subtotal={total} />
 
-{#if !$user.token}
+{#if !$session.isAuth}
   <Notification
     title="Informação"
     msg="Crie uma conta, para adicionar produtos ao carrinho"

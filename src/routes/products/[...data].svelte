@@ -65,7 +65,7 @@
     anchor={true}
     labelClassName="text-ocitanda-beige"
     items={orders}
-    selected={orders[0].text}
+    selected={orders[order-1].text}
     label="Ordenar por" />
 </section>
 {#if fetching}

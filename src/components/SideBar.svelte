@@ -1,11 +1,19 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { stores } from "@sapper/app";
   import { fly, fade } from "svelte/transition";
   import CloseIcon from "./CloseIcon.svelte";
   import UserAvatar from "./UserAvatar.svelte";
-  import { links } from "../data/links";
+  import { links, adminLinks } from "../data/links";
+  import Label from "./Label.svelte";
+import SideBarList from "./SideBarList.svelte";
 
+  const { page } = stores();
   const dispatch = createEventDispatcher();
+
+  let activeAdmin = $page.path.startsWith("/admin");
+
+  $: activeLinks = activeAdmin ? adminLinks : links;
 </script>
 
 <aside
@@ -24,15 +32,24 @@
     <h3 class="uppercase font-bold text-ocitanda-green text-center my-4">
       Menu
     </h3>
-    <ul class="flex flex-col text-center uppercase text-sm text-ocitanda-green">
-      {#each links as { name, href }}
-        <li class="mb-1 bg-ocitanda-beige hover:bg-ocitanda-khaki">
-          <a on:click={() => dispatch('close')} class="py-2 px-4 block" {href}>
-            {name}
-          </a>
-        </li>
-      {/each}
-    </ul>
+    {#if $page.path.startsWith('/admin')}
+      <span class="flex mb-4">
+        <Label
+          className="w-full"
+          active={activeAdmin}
+          on:click={() => (activeAdmin = true)}>
+          Admin
+        </Label>
+        <Label
+          className="w-full"
+          active={!activeAdmin}
+          on:click={() => (activeAdmin = false)}>
+          Site
+        </Label>
+      </span>
+    {/if}
+     
+    <SideBarList links={activeLinks} />
   </div>
 </aside>
 <div

@@ -2,51 +2,50 @@
   import Alert from "../components/Alert.svelte";
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import { onMount } from "svelte";
-  import { goto } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
   import UserAvatar from "../components/UserAvatar.svelte";
   import ActionBox from "../components/user/ActionBox.svelte";
   import ProductSection from "../components/ProductSection.svelte";
   import Notification from "../components/Notification.svelte";
   import Modal from "../components/Modal.svelte";
   import UpdateForm from "../components/consumer/UpdateForm.svelte";
-  // import { products } from "../data/products";
   import { updateConsumer, deleteConsumer } from "../api";
-  import { user } from "../stores/user";
-  import { login } from "../util";
+  import { loading } from "../stores/loading";
+
+  const { session } = stores();
 
   let errorMsg = "",
     edit = false,
-    loading = false,
     wantDelete = false;
 
   const onUpdateConsumer = async ({ detail }) => {
-    loading = true;
+    loading.show();
     const res = await updateConsumer(detail);
     if (res.error) {
-      loading = false;
+      loading.close();
       return (errorMsg = "Erro ao Atualizar os seus dados!");
     }
-    await login(res.data);
-    loading = false;
-    await goto("/", { replaceState: true });
+    loading.close();
+    // await goto("/", { replaceState: true });
+    window.location.href = "/";
   };
 
   const onDeleteConsumer = async () => {
     wantDelete = false;
-    loading = true;
-    const res = await deleteConsumer($user.consumer.id, $user.token);
+    loading.show();
+    
+    const res = await deleteConsumer($session.user.id);
     if (res.error) {
-      loading = false;
+      loading.close();
       return (errorMsg = "Erro ao Eliminar a sua conta!");
     }
-    user.logout();
-    loading = false;
-    await goto("/", { replaceState: true });
+    await goto("/auth/logout", { replaceState: true });
+    loading.close();
   };
 </script>
 
 <svelte:head>
-  <title>Ocitanda - {$user.consumer.name}</title>
+  <title>Ocitanda - {'consumidor'}</title>
 </svelte:head>
 
 <section>
@@ -67,7 +66,7 @@
 
 {#if edit}
   <Modal on:close={() => (edit = false)}>
-    <UpdateForm on:update={onUpdateConsumer} consumer={$user.consumer} />
+    <UpdateForm on:update={onUpdateConsumer} consumer={$session.user} />
   </Modal>
 {/if}
 
@@ -76,10 +75,6 @@
     on:resolve={onDeleteConsumer}
     on:close={() => (wantDelete = false)}
     waitToResolve={5000}>
-    Desejá Eliminar a sua conta?
+    <p class="w-11/12">Desejá Eliminar a sua conta?</p>
   </Alert>
-{/if}
-
-{#if loading}
-  <LoadingOverlay />
 {/if}

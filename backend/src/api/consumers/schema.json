@@ -4,8 +4,6 @@
 	"title": "Consumer",
 	"description": "The Consumer Schrema",
 	"required": [
-		"birth_date",
-		"gender",
 		"user_id"
 	],
 	"additionalProperties": false,

@@ -6,23 +6,23 @@
   import InputText from "./../components/InputText.svelte";
   import Button from "./../components/Button.svelte";
   import LoadingOverlay from "./../components/LoadingOverlay.svelte";
+  import { loading } from "../stores/loading";
 
   let errorMsg = "",
     email = "",
-    success = false,
-    loading = false;
+    success = false;
 
   const onSendEmail = async () => {
-    loading = true;
+    loading.show();
     if (vEmail.validator(email)) {
       const res = await forgotPassword(email);
       if (res.error) {
-        loading = false;
+        loading.close();
 
         return (errorMsg = res.msg);
       }
       success = true;
-      loading = false;
+      loading.close();
     }
   };
 </script>
@@ -63,8 +63,4 @@
     msg="O seu email de atualização de palavra-passe, foi enviado com sucesso!"
     type="success"
     on:close={() => (success = false)} />
-{/if}
-
-{#if loading}
-  <LoadingOverlay />
 {/if}

@@ -26,3 +26,5 @@ this is the oficial ocitanda e-commerce
 -   [] work on verify email.
 -   [] Work on authentication with sapper.
 -   [] Work on refresh token.
+-   [] fix the product page.
+-   [] products card adjust on mobile sm.

@@ -5,10 +5,7 @@
     "description": "The user Schrema",
     "required": [
         "email",
-        "name",
-        "password",
-        "phone",
-        "image_url"
+        "name"
     ],
     "additionalProperties": false,
     "properties": {
@@ -33,23 +30,27 @@
                 "Denilson Costa"
             ]
         },
+        "verified": {
+            "$id": "#/properties/verified",
+            "type": "boolean",
+            "title": "verified",
+            "description": "the user verified email",
+            "examples": [
+                true
+            ]
+        },
         "password": {
             "$id": "#/properties/password",
-            "type": "string", 
+            "type": "string",
             "description": "the user password",
             "examples": [
                 "$2b$12$qbMEm2ab.F74hAlZl6Bnq.Pt/u.0lLX3BpakhJh7xZlDzBcpYLe7u"
             ]
         },
-        "last_login": {
-            "$id": "#/properties/last_login",
-            "type": "null",
-            "title": "last_login ",
-            "description": "last login",
-            "default": null,
-            "examples": [
-                "2020-06-02T14:04:36.000Z"
-            ]
+        "google_id": {
+            "$id": "#/properties/google_id",
+            "type": "string",
+            "description": "the user google_id"
         },
         "phone": {
             "$id": "#/properties/phone",
@@ -70,21 +71,23 @@
             ]
         },
         "reset_password_expires_date": {
-			"$id": "#/properties/reset_password_expires_date",
-			"type": "number",
-			"title": "expires date",
-			"description": "the expires date of the password",
-			"examples": [
-				"2020-06-02T14:04:36.000Z"
-			]
-		},
-		"reset_password_token": {
-			"$id": "#/properties/reset_password_token",
-			"type": "string",
-			"title": "token",
-			"description": "the token of the password to reset",
-			"examples": ["13123$#%&6565656"]
-		},
+            "$id": "#/properties/reset_password_expires_date",
+            "type": "number",
+            "title": "expires date",
+            "description": "the expires date of the password",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "reset_password_token": {
+            "$id": "#/properties/reset_password_token",
+            "type": "string",
+            "title": "token",
+            "description": "the token of the password to reset",
+            "examples": [
+                "13123$#%&6565656"
+            ]
+        },
         "created_at": {
             "$id": "#/properties/created_at",
             "type": "string",

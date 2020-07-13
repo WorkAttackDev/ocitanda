@@ -10,6 +10,7 @@
   export let type = "text";
   export let disabled = false;
   export let validators = [];
+  export let name = "";
 
   const dispatch = createEventDispatcher();
   let errorStack = "";
@@ -47,13 +48,14 @@
     class="flex-grow md:text-lg leading-6 align-middle transition-colors
     duration-300 bg-ocitanda-beige outline-none"
     {placeholder}
+    {name}
     on:input={validateInput} />
   {#if !disabled}
     <button
       type="submit"
       {disabled}
       class="text-ocitanda-khaki text-2xl leading-6 align-middle
-      transition-colors duration-300">
+      transition-colors duration-300 outline-none hover:text-ocitanda-green">
       <slot>
         {#if typeSearch}
           <SearchMajorMonotone class="w-4 text-gray-500 fill-current" />

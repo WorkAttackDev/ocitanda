@@ -1,6 +1,7 @@
 const tableNames = require("./tableNames");
 
 module.exports = [
+	tableNames.api,
 	tableNames.subscriber,
 	tableNames.cart_item,
 	tableNames.purchase,

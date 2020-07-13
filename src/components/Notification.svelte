@@ -9,7 +9,7 @@
     type = "info",
     buttonText = "",
     title = "Notificação",
-    href = "";
+    href = "", isSlot = false;
 
   const dispatch = createEventDispatcher();
 </script>
@@ -38,26 +38,29 @@
 <section
   transition:slide
   class="fixed flex flex-col transform -translate-x-1/2 z-50 bg-white w-full
-  text-grey-700 h-auto md:w-auto md:h-40 md:rounded shadow-xl p-5">
+  text-grey-700 h-auto md:w-auto md:min-h-40 md:rounded shadow-xl p-5">
   <MobileCancelMajorMonotone
     on:click={() => dispatch('close')}
     class="absolute w-5 ml-auto mb-8 cursor-pointer fill-current
     hover:text-ocitanda-brown md:w-6" />
 
-  <h1
-    class="text-2xl font-bold w-11/12"
-    class:error={type.toLowerCase() === 'error'}
-    class:success={type.toLowerCase() === 'success'}>
-    {title}
-  </h1>
-  <p class="text-lg lg:text-xl">{msg}</p>
-  {#if buttonText && !href}
-    <Button className="my-2" on:click>{buttonText}</Button>
-  {/if}
-  {#if buttonText && href}
-    <Button className="my-2" on:click>{buttonText}</Button>
+  {#if isSlot}
+    <slot />
+  {:else}
+    <h1
+      class="text-2xl font-bold w-11/12"
+      class:error={type.toLowerCase() === 'error'}
+      class:success={type.toLowerCase() === 'success'}>
+      {title}
+    </h1>
+    <p class="text-lg lg:text-xl">{msg}</p>
+    {#if buttonText && !href}
+      <Button className="my-2" on:click>{buttonText}</Button>
+    {/if}
+    {#if buttonText && href}
+      <Button className="my-2" {href}>{buttonText}</Button>
+    {/if}
   {/if}
 </section>
-
 
 <Backdrop on:close />

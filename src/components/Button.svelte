@@ -2,7 +2,8 @@
   export let className = "",
     disabled = false,
     scrollTop = false,
-    href = "";
+    href = "",
+    type = "button";
 </script>
 
 <style>
@@ -20,9 +21,10 @@
 {#if !href}
   <button
     {disabled}
+    {type}
     on:click
     class:scrollTop
-    class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow' + className}>
+    class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow ' + className}>
     <slot>lorem ipum</slot>
   </button>
 {:else}

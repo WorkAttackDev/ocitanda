@@ -9,7 +9,7 @@
 
 <style>
   div :global(svg) {
-    @apply min-w-8 mr-4 fill-current;
+    @apply min-w-8 w-8 mr-4 fill-current;
   }
 </style>
 

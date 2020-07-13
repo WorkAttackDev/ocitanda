@@ -6,7 +6,7 @@
   import SelectDropdown from "../SelectDropdown.svelte";
   import Alert from "../Alert.svelte";
   import { vEmail, vAlpha, vNotEmpty } from "../../lib/validation";
-
+  import { notification } from "../../stores/notification";
   export let consumer = {};
 
   const dispatch = createEventDispatcher();
@@ -17,33 +17,34 @@
 
   let name = consumer.user.name.split(" ")[0] || "",
     surname = consumer.user.name.split(" ")[1] || "",
-    email = consumer.user.email || "",
     birthDate = isoDate.substring(0, 10) || "",
     phone = consumer.user.phone || "",
     gender = parsedGender || "",
     readyToUpdate = false;
 
   const notEmpty = (...input) => input.every((_i) => _i.trim() !== "");
-  $: valid = notEmpty(name, surname, email, phone, gender);
+  $: valid = notEmpty(name, surname, phone, gender);
 
   const onSubmitForm = () => {
-    if (valid) {
-      readyToUpdate = true;
-    }
+    if (valid) return (readyToUpdate = true);
+    notification.show(
+      "error",
+      "preencha todos os campos para editar.",
+      "Erro ao Atualizar"
+    );
   };
 
   const onUpdateUser = () => {
-    const user = {
-      name: `${name} ${surname}`,
-      email,
-      birthDate,
-      phone,
-      gender: gender[0],
-      id: consumer.id,
-      imageUrl: consumer.user.image_url,
-    };
-
     if (valid) {
+      const user = {
+        name: `${name} ${surname}`,
+        birthDate,
+        phone,
+        gender: gender[0],
+        id: consumer.id,
+        imageUrl: consumer.user.image_url,
+      };
+
       readyToUpdate = false;
       dispatch("update", user);
     }
@@ -67,13 +68,6 @@
     on:validated={(e) => (surname = e.detail)} />
   <InputText
     className="mb-4"
-    placeholder="Email"
-    value={email}
-    disabled
-    validators={[vNotEmpty, vEmail]}
-    on:validated={(e) => (email = e.detail)} />
-  <InputText
-    className="mb-4"
     placeholder="Data de Nascimento"
     type="date"
     value={birthDate}
@@ -94,7 +88,7 @@
     selected={gender}
     items={['Masculino', 'Femenino', 'Outro']}
     on:selectitem={(e) => (gender = e.detail)} />
-  <Button className="my-4">Atualizar Conta</Button>
+  <Button type="submit" className="my-4">Atualizar Conta</Button>
   <Button
     type="button"
     on:click={async () => await goto('/forgot-password')}
@@ -104,9 +98,7 @@
 </form>
 
 {#if readyToUpdate}
-<Alert
-  on:resolve={onUpdateUser}
-  on:close={() => (readyToUpdate = false)}>
-  Desejá Salvar as alterações?
-</Alert>
+  <Alert on:resolve={onUpdateUser} on:close={() => (readyToUpdate = false)}>
+    Desejá Salvar as alterações?
+  </Alert>
 {/if}

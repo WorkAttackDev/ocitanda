@@ -11,13 +11,30 @@
   import UserAvatar from "./UserAvatar.svelte";
   import InputText from "./InputText.svelte";
   import { links } from "../data/links";
+  import { products } from "../stores/products";
+  import isAlphanumeric from "validator/lib/isAlphanumeric";
+  import SearchList from "./SearchList.svelte";
 
   const { page } = stores();
 
-  let showSideBar = false;
-  let showSearchModal = false;
+  let searchValue = "",
+    searchProducts = [],
+    showSideBar = false,
+    showSearchModal = false,
+    searchLoading = false,
+    timeout;
+
+  $: if (!searchValue) searchProducts = [];
 
   const onGotoCart = async () => await goto("/cart");
+
+  const onSearchProducts = async () => {
+    if (!isAlphanumeric(searchValue.trim())) return;
+    searchLoading = true;
+    searchProducts = await products.searchProductsBySlug(searchValue);
+    if (timeout) clearTimeout(timeout);
+    setTimeout(() => (searchLoading = false), 500);
+  };
 </script>
 
 <style>
@@ -54,7 +71,7 @@
       {#each links as { name, href }}
         <li
           class="mx-4 hover:text-ocitanda-khaki"
-          class:active={href === $page.path}>
+          class:active={href === $page.path || $page.path.substring(0, 10) === href.substring(0, 10)}>
           <a {href}>{name}</a>
         </li>
       {/each}
@@ -76,7 +93,19 @@
 {/if}
 
 {#if showSearchModal}
-  <Modal on:close={() => (showSearchModal = false)}>
-    <InputText typeSearch placeholder="Procurar" />
+  <Modal
+    on:close={() => (showSearchModal = false)}
+    className="overflow-x-hidden">
+    <form on:submit|preventDefault={onSearchProducts}>
+      <InputText
+        typeSearch
+        value={searchValue}
+        placeholder="Procurar"
+        on:validated={({ detail }) => (searchValue = detail)} />
+    </form>
+    <SearchList
+      on:click={() => (showSearchModal = false)}
+      products={searchProducts}
+      loading={searchLoading} />
   </Modal>
 {/if}

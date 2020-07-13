@@ -8,167 +8,176 @@ const { sendEmail } = require("../email");
 
 const User = require("../users/model");
 const Consumer = require("../consumers/model");
-const { isAuth } = require("../../middleware");
+const { getByUserId } = require("../consumers/controller");
+// const { isAuth } = require("../../middleware");
 
 const loginValidation = [
-	body("email", "Incorrect email").isString().isEmail(),
-	body("password", "Incorrect password").isString().isLength({ min: 8 }),
+  body("password", "Incorrect password").isString().isLength({ min: 8 }),
+  body("email", "Incorrect email").isString().isEmail(),
 ];
 
 const signupValidation = [
-	...loginValidation,
-	body("name").isString().notEmpty().trim(),
-	body("phone").isString().isLength({ min: 9, max: 9 }).isNumeric(),
-	body("imageUrl").isString().not().isEmpty(),
-	body("gender").isString().not().isEmpty().isLength({ max: 1 }),
-	body("birthDate").not().isEmpty().toDate(),
+  body("email", "Incorrect email").isString().isEmail(),
+  body("name").isString().notEmpty().trim(),
+  // body("phone").isString().isLength({ min: 9, max: 9 }).isNumeric(),
+  // body("imageUrl").isString().not().isEmpty(),
+  // body("gender").isString().not().isEmpty().isLength({ max: 1 }),
+  // body("birthDate").not().isEmpty().toDate(),
 ];
 
 const updateValidation = [
-	body("id", "Incorrect id").isInt(),
-	body("email", "Incorrect email").isString().isEmail(),
-	body("name").isString().notEmpty().trim(),
-	body("phone").isString().isLength({ min: 9, max: 9 }).isNumeric(),
-	body("imageUrl").isString().not().isEmpty(),
-	body("gender").isString().not().isEmpty().isLength({ max: 1 }),
-	body("birthDate").not().isEmpty().toDate(),
+  body("id", "Incorrect id").isInt(),
+  body("name").isString().notEmpty().trim(),
+  body("phone").isString().isLength({ min: 9, max: 9 }).isNumeric(),
+  body("imageUrl").isString().not().isEmpty(),
+  body("gender").isString().not().isEmpty().isLength({ max: 1 }),
+  body("birthDate").not().isEmpty().toDate(),
 ];
 
 router.post("/signup", signupValidation, async (req, res, next) => {
-	handleValidationError(req, res, next);
-	const { name, email, birthDate, imageUrl, gender, phone } = req.body;
-	const trx = await Consumer.startTransaction();
+  handleValidationError(req, res, next);
 
-	try {
-		const existUser = await User.query()
-			.where({ email: email.toLowerCase() })
-			.first();
+  let {
+    name,
+    email,
+    birthDate,
+    imageUrl,
+    gender,
+    phone,
+    password,
+    google_id,
+    verified,
+  } = req.body;
 
-		throwErrorIf(res, existUser, "user Already exists", 403);
+  const trx = await Consumer.startTransaction();
 
-		const hashedPassword = await bcrypt.hash(req.body.password, 12);
+  try {
+    const existUser = await User.query()
+      .where({ email: email.toLowerCase() })
+      .first();
 
-		const consumer = await Consumer.query(trx).insertGraph({
-			birth_date: format(birthDate, "YYYY-MM-DD HH:mm:ss"),
-			gender,
+    throwErrorIf(res, existUser, "user Already exists", 403);
 
-			user: {
-				name,
-				email: email.toLowerCase(),
-				phone,
-				image_url: imageUrl,
-				password: hashedPassword,
-			},
-		});
+    let hashedPassword;
+    if (password) hashedPassword = await bcrypt.hash(req.body.password, 12);
 
-		await trx.commit();
+    const consumer = await Consumer.query(trx).insertGraph({
+      birth_date: birthDate
+        ? format(new Date(birthDate), "YYYY-MM-DD HH:mm:ss")
+        : undefined,
+      gender,
 
-		delete consumer.user.password;
-		delete consumer.user.reset_password_token;
-		delete consumer.user.reset_password_expires_date;
+      user: {
+        name,
+        email: email.toLowerCase(),
+        phone,
+        google_id,
+        verified,
+        image_url: imageUrl,
+        password: hashedPassword,
+      },
+    });
 
-		const token = await sign({
-			userId: consumer.id,
-			name: consumer.user.name,
-			email: consumer.user.email,
-		});
+    const info = await sendEmail(consumer.user.email);
+    await trx.commit();
 
-		res.status(201);
-		res.json({ consumer, token });
+    delete consumer.user.password;
+    delete consumer.user.reset_password_token;
+    delete consumer.user.reset_password_expires_date;
 
-		const info = await sendEmail(consumer.user.email);
-	} catch (error) {
-		await trx.rollback();
-		next(error);
-	}
+    const token = await sign({
+      userId: consumer.id,
+      name: consumer.user.name,
+      email: consumer.user.email,
+    });
+
+    res.status(201);
+    res.json({ consumer, token });
+  } catch (error) {
+    await trx.rollback();
+    next(error);
+  }
 });
 
 router.post("/login", loginValidation, async (req, res, next) => {
-	handleValidationError(req, res, next);
-	const { email, password } = req.body;
-	try {
-		const user = await User.query()
-			.where({ email: email.toLowerCase() })
-			.first();
+  handleValidationError(req, res, next);
+  const { email, password } = req.body;
+  try {
+    const user = await User.query()
+      .where({ email: email.toLowerCase() })
+      .first();
 
-		throwErrorIf(res, !user, "user does not exists", 404);
+    throwErrorIf(res, !user, "user does not exists", 404);
 
-		const isValidPassword = await bcrypt.compare(password, user.password);
+    throwErrorIf(res, !user.verified, "verify your email", 401);
 
-		throwErrorIf(res, !isValidPassword, "invalid password", 401);
+    const isValidPassword = await bcrypt.compare(password, user.password);
 
-		const consumer = await Consumer.query()
-			.where({ user_id: user.id })
-			.withGraphFetched("user")
-			.first();
+    throwErrorIf(res, !isValidPassword, "invalid password", 401);
 
-		delete consumer.user.password;
-		delete consumer.user.reset_password_token;
-		delete consumer.user.reset_password_expires_date;
+    const consumer = await getByUserId(user.id);
 
-		const token = await sign({
-			userId: consumer.id,
-			name: consumer.user.name,
-			email: consumer.user.email,
-		});
+    const token = await sign({
+      userId: consumer.id,
+      name: consumer.user.name,
+      email: consumer.user.email,
+    });
 
-		res.status(200);
-		res.json({ consumer, token });
-	} catch (error) {
-		next(error);
-	}
+    res.status(200);
+    res.json({ consumer, token });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put("/update", updateValidation, async (req, res, next) => {
-	console.log(req.body);
-	handleValidationError(req, res, next);
-	const { id, name, email, birthDate, imageUrl, gender, phone } = req.body;
-	const trx = await Consumer.startTransaction();
+  handleValidationError(req, res, next);
+  const { id, name, birthDate, imageUrl, gender, phone } = req.body;
+  const trx = await Consumer.startTransaction();
 
-	try {
-		const existUser = await Consumer.query(trx).findById(id).first();
+  try {
+    const existUser = await Consumer.query(trx).findById(id).first();
 
-		throwErrorIf(res, !existUser, "user don't exists", 404);
+    throwErrorIf(res, !existUser, "user don't exists", 404);
 
-		await User.query(trx).findById(existUser.user_id).patch({
-			name,
-			email: email.toLowerCase(),
-			phone,
-			image_url: imageUrl,
-		});
+    await User.query(trx).findById(existUser.user_id).patch({
+      name,
+      phone,
+      image_url: imageUrl,
+    });
 
-		await Consumer.query(trx)
-			.findById(id)
-			.patch({
-				birth_date: format(birthDate, "YYYY-MM-DD HH:mm:ss"),
-				gender,
-			});
+    await Consumer.query(trx)
+      .findById(id)
+      .patch({
+        birth_date: format(birthDate, "YYYY-MM-DD HH:mm:ss"),
+        gender,
+      });
 
-		const consumer = await Consumer.query(trx)
-			.findById(id)
-			.withGraphFetched("user")
-			.first();
+    const consumer = await Consumer.query(trx)
+      .findById(id)
+      .withGraphFetched("user")
+      .first();
 
-		await trx.commit();
+    await trx.commit();
 
-		delete consumer.user.password;
-		delete consumer.user.reset_password_token;
-		delete consumer.user.reset_password_expires_date;
+    delete consumer.user.password;
+    delete consumer.user.reset_password_token;
+    delete consumer.user.reset_password_expires_date;
 
-		const token = await sign({
-			userId: consumer.id,
-			name: consumer.user.name,
-			email: consumer.user.email,
-		});
+    const token = await sign({
+      userId: consumer.id,
+      name: consumer.user.name,
+      email: consumer.user.email,
+    });
 
-		res.status(200);
-		res.json({ consumer, token });
-		// const info = await sendEmail(consumer.user.email);
-		// console.log(info, consumer.user.email);
-	} catch (error) {
-		await trx.rollback();
-		next(error);
-	}
+    res.status(200);
+    res.json({ consumer, token });
+    const info = await sendEmail(consumer.user.email);
+    // console.log(info, consumer.user.email);
+  } catch (error) {
+    await trx.rollback();
+    next(error);
+  }
 });
 
 module.exports = router;

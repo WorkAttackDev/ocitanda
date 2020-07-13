@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { user } from "./../stores/user.js";
   import { cart } from "./../stores/cart";
   import { notification } from "./../stores/notification";
   import { loading } from "./../stores/loading";
@@ -11,19 +10,16 @@
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import Footer from "../components/Footer.svelte";
   import Notification from "../components/Notification.svelte";
+  import { AbandonedCartMajorMonotone } from "svelte-polaris-icons";
+
+  const { preloading, session } = stores();
+  const ready = true;
 
   onMount(async () => {
-    const authInfo = JSON.parse(localStorage.getItem("user"));
-
-    if (authInfo && new Date(authInfo.expiryDate) > new Date()) {
-      await user.login(authInfo);
-      await cart.initCart(authInfo.consumer.id, authInfo.token);
-    } else {
+    if ($session.isAuth) {
+      await cart.initCart($session.user.id);
     }
   });
-
-  const { preloading } = stores();
-  const ready = true;
 </script>
 
 {#if ready}
@@ -47,5 +43,8 @@
     title={$notification.title}
     msg={$notification.msg}
     type={$notification.type}
-    on:close={() => notification.close()} />
+    href={$notification.button.href}
+    buttonText={$notification.button.text}
+    on:close={() => notification.close()}
+    on:click={() => $notification.button.onClick ? $notification.button.onClick() : null} />
 {/if}

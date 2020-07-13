@@ -24,7 +24,7 @@
 
 </style>
 
-<Notification on:close>
+<Notification isSlot on:close>
   <slot>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum distinctio
     nihil laudantium at natus atque.
