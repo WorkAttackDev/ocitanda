@@ -49,7 +49,7 @@ import SideBarList from "./SideBarList.svelte";
       </span>
     {/if}
      
-    <SideBarList links={activeLinks} />
+    <SideBarList links={activeLinks} on:close />
   </div>
 </aside>
 <div

@@ -15,10 +15,15 @@ html {
 	}
 }
 
-html,
+html, 
 body,
 #sapper {
 	@apply min-h-full h-full;
+}
+
+
+svg {
+	@apply min-w-5 min-h-5 fill-current cursor-pointer;
 }
 
 @import "tailwindcss/components";

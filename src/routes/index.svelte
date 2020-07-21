@@ -1,4 +1,6 @@
 <script>
+  import CarrocelSlide from "../components/CarrocelSlide.svelte";
+
   import { onMount } from "svelte";
   import SlideHero from "../components/home/SlideHero.svelte";
   import ProductSection from "../components/ProductSection.svelte";
@@ -22,14 +24,18 @@
   <title>Ocitanda - E-commerce</title>
 </svelte:head>
 
-<SlideHero />
+<!-- <SlideHero /> -->
+<CarrocelSlide />
 <ProductSection {products} title="Destaques" {fetching} />
 <ProductSection products={products2} title="Novos" {fetching} />
 <TextBlock title="Quem Somos">
-  A DP & DEEPL, Comércio e Prestação de Serviços, Lda., doravante referida por
-  <strong>DEEPL,</strong>
-  é uma sociedade comercial constituída à luz do ordenamento jurídico angolano,
-  com sede em Luanda, no Bairro Cassenda, Rua 3, Casa nº 33, Distrito Urbano da
-  Maianga, Município e província de Luanda.
-  <strong>A DEEPL é detentora da marca OCITANDA.</strong>
+  Somos especializados na distribuição de alimentos
+  <strong>orgânicos</strong>
+  e
+  <strong>frescos</strong>
+  , contando para isso, com uma equipa qualificada na busca de soluções
+  adequadas para o
+  <strong>bem-estar dos nossos clientes e colaboradores</strong>
+  . Prezamos por padrões de qualidade focados na conquista e fidelização dos
+  nossos clientes.
 </TextBlock>

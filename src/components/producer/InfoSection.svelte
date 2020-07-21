@@ -7,7 +7,7 @@
 </style>
 
 <section class={`flex flex-col m-4  ${ reverse ? "md:flex-row" : "md:flex-row-reverse" } md:m-8`}>
-  <figure class="w-full min-h-full md:w-1/2">
+  <figure class="w-full min-h-full max-h-96 md:w-1/2">
     <img class="w-full h-full object-cover" {src} {alt} />
   </figure>
   <article class="flex flex-col p-6 border-opacity-75 border-b-2 border-ocitanda-khaki  w-full md:border-none md:w-1/2 md:p-12">

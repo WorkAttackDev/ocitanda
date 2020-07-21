@@ -53,30 +53,30 @@
 
 <form class="flex flex-col mb-8" on:submit|preventDefault={onSubmitForm}>
   <InputText
-    className="mb-4"
-    placeholder="Nome"
+    className="mb-8"
+    label="Nome"
     value={name}
     disabled
     validators={[vNotEmpty, vAlpha]}
     on:validated={(e) => (name = e.detail)} />
   <InputText
-    className="mb-4"
-    placeholder="Sobrenome"
+    className="mb-8"
+    label="Sobrenome"
     value={surname}
     disabled
     validators={[vNotEmpty, vAlpha]}
     on:validated={(e) => (surname = e.detail)} />
   <InputText
-    className="mb-4"
-    placeholder="Data de Nascimento"
+    className="mb-8"
+    label="Data de Nascimento"
     type="date"
     value={birthDate}
     disabled
     validators={[vNotEmpty]}
     on:validated={(e) => (birthDate = e.detail)} />
   <InputText
-    className="mb-4"
-    placeholder="Número de Telefone"
+    className="mb-8"
+    label="Número de Telefone"
     disabled
     type="phone"
     value={phone}
@@ -89,10 +89,7 @@
     items={['Masculino', 'Femenino', 'Outro']}
     on:selectitem={(e) => (gender = e.detail)} />
   <Button type="submit" className="my-4">Atualizar Conta</Button>
-  <Button
-    type="button"
-    on:click={async () => await goto('/forgot-password')}
-    className="my-4 bg-ocitanda-gold">
+  <Button href="/forgot-password" className="my-4 bg-ocitanda-gold">
     Atualizar palavra-passe
   </Button>
 </form>

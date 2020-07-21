@@ -1,23 +1,25 @@
 <script context="module">
-  import { fetchProducts, fetchCategories } from "../../../api";
+  import { fetchProducts } from "../../../api";
+  import { category } from "../../../stores/category";
+  import { products as productStore } from "../../../stores/products";
 
   export async function preload(page) {
-    const [pageNum, category, order] = page.params.data;
+    const [pageNum, currCategory, order] = page.params.data;
 
-    if (isNaN(pageNum) || typeof category !== "string")
+    if (isNaN(pageNum) || typeof currCategory !== "string")
       throw new Error("Invalid params");
 
     const limit = 10;
-
-    let categories = ["Todos", ...(await fetchCategories())];
+    
+    let categories = ["Todos", ...(await category.getCategories())];
     if (categories.error) categories = ["Todos"];
 
-    let products = await fetchProducts(limit, pageNum, category, order);
+    let products = await productStore.getAsAdmin(limit, pageNum, currCategory, order);
     if (products.error) products = [];
 
     return {
       page: +pageNum,
-      category,
+      currCategory,
       categories,
       products,
       limit,
@@ -36,7 +38,7 @@
 
   export let categories,
     products,
-    category = "Todos",
+    currCategory = "Todos",
     fetching = true,
     limit = 10,
     page = 1,
@@ -52,10 +54,10 @@
   });
 
   const orders = [
-    { text: "Nome (A-Z)", href: `/admin/products/${page}/${category}/1` },
-    { text: "Nome (Z-A)", href: `/admin/products/${page}/${category}/2` },
-    { text: "Baratos", href: `/admin/products/${page}/${category}/3` },
-    { text: "Caros", href: `/admin/products/${page}/${category}/4` },
+    { text: "Nome (A-Z)", href: `/admin/products/${page}/${currCategory}/1` },
+    { text: "Nome (Z-A)", href: `/admin/products/${page}/${currCategory}/2` },
+    { text: "Baratos", href: `/admin/products/${page}/${currCategory}/3` },
+    { text: "Caros", href: `/admin/products/${page}/${currCategory}/4` },
   ];
 </script>
 
@@ -69,7 +71,7 @@
     items={categoriesHref}
     label="Categoria"
     anchor={true}
-    selected={category} />
+    selected={currCategory} />
   <SelectDropdown
     anchor={true}
     labelClassName="text-ocitanda-beige"
@@ -85,5 +87,5 @@
 <Pagination
   pageCount={page}
   lastPage={products.length < limit}
-  nextHref={`/admin/products/${page + 1}/${category}/${order}`}
-  prevHref={`/admin/products/${page - 1}/${category}/${order}`} />
+  nextHref={`/admin/products/${page + 1}/${currCategory}/${order}`}
+  prevHref={`/admin/products/${page - 1}/${currCategory}/${order}`} />

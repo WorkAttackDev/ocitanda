@@ -1,21 +1,29 @@
 <script context="module">
-  import { fetchProducts, fetchCategories } from "../../api";
+  import { fetchProducts } from "../../api";
+  import { category } from "../../stores/category";
 
   export async function preload(page) {
-    const [pageNum, category, order] = page.params.data;
+    const [pageNum, currCategory, order] = page.params.data;
 
-    if (isNaN(pageNum) || typeof category !== "string")
+    if (isNaN(pageNum) || typeof currCategory !== "string")
       throw new Error("Invalid params");
 
     const limit = 10;
 
-    let categories = ["Todos", ...(await fetchCategories())];
+    let categories = [{ name: "Todos" }, ...(await category.getCategories())];
     if (categories.error) categories = ["Todos"];
 
-    let products = await fetchProducts(limit, pageNum, category, order);
+    let products = await fetchProducts(limit, pageNum, currCategory, order);
     if (products.error) products = [];
 
-    return { page: +pageNum, category, categories, products, limit, order: order || 1 };
+    return {
+      page: +pageNum,
+      currCategory,
+      categories,
+      products,
+      limit,
+      order: order || 1,
+    };
   }
 </script>
 
@@ -27,15 +35,17 @@
   import Pagination from "../../components/products/Pagination.svelte";
   import Loading from "../../components/Loading.svelte";
 
-  export let categories, products, category = "Todos",
+  export let categories,
+    products,
+    currCategory = "Todos",
     fetching = true,
     limit = 10,
     page = 1,
     order = 1;
 
-  $: categoriesHref = categories.map((_c) => ({
-    text: _c,
-    href: `/products/${page}/${_c}/${order}`,
+  $: categoriesHref = categories.map(({ name }) => ({
+    text: name,
+    href: `/products/1/${name}/${order}`,
   }));
 
   onMount(() => {
@@ -43,10 +53,10 @@
   });
 
   const orders = [
-    { text: "Nome (A-Z)", href: `/products/${page}/${category}/1` },
-    { text: "Nome (Z-A)", href: `/products/${page}/${category}/2` },
-    { text: "Baratos", href: `/products/${page}/${category}/3` },
-    { text: "Caros", href: `/products/${page}/${category}/4` },
+    { text: "Nome (A-Z)", href: `/products/${page}/${currCategory}/1` },
+    { text: "Nome (Z-A)", href: `/products/${page}/${currCategory}/2` },
+    { text: "Baratos", href: `/products/${page}/${currCategory}/3` },
+    { text: "Caros", href: `/products/${page}/${currCategory}/4` },
   ];
 </script>
 
@@ -60,21 +70,21 @@
     items={categoriesHref}
     label="Categoria"
     anchor={true}
-    selected={category} />
+    selected={currCategory} />
   <SelectDropdown
     anchor={true}
     labelClassName="text-ocitanda-beige"
     items={orders}
-    selected={orders[order-1].text}
+    selected={orders[order - 1].text}
     label="Ordenar por" />
 </section>
 {#if fetching}
   <Loading />
 {:else}
-   <ProductSection {products} vertical {fetching} />
+  <ProductSection {products} vertical {fetching} />
 {/if}
 <Pagination
   pageCount={page}
   lastPage={products.length < limit}
-  nextHref={`/products/${page + 1}/${category}/${order}`}
-  prevHref={`/products/${page - 1}/${category}/${order}`} />
+  nextHref={`/products/${page + 1}/${currCategory}/${order}`}
+  prevHref={`/products/${page - 1}/${currCategory}/${order}`} />

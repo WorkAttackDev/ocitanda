@@ -21,11 +21,11 @@
 
   <InfoSection
     title="Nossa relação com os produtores"
-    src="/agri-1.jpg"
+    src="/ocitanda/24.jpg"
     alt="agriculture" />
   <InfoSection
-    title="Desde a platação até a conheita"
-    src="/agri-2.jpg"
+    title="Desde a plantação até a conheita"
+    src="/ocitanda/2.jpg"
     alt="agriculture" reverse />
   
    <ContactBox />

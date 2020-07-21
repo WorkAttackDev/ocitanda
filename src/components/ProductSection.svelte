@@ -1,7 +1,9 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { cart } from "../stores/cart";
+  import { products as productStore } from "../stores/products";
   import { notification } from "../stores/notification";
+  import { loading } from "../stores/loading";
   import { addToCart, removeFromCart } from "../api";
   import { stores } from "@sapper/app";
   import ProductModel from "../models/Product";
@@ -36,20 +38,14 @@
 
     fetching = true;
     const res = await addToCart(productId, $session.user.id);
-    if (res.error) {
-      notification.show(
+    if (res.error)
+      return notification.show(
         "error",
         "Ocorreu um erro ao adicionar o produto, tente novamente.",
         "Ocorreu um erro"
       );
-    } else {
-      notification.show(
-        "success",
-        "O produto foi adicionado ao seu carrrinho.",
-        "Operação realizada com sucesso"
-      );
-      cart.initCart($session.user.id);
-    }
+
+    cart.initCart($session.user.id);
     fetching = false;
   };
 
@@ -63,18 +59,6 @@
 
     fetching = true;
     const res = await cart.removeProduct(cartId);
-    res && res.error
-      ? notification.show(
-          "error",
-          "Ocorreu um erro ao remover o produto, tente novamente.",
-          "Ocorreu um erro"
-        )
-      : notification.show(
-          "success",
-          "O produto foi removido ao seu carrrinho.",
-          "Operação realizada com sucesso"
-        );
-
     fetching = false;
   };
 
@@ -85,6 +69,15 @@
   const decreaseQuantity = (cartId) => {
     cart.decrease(cartId);
   };
+
+  const handleToggleInvalid = async (e)=> {
+    e.preventDefault();
+    e.stopPropagation();
+    const {id, invalid} = e.detail;
+    loading.show();
+    const res = productStore.invalidate(id, invalid);
+    loading.close();
+  } 
 </script>
 
 <ProductSectionList
@@ -96,4 +89,5 @@
   {productType}
   products={filteredProducts}
   on:removefromcart={(e) => removeProductFromCart(e, e.detail)}
-  on:addtocart={(e) => addProductToCart(e, e.detail)} />
+  on:addtocart={(e) => addProductToCart(e, e.detail)} 
+  on:toggleinvalid={handleToggleInvalid}/>

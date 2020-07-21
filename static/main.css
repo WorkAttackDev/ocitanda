@@ -614,6 +614,13 @@ body,
   height: 100%;
 }
 
+svg {
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  fill: currentColor;
+  cursor: pointer;
+}
+
 .container {
   width: 100%;
 }
@@ -9513,24 +9520,28 @@ body,
 
 .select-none {
   -webkit-user-select: none;
+     -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
 
 .select-text {
   -webkit-user-select: text;
+     -moz-user-select: text;
       -ms-user-select: text;
           user-select: text;
 }
 
 .select-all {
   -webkit-user-select: all;
+     -moz-user-select: all;
       -ms-user-select: all;
           user-select: all;
 }
 
 .select-auto {
   -webkit-user-select: auto;
+     -moz-user-select: auto;
       -ms-user-select: auto;
           user-select: auto;
 }
@@ -21331,24 +21342,28 @@ body,
 
   .xs\:select-none {
     -webkit-user-select: none;
+       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
   }
 
   .xs\:select-text {
     -webkit-user-select: text;
+       -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
   }
 
   .xs\:select-all {
     -webkit-user-select: all;
+       -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
   }
 
   .xs\:select-auto {
     -webkit-user-select: auto;
+       -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
   }
@@ -33150,24 +33165,28 @@ body,
 
   .sm\:select-none {
     -webkit-user-select: none;
+       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
   }
 
   .sm\:select-text {
     -webkit-user-select: text;
+       -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
   }
 
   .sm\:select-all {
     -webkit-user-select: all;
+       -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
   }
 
   .sm\:select-auto {
     -webkit-user-select: auto;
+       -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
   }
@@ -44969,24 +44988,28 @@ body,
 
   .md\:select-none {
     -webkit-user-select: none;
+       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
   }
 
   .md\:select-text {
     -webkit-user-select: text;
+       -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
   }
 
   .md\:select-all {
     -webkit-user-select: all;
+       -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
   }
 
   .md\:select-auto {
     -webkit-user-select: auto;
+       -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
   }
@@ -56788,24 +56811,28 @@ body,
 
   .lg\:select-none {
     -webkit-user-select: none;
+       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
   }
 
   .lg\:select-text {
     -webkit-user-select: text;
+       -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
   }
 
   .lg\:select-all {
     -webkit-user-select: all;
+       -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
   }
 
   .lg\:select-auto {
     -webkit-user-select: auto;
+       -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
   }
@@ -68607,24 +68634,28 @@ body,
 
   .xl\:select-none {
     -webkit-user-select: none;
+       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
   }
 
   .xl\:select-text {
     -webkit-user-select: text;
+       -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
   }
 
   .xl\:select-all {
     -webkit-user-select: all;
+       -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
   }
 
   .xl\:select-auto {
     -webkit-user-select: auto;
+       -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
   }
@@ -80426,24 +80457,28 @@ body,
 
   .xxl\:select-none {
     -webkit-user-select: none;
+       -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
   }
 
   .xxl\:select-text {
     -webkit-user-select: text;
+       -moz-user-select: text;
         -ms-user-select: text;
             user-select: text;
   }
 
   .xxl\:select-all {
     -webkit-user-select: all;
+       -moz-user-select: all;
         -ms-user-select: all;
             user-select: all;
   }
 
   .xxl\:select-auto {
     -webkit-user-select: auto;
+       -moz-user-select: auto;
         -ms-user-select: auto;
             user-select: auto;
   }

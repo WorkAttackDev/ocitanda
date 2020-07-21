@@ -5,7 +5,7 @@ const orderedTables = require("../../src/constants/orderedTables");
 
 function addDefaultColumns(table) {
   table.timestamps(false, true);
-  table.datetime("deleted_at");
+  table.boolean("deleted");
 }
 
 function references(table, foringTable, column = "id") {
@@ -73,7 +73,7 @@ exports.up = async (knex) => {
 
   await knex.schema.createTable(tableNames.product, (table) => {
     table.increments().notNullable();
-    table.string("name").notNullable();
+    table.string("name").notNullable().unique();
     table.float("price").notNullable();
     table.integer("quantity").notNullable();
     table.string("description", 300).notNullable();

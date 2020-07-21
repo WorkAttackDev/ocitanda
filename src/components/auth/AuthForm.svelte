@@ -68,40 +68,40 @@
 
 {#if type === 'signup'}
   <form
-    class="flex flex-col my-4"
+    class="flex flex-col my-8"
     on:submit|preventDefault={() => onCreateUser()}>
     <InputText
-      className="mb-4"
-      placeholder="Nome"
+      className="mb-8"
+      label="Nome"
       value={name}
       disabled
       validators={[vNotEmpty, vAlpha]}
       on:validated={(e) => (name = e.detail)} />
     <InputText
-      className="mb-4"
-      placeholder="Sobrenome"
+      className="mb-8"
+      label="Sobrenome"
       value={surname}
       disabled
       validators={[vNotEmpty, vAlpha]}
       on:validated={(e) => (surname = e.detail)} />
     <InputText
-      className="mb-4"
-      placeholder="Email"
+      className="mb-8"
+      label="Email"
       value={email}
       disabled
       validators={[vNotEmpty, vEmail]}
       on:validated={(e) => (email = e.detail)} />
     <InputText
-      className="mb-4"
-      placeholder="Data de Nascimento"
+      className="mb-8"
+      label="Data de Nascimento"
       type="date"
       value={birthDate}
       disabled
       validators={[vNotEmpty]}
       on:validated={(e) => (birthDate = e.detail)} />
     <InputText
-      className="mb-4"
-      placeholder="Número de Telefone"
+      className="mb-8"
+      label="Número de Telefone"
       disabled
       type="phone"
       value={phone}
@@ -113,17 +113,17 @@
       items={['Masculino', 'Femenino', 'Outro']}
       on:selectitem={(e) => (gender = e.detail)} />
     <InputText
-      className="mb-4"
+      className="mb-8"
       type="password"
-      placeholder="Palavra-Passe"
+      label="Palavra-Passe"
       value={password}
       disabled
       validators={[vNotEmpty, vLength(8)]}
       on:validated={(e) => (password = e.detail)} />
     <InputText
-      className="mb-4"
+      className="mb-8"
       type="password"
-      placeholder="Verificar Palavra-Passe"
+      label="Verificar Palavra-Passe"
       value={verifPassword}
       disabled
       validators={[vNotEmpty, vLength(8), isEqualPassword(password)]}
@@ -131,11 +131,11 @@
     <Button type="submit">Criar Conta</Button>
   </form>
 {:else}
-  <form class="flex flex-col my-4" action="/auth/ocitanda" method="POST">
+  <form class="flex flex-col my-8" action="/auth/ocitanda" method="POST">
     <InputText
       value={email}
-      className="mb-4"
-      placeholder="Email"
+      className="mb-8"
+      label="Email"
       type="email"
       name="email"
       disabled
@@ -143,10 +143,10 @@
       on:validated={(e) => (email = e.detail)} />
     <InputText
       value={password}
-      className="mb-4"
+      className="mb-8"
       name="password"
       type="password"
-      placeholder="Palavra-Passe"
+      label="Palavra-Passe"
       disabled
       validators={[vNotEmpty, vLength(8)]}
       on:validated={(e) => (password = e.detail)} />

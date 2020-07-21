@@ -10,10 +10,11 @@
   import Modal from "./Modal.svelte";
   import UserAvatar from "./UserAvatar.svelte";
   import InputText from "./InputText.svelte";
-  import { links } from "../data/links";
+  import { links, adminLinks } from "../data/links";
   import { products } from "../stores/products";
   import isAlphanumeric from "validator/lib/isAlphanumeric";
   import SearchList from "./SearchList.svelte";
+  import HeaderLinks from "./HeaderLinks.svelte";
 
   const { page } = stores();
 
@@ -23,6 +24,8 @@
     showSearchModal = false,
     searchLoading = false,
     timeout;
+
+  $: activeLinks = $page.path.startsWith("/admin") ? adminLinks : links;
 
   $: if (!searchValue) searchProducts = [];
 
@@ -67,15 +70,7 @@
       class="font-bold uppercase ml-auto -mr-8 md:text-xl lg:ml-0 lg:mr-auto">
       Ocitanda
     </a>
-    <ul class="hidden uppercase text-sm lg:flex md:mr-auto">
-      {#each links as { name, href }}
-        <li
-          class="mx-4 hover:text-ocitanda-khaki"
-          class:active={href === $page.path || $page.path.substring(0, 10) === href.substring(0, 10)}>
-          <a {href}>{name}</a>
-        </li>
-      {/each}
-    </ul>
+    <HeaderLinks links={activeLinks} {page} />
     {#if $page.path !== '/consumer'}
       <UserAvatar dropDownMode />
     {/if}
@@ -100,7 +95,7 @@
       <InputText
         typeSearch
         value={searchValue}
-        placeholder="Procurar"
+        label="Procurar"
         on:validated={({ detail }) => (searchValue = detail)} />
     </form>
     <SearchList

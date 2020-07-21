@@ -8,19 +8,12 @@ export default (passport) => {
       { usernameField: "email" },
       async (email, password, done) => {
         try {
-          if (password === "ocauto") {
-            const res = await getConsumerbyEmail(email);
-            if (!res.error) {
-              const user = res.data.consumer;
-              return done(null, user);
-            }
-          }
           let res = await signin({ email, password });
           if (!res.error) {
             const user = res.data.consumer;
             done(null, user);
           } else {
-            done(null, false, { message: res.msg});
+            done(null, false, { message: res.msg });
           }
         } catch (error) {
           console.log(error);
@@ -53,12 +46,12 @@ export default (passport) => {
               imageUrl: image_url,
               email,
               google_id,
-              verified: true
+              verified: true,
             };
 
             const res = await signup(newUser);
             console.log(res);
-            
+
             if (!res.error) {
               console.log(res);
               const user = res.data.consumer;

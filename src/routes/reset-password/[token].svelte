@@ -59,22 +59,22 @@
   </p>
   <form class="flex flex-col my-4" on:submit|preventDefault={onResetPassword}>
     <InputText
-      className="mb-4"
+      className="mb-8"
       type="password"
-      placeholder="Digite a Nova Palavra-Passe"
+      label="Digite a Nova Palavra-Passe"
       value={password}
       disabled
       validators={[vNotEmpty, vLength(8)]}
       on:validated={(e) => (password = e.detail)} />
     <InputText
-      className="mb-4"
+      className="mb-8"
       type="password"
-      placeholder="Verificar Nova Palavra-Passe"
+      label="Verificar Nova Palavra-Passe"
       value={verifPassword}
       disabled
       validators={[vNotEmpty, vLength(8), isEqualPassword(password)]}
       on:validated={(e) => (verifPassword = e.detail)} />
-    <Button disabled={!valid}>Atualizar Palavra-Passe</Button>
+    <Button type="submit" disabled={!valid}>Atualizar Palavra-Passe</Button>
   </form>
 </section>
 

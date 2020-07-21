@@ -15,7 +15,7 @@
       title: "Nossa Visão",
       desc:
         "Fornecer produtos nacionais com qualidade e excelência, com o fim último de aprimorar e contribuir para a qualidade de vida e bem estar dos seus clientes, parceiros, bem com de todos os stakeholders.",
-      imgSrc: "/meeting.jpg",
+      imgSrc: "/ocitanda/10.jpg",
     },
     {
       title: "Nossa Missão",

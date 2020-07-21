@@ -1,10 +1,13 @@
 const router = require('express').Router();
 
 const tableNames = require('../../constants/tableNames');
-const { findAll, getById } = require('../globalQueries');
+const {getById } = require('../globalQueries');
+const Producer = require('./model');
 
 router.get('/', async (req, res) => {
-	const producers = await findAll(tableNames.producer);
+	const producers = await Producer.query().withGraphFetched("user").modifyGraph("user", (builder) => {
+        builder.select("name", "email");
+      });;
 	res.json(producers);
 });
 

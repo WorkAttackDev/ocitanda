@@ -1,6 +1,6 @@
 <script>
   import { fly, fade } from "svelte/transition";
-  export let title = "O mercado à sua porta", subTitle= "Este é o conceito da OCITANDA", imgAlt = "home delivery", imgSrc = "/delivery.jpg";
+  export let title = "O mercado à sua porta", subTitle= "Este é o conceito da OCITANDA", imgAlt = "home delivery", imgSrc = "/ocitanda/8.jpg";
 </script>
 
 <style>

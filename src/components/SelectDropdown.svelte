@@ -3,21 +3,23 @@
   import { SelectMinor } from "svelte-polaris-icons";
   import { slide } from "svelte/transition";
 
-  export let items = [""],
+  const item = { text: "" };
+  export let items = [item],
+    empty = false,
     label = "Lorem",
     className = "",
     labelClassName = "",
     anchor = false,
-    selected = items[0];
+    selected = empty ? "selecione" : items[0].text || items[0];
 
   const dispatch = createEventDispatcher();
 
   let showlist = false;
 
   const toogleShowList = () => (showlist = !showlist);
-  const onSelectItem = (item = "") => {
-    if (selected === item) return;
-    selected = item;
+  const onSelectItem = (item = { text: "" }) => {
+    if (selected === item.text || selected === item) return;
+    selected = item.text || item;
     dispatch("selectitem", item);
   };
 </script>
@@ -33,7 +35,8 @@
 </style>
 
 <div class={'flex items-center mx-4 my-2 ' + className} role="combobox">
-  <p class={`uppercase text-sm mr-4 whitespace-no-wrap ${labelClassName}`}>
+  <p
+    class={`uppercase text-xs font-medium mr-4 whitespace-no-wrap ${labelClassName}`}>
     {label}
   </p>
   <div
@@ -56,8 +59,8 @@
             <li
               on:click|preventDefault={() => onSelectItem(item)}
               class="p-2 border-b-2 border-gray-200 cursor-pointer"
-              class:active={item === selected}>
-              {item}
+              class:active={item.text === selected || item === selected}>
+              {item.text || item}
             </li>
           {/each}
         {:else}

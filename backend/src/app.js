@@ -8,7 +8,6 @@ const cors = require("cors");
 const apiRoutes = require("./api");
 const { errorHandler, notFound } = require("./middleware");
 
-
 const app = express();
 
 app.use(morgan("tiny"));
@@ -17,13 +16,13 @@ app.use(helmet());
 app.use(cors());
 app.use("/api/static", express.static(path.join(__dirname, "public")));
 app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   res.json({
     message: "Ocitanda API!!!",
   });
 });
-
 
 app.use("/api", apiRoutes);
 

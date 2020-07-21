@@ -5,6 +5,7 @@ import {createEventDispatcher} from "svelte";
   import Button from "../Button.svelte";
   import QuantityBox from "../QuantityBox.svelte";
   import Product from "../../models/Product";
+  import { currecy } from "../../lib/format";
 
   export let product = Product(), className = "", isOnCart;
 
@@ -26,7 +27,7 @@ import {createEventDispatcher} from "svelte";
   </h3>
   <p class="mb-4">{product.desc}</p>
   <span class="flex flex-col">
-    <p class="text-2xl font-bold text-ocitanda-gold mb-4">{product.price} Kz</p>
+    <p class="text-2xl font-bold text-ocitanda-gold mb-4">{currecy(product.price)} Kz</p>
     <!-- <QuantityBox qty={product.count || 1} /> -->
   </span>
   {#if isOnCart}

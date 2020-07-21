@@ -33,10 +33,10 @@
 			"description": "the province update date",
 			"examples": ["2020-06-02T14:04:36.000Z"]
 		},
-		"deleted_at": {
-			"$id": "#/properties/deleted_at",
+		"deleted": {
+			"$id": "#/properties/deleted",
 			"type": "string",
-			"title": "deleted_at",
+			"title": "deleted",
 			"description": "The deleted province date",
 			"examples": ["2020-06-02T14:04:36.000Z"]
 		}

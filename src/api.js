@@ -13,7 +13,7 @@ export const api =
     ? "https://www.ocitanda.com/api/"
     : "http://localhost:5050/api/";
 
-const handleError = (err) => {
+export const handleError = (err) => {
   if (!err.response) return { error: true, msg: "Network Problem" };
   return {
     msg: err.response.data.message,
@@ -22,7 +22,7 @@ const handleError = (err) => {
   };
 };
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: api,
   timeout: 3000,
   // headers: {'X-Custom-Header': 'foobar'}
@@ -44,20 +44,17 @@ export const fetchProducts = async (
       },
     });
     return res.data.map(
-      ({ name, id, quantity, price, image_url, description }) =>
-        Product(id, name, description, price, "Ocitanda", api + image_url)
-    );
-  } catch (error) {
-    return handleError(error);
-  }
-};
-
-export const fetchProductsBySlug = async (slug) => {
-  try {
-    let res = await axiosInstance.get("products/search/" + slug);
-    return res.data.map(
-      ({ name, id, quantity, price, image_url, description }) =>
-        Product(id, name, description, price, "Ocitanda", api + image_url)
+      ({ name, id, quantity, price, image_url, description, deleted }) =>
+        Product({
+          id,
+          deletedAt: deleted,
+          desc: description,
+          img: api + image_url,
+          name,
+          price,
+          producer: "Ocitanda",
+          qty: quantity,
+        })
     );
   } catch (error) {
     return handleError(error);
@@ -69,14 +66,15 @@ export const fetchProductById = async (id) => {
     const res = await axiosInstance.get("products/" + id);
     const data = res.data;
 
-    const product = Product(
-      data.id,
-      data.name,
-      data.description,
-      data.price,
-      "Ocitanda",
-      api + data.image_url
-    );
+    const product = Product({
+      id: data.id,
+      name: data.name,
+      desc: data.description,
+      price: data.price,
+      producer: "Ocitanda",
+      img: api + data.image_url,
+      deletedAt: data.deleted
+    });
 
     return product;
   } catch (error) {
@@ -105,16 +103,6 @@ export const fetchUserCartItems = async (userId, authToken) => {
         _d.product.category_id
       )
     );
-  } catch (error) {
-    return handleError(error);
-  }
-};
-
-export const fetchCategories = async () => {
-  try {
-    let res = await axiosInstance.get("categories");
-    let data = res.data;
-    return data.map(({ name }) => name);
   } catch (error) {
     return handleError(error);
   }

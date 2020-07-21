@@ -53,12 +53,12 @@ exports.seed = async (knex) => {
       verified: true
     },
     {
-      email: "loremFarm@gmail.com",
-      name: "Farm roll",
+      email: "geral@ocitanda.com",
+      name: "ocitanda",
       password: await bcrypt.hash(password, 12),
       phone: "993228333",
-      image_url: "https://wwfjdkfjksdjflk.com/fkdsfk",
-      verified: false
+      image_url: "/api/static/images/ocitanda.jpg",
+      verified: true
     },
   ];
 

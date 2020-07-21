@@ -45,14 +45,14 @@
     Verifique o seu email para poder iniciar sessão na OCITANDA, este é um
     mecanismo de segurança para evitar o uso de emails alheios.
   </p>
-  <form class="flex flex-col my-4" on:submit|preventDefault={onSendEmail}>
+  <form class="flex flex-col my-8" on:submit|preventDefault={onSendEmail}>
     <InputText
       value={email}
-      className="mb-4"
-      placeholder="Email"
+      className="mb-8"
+      label="Email"
       disabled
       validators={[vNotEmpty, vEmail]}
       on:validated={(e) => (email = e.detail)} />
-    <Button>Enviar Email</Button>
+    <Button type="submit">Enviar Email</Button>
   </form>
 </section>

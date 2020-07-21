@@ -1,10 +1,10 @@
 <script>
   import { createEventDispatcher } from "svelte";
 
+  import LoadingOverlay from "./LoadingOverlay.svelte";
   import Button from "./Button.svelte";
   import Product from "./Product.svelte";
   import ProductActionBox from "./admin/ProductActionBox.svelte";
-  import Loading from "./Loading.svelte";
   import QuantityBox from "./QuantityBox.svelte";
 
   export let vertical = false,
@@ -41,11 +41,21 @@
                 Remover
               </Button>
             {:else if productType === 'add' && !product.onCart}
-              <Button on:click={() => dispatch('addtocart', product.id)}>
+              <Button
+                on:click={(e) => {
+                  e.preventDefault();
+                  dispatch('addtocart', product.id);
+                }}>
                 Adicionar
               </Button>
             {:else if productType === 'admin'}
-              <ProductActionBox />
+              <ProductActionBox
+                invalidate={product.deletedAt}
+                teste={product}
+                on:toggleinvalid={() => dispatch('toggleinvalid', {
+                    id: product.id,
+                    invalid: !product.deletedAt,
+                  })} />
             {:else}
               <Button disabled>No Carrinho</Button>
             {/if}
@@ -60,7 +70,7 @@
       {title}
     </h2>
     {#if fetching}
-      <Loading />
+      <LoadingOverlay />
     {:else}
       <div class="flex overflow-x-auto pb-4">
         {#each products as product}
@@ -82,7 +92,7 @@
                 </Button>
               {:else if productType === 'add' && !product.onCart}
                 <Button
-                  on:click={() => {
+                  on:click={(e) => {
                     e.preventDefault();
                     dispatch('addtocart', product.id);
                   }}>

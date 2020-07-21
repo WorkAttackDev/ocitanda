@@ -16,6 +16,21 @@
   .disabled {
     @apply bg-gray-400 text-gray-600 cursor-not-allowed pointer-events-none;
   }
+
+  button::before, a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #ffffff6c, transparent);
+    transition: .5s ease-out;
+  }
+
+  button:hover::before, a:hover::before {
+    left: 100%;
+  }
 </style>
 
 {#if !href}
@@ -24,7 +39,7 @@
     {type}
     on:click
     class:scrollTop
-    class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow ' + className}>
+    class={'relative flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow overflow-hidden ' + className}>
     <slot>lorem ipum</slot>
   </button>
 {:else}
@@ -32,7 +47,7 @@
     rel="prefetch"
     class:disabled
     href={disabled ? '' : href}
-    class={'flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green ' + className}>
+    class={'relative flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow overflow-hidden ' + className}>
     <slot>lorem ipum</slot>
   </a>
 {/if}

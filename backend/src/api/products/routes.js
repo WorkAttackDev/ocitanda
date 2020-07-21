@@ -1,27 +1,17 @@
 const router = require("express").Router();
-const { body, param } = require("express-validator");
-
-const { handleValidationError, isId } = require("../validations");
 const Product = require("./model");
 const Category = require("../categories/model");
+const fileUpload = require("../../middleware/file-upload");
+const { body, param } = require("express-validator");
+const { handleValidationError, isId } = require("../validations");
+const { throwErrorIf } = require("../util");
+const { format } = require("fecha");
 
 const productValidation = [
   body(["name", "description"]).isString().not().isEmpty(),
   body("price").isNumeric(),
-  body("imageUrl").isString(),
   body(["producerId", "categoryId", "quantity"]).isInt({ min: 1 }),
 ];
-
-const buildProductByReqBody = (req) =>
-  Product(
-    req.body.name,
-    req.body.price,
-    req.body.quantity,
-    req.body.description,
-    req.body.imageUrl,
-    req.body.producerId,
-    req.body.categoryId
-  );
 
 //* routes
 
@@ -34,6 +24,8 @@ router.get("/", async (req, res, next) => {
     !isNaN(req.query.order) && req.query.order > 0 && req.query.order <= 4
       ? req.query.order
       : 1;
+  const { isAdmin } = req.body;
+  console.log(isAdmin);
 
   const orderTable = {
     1: { col: "name", dir: "asc" },
@@ -48,19 +40,38 @@ router.get("/", async (req, res, next) => {
 
     let products;
 
-    if (category) {
-      products = await Product.query()
-        .where("category_id", category.id)
-        .offset(page * limit)
-        .limit(limit)
-        .orderBy(orderTable[order].col, orderTable[order].dir);
-      res.json(products);
+    if (isAdmin) {
+      if (category) {
+        products = await Product.query()
+          .where("category_id", category.id)
+          .offset(page * limit)
+          .limit(limit)
+          .orderBy(orderTable[order].col, orderTable[order].dir);
+        res.json(products);
+      } else {
+        products = await Product.query()
+          .offset(page * limit)
+          .limit(limit)
+          .orderBy(orderTable[order].col, orderTable[order].dir);
+        res.json(products);
+      }
     } else {
-      products = await Product.query()
-        .offset(page * limit)
-        .limit(limit)
-        .orderBy(orderTable[order].col, orderTable[order].dir);
-      res.json(products);
+      if (category) {
+        products = await Product.query()
+          .where("deleted", null)
+          .andWhere("category_id", category.id)
+          .offset(page * limit)
+          .limit(limit)
+          .orderBy(orderTable[order].col, orderTable[order].dir);
+        res.json(products);
+      } else {
+        products = await Product.query()
+          .where("deleted", null)
+          .offset(page * limit)
+          .limit(limit)
+          .orderBy(orderTable[order].col, orderTable[order].dir);
+        res.json(products);
+      }
     }
   } catch (err) {
     next(err);
@@ -73,12 +84,22 @@ router.get(
   async (req, res, next) => {
     handleValidationError(req, res, next);
     const { slug } = req.params;
+    const { isAdmin } = req.body;
 
     try {
-      const products = await Product.query()
-        .where("name", "like", `%${slug}%`)
-        .limit(100)
-        .orderBy("name", "asc");
+      let products;
+      if (isAdmin) {
+        products = await Product.query()
+          .where("name", "like", `%${slug}%`)
+          .limit(100)
+          .orderBy("name", "asc");
+      } else {
+        products = await Product.query()
+          .where("deleted", null)
+          .andWhere("name", "like", `%${slug}%`)
+          .limit(100)
+          .orderBy("name", "asc");
+      }
 
       res.json(products);
     } catch (err) {
@@ -104,45 +125,78 @@ router.get("/:id", [isId], async (req, res, next) => {
   }
 });
 
-// router.post("/", productValidation, async (req, res, next) => {
-//   if (handleValidationError(req, next)) return null;
-//   const newProduct = buildProductByReqBody(req);
+router.post(
+  "/",
+  fileUpload.single("image"),
+  productValidation,
+  async (req, res, next) => {
+    // console.log(req.file);
+    console.log(req.body);
+    if (handleValidationError(req, res, next)) return null;
+    throwErrorIf(res, !req.file, "no image supplied", 401);
+    const {
+      name,
+      price,
+      quantity,
+      description,
+      producerId,
+      categoryId,
+    } = req.body;
 
-//   try {
-//     const wasCreated = await createProduct(newProduct);
-//     console.log(wasCreated);
-//     res.status(201);
-//     return res.json({ message: "created succesfuly!" });
-//   } catch (error) {
-//     return next(error);
-//   }
-// });
+    try {
+      const wasCreated = await Product.query().insert({
+        name,
+        price: +price,
+        quantity: +quantity,
+        description,
+        image_url: "static/images/products/" + req.file.filename,
+        producer_id: +producerId,
+        category_id: +categoryId,
+      });
+      console.log(wasCreated);
+      res.status(201);
+      return res.json({ message: "created succesfuly!" });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 
-// router.post("/:id", [...productValidation, isId], async (req, res, next) => {
-//   if (handleValidationError(req, next)) return null;
+router.patch(
+  "/invalidate/:id",
+  [isId, body("invalidate").isBoolean()],
+  async (req, res, next) => {
+    if (handleValidationError(req, res, next)) return null;
 
-//   const { id } = req.params;
-//   const newProduct = buildProductByReqBody(req);
+    const { id } = req.params;
+    const { invalidate } = req.body;
 
-//   try {
-//     const wasUpdated = await updateProduct(id, newProduct);
-//     console.log(id, wasUpdated);
-//     return res.json({ message: "updated succesfuly!" });
-//   } catch (error) {
-//     return next(error);
-//   }
-// });
+    try {
+      await Product.query()
+        .findById(id)
+        .patch({
+          deleted: invalidate,
+        });
 
-// router.delete("/:id", [isId], async (req, res, next) => {
-//   handleValidationError(req, res, next);
-//   const { id } = req.params;
-//   try {
-//     const wasDeleted = await deleteProduct(id);
-//     console.log(id, wasDeleted);
-//     return res.json({ message: "deleted succesfuly!" });
-//   } catch (error) {
-//     return next(error);
-//   }
-// });
+      return res.json({
+        message: date ? "was invalidated" : "was uninvalidated",
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.delete("/:id", [isId], async (req, res, next) => {
+  handleValidationError(req, res, next);
+  const { id } = req.params;
+  try {
+    const wasDeleted = await deleteProduct(id);
+    console.log(id, wasDeleted);
+    return res.json({ message: "deleted succesfuly!" });
+  } catch (error) {
+    return next(error);
+  }
+});
 
 module.exports = router;
