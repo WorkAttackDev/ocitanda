@@ -2,15 +2,13 @@
   import { ArrowLeftMinor, ArrowRightMinor } from "svelte-polaris-icons";
 
   const imgs = [
-    { src: "/ocitanda/1.jpg", alt: "farm photo" },
-    { src: "/ocitanda/2.jpg", alt: "farm photo" },
-    { src: "/ocitanda/3.jpg", alt: "farm photo" },
+    { src: "/vegetables_bowls.jpg", alt: "farm photo" },
+    { src: "/vegetables.jpg", alt: "farm photo" },
+    { src: "/agri-1.jpg", alt: "farm photo" },
   ];
 
   let end = false,
     start = true;
-
-  $: console.log(end);
 
   const scrollBy = (el, x) =>
     setTimeout(() => {
@@ -27,15 +25,15 @@
     }
   };
 
-  const handleWheelSlide = (e) => {
-    if (e.deltaY > 0) {
-      scrollBy(e.target, 800);
-      calcBounderies(e.target);
-    } else {
-      scrollBy(e.target, -800);
-      calcBounderies(e.target, false);
-    }
-  };
+  // const handleWheelSlide = (e) => {
+  //   if (e.deltaY > 0) {
+  //     scrollBy(e.target, 800);
+  //     calcBounderies(e.target);
+  //   } else {
+  //     scrollBy(e.target, -800);
+  //     calcBounderies(e.target, false);
+  //   }
+  // };
 
   const next = (e) => {
     const slider = e.target.parentElement.children[2];
@@ -72,11 +70,11 @@
 
   .next {
     top: 50%;
-    right: 0%;
+    right: 5%;
   }
   .prev {
     top: 50%;
-    left: 10%;
+    left: 5%;
   }
 
   .disabled {
@@ -95,19 +93,18 @@
   <button
     class:disabled={start}
     disabled={start}
-    class="prev absolute z-10 transform -translate-x-1/2"
+    class="prev hidden absolute z-20 transform -translate-y-1/2 sm:block"
     on:click={prev}>
-    <ArrowLeftMinor />
+    <ArrowLeftMinor class="w-4" />
   </button>
   <button
     class:disabled={end}
     disabled={end}
-    class="next absolute z-10 transform -translate-x-1/2"
+    class="next hidden absolute z-20 transform -translate-y-1/2 sm:block"
     on:click={next}>
-    <ArrowRightMinor />
+    <ArrowRightMinor class="w-4" />
   </button>
   <article
-    on:mousewheel|preventDefault|stopPropagation={handleWheelSlide}
     class="relative flex w-full overflow-x-auto scrolling-touch">
     {#each imgs as { src, alt }}
       <figure class="flex-none w-full h-full pointer-events-none">
@@ -115,4 +112,11 @@
       </figure>
     {/each}
   </article>
+  <div
+    class="absolute z-10 w-full h-full left-0 top-0 flex flex-col items-center
+    justify-center bg-black bg-opacity-50 text-white pointer-events-none px-8
+    text-center">
+    <h1 class="text-4xl ">25% de Desconto</h1>
+    <h3 class="text-xl">Em todos os Vegetais</h3>
+  </div>
 </section>

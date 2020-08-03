@@ -41,33 +41,28 @@
 </script>
 
 <style>
-  .active {
-    @apply border-b-2 border-ocitanda-khaki;
-  }
-
   header :global(svg) {
     @apply cursor-pointer transition duration-300;
   }
 </style>
 
 <header
-  class="fixed z-40 left-0 top-0 w-full h-12 md:h-16 px-4 bg-ocitanda-green
+  class="fixed z-40 left-0 top-0 w-full shadow h-12 px-4 bg-ocitanda-green
   text-ocitanda-beige">
   <nav class="container mx-auto h-full flex justify-between items-center">
-    {#if $page.path.substring(0, 9) === '/product/'}
+    {#if $page.path.substring(0, 9) !== '/'}
       <ArrowLeftMinor
         on:click={() => window.history.back()}
-        class="w-6 md:w-7 md:mr-8 fill-current hover:text-ocitanda-khaki" />
-    {:else}
-      <MenuIcon
-        on:click={() => (showSideBar = true)}
-        className="md:w-8 lg:hidden fill-current text-ocitanda-beige
-        hover:text-ocitanda-khaki" />
+        class="w-6 mr-4 md:w-7 md:mr-8 fill-current hover:text-ocitanda-khaki" />
     {/if}
+    <MenuIcon
+      on:click={() => (showSideBar = true)}
+      className="md:w-8 lg:hidden fill-current text-ocitanda-beige
+      hover:text-ocitanda-khaki" />
 
     <a
       href="/"
-      class="font-bold uppercase ml-auto -mr-8 md:text-xl lg:ml-0 lg:mr-auto">
+      class="font-bold uppercase ml-8 md:ml-auto -mr-8 md:text-xl lg:ml-0 lg:mr-auto">
       Ocitanda
     </a>
     <HeaderLinks links={activeLinks} {page} />

@@ -5,7 +5,7 @@ const orderedTables = require("../../src/constants/orderedTables");
 
 function addDefaultColumns(table) {
   table.timestamps(false, true);
-  table.boolean("deleted");
+  table.boolean("deleted").defaultTo(false);
 }
 
 function references(table, foringTable, column = "id") {
@@ -60,6 +60,7 @@ exports.up = async (knex) => {
     table.increments().notNullable();
     table.dateTime("birth_date");
     table.enu("gender", ["M", "F", "O"]).defaultTo("O");
+    table.boolean("isAdmin").defaultTo(false);
     references(table, tableNames.user);
     addDefaultColumns(table);
   });

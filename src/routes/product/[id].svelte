@@ -1,10 +1,11 @@
 <script context="module">
   import Product from "../../models/Product";
-  import { fetchProductById } from "../../api";
+  import { products } from "../../stores/products";
+
   export async function preload(page) {
     const { id } = page.params;
 
-    const product = await fetchProductById(id);
+    let product = await products.getProductById(id);
 
     if (product.error) product = {};
 
@@ -41,26 +42,29 @@
     e.preventDefault();
     e.stopPropagation();
     if (!$session.isAuth)
-      return notification.show(
-        "error",
-        "Crie uma conta ou inicie sessão para adicionar ao carrinho.",
-        "Erro adicionar produto ao carrinho"
-      );
+      return notification.show({
+        type: "error",
+        msg: "Crie uma conta ou inicie sessão para adicionar ao carrinho.",
+        title: "Erro adicionar produto ao carrinho",
+        minimal: true,
+      });
 
     loading.show();
     const res = await addToCart(productId, $session.user.id);
     if (res.error) {
-      notification.show(
-        "error",
-        "Ocorreu um erro ao adicionar o produto, tente novamente.",
-        "Erro adicionar produto ao carrinho"
-      );
+      notification.show({
+        type: "error",
+        msg: "Ocorreu um erro ao adicionar o produto, tente novamente.",
+        title: "Erro adicionar produto ao carrinho",
+        minimal: true,
+      });
     } else {
-      notification.show(
-        "success",
-        "O produto foi adicionado ao seu carrrinho.",
-        "Adicionado com sucesso"
-      );
+      notification.show({
+        type: "success",
+        msg: "O produto foi adicionado ao seu carrrinho.",
+        title: "Adicionado com sucesso",
+        minimal: true,
+      });
       cart.initCart($session.user.id);
     }
     loading.close();

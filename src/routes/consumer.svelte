@@ -18,6 +18,10 @@
     edit = false,
     wantDelete = false;
 
+  onMount(async () => {
+    if (!$session.isAuth) await goto("/login");
+  });
+
   const onUpdateConsumer = async ({ detail }) => {
     loading.show();
     const res = await updateConsumer(detail);
@@ -33,7 +37,7 @@
   const onDeleteConsumer = async () => {
     wantDelete = false;
     loading.show();
-    
+
     const res = await deleteConsumer($session.user.id);
     if (res.error) {
       loading.close();
@@ -49,7 +53,7 @@
 </svelte:head>
 
 <section>
-  <UserAvatar loggedIn AvatarClassName="md:w-20 md:h-20 lg:w-32 lg:h-32 " />
+  <UserAvatar AvatarClassName="md:w-20 md:h-20 lg:w-32 lg:h-32 " />
   <ActionBox
     on:edit={() => (edit = true)}
     on:delete={() => (wantDelete = true)} />

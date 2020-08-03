@@ -19,19 +19,19 @@
       loading.close();
       if (!res.error) {
         email = "";
-        return notification.show(
-          "success",
-          "Subscrito com sucesso, verifique o seu email.",
-          "Subscrito com sucesso"
-        );
+        return notification.show({
+          type: "success",
+          msg: "Subscrito com sucesso, verifique o seu email.",
+          title: "Subscrito com sucesso",
+        });
       }
     }
 
-    notification.show(
-      "error",
-      "Ocorreu um erro ao subscrever o seu email, tente novamente.",
-      "Error ao subscrever"
-    );
+    notification.show({
+      type: "error",
+      msg: "Ocorreu um erro ao subscrever o seu email, tente novamente.",
+      title: "Error ao subscrever"
+    });
   };
 </script>
 
@@ -50,7 +50,8 @@
     <ArrowUpMinor class="w-5 fill-current" />
   </Button>
   <section
-    class="container mx-auto mb-4 mt-4 justify-between sm:flex md:items-center lg:justify-evenly">
+    class="container mx-auto mb-4 mt-4 justify-between sm:flex md:items-center
+    lg:justify-evenly">
     <div class="flex justify-center items-center">
       <FacebookIcon className="w-5 md:w-6 mr-4" />
       <InstagramIcon className="w-5 md:w-6 mr-4" />

@@ -26,28 +26,28 @@
       loading.close();
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
-    notification.show(
-      "success",
-      "agora abre o seu email",
-      "Email enviado com sucesso"
-    );
+    notification.show({
+      type: "success",
+      msg: "agora abre o seu email",
+      title: "Email enviado com sucesso",
+    });
   };
 
   onMount(() => {
     if (err) {
-      notification.show(
-        "error",
-        "Erro ao valida email, feche a notificação para tentar novamente",
-        "Ocorreu um erro",
-        verifyEmail
-      );
+      notification.show({
+        type: "error",
+        msg: "Erro ao valida email, feche a notificação para tentar novamente",
+        title: "Ocorreu um erro",
+        callback: verifyEmail,
+      });
     } else {
-      notification.show(
-        "success",
-        "Email verificado com sucesso",
-        "Sucesso ao verificar",
-        async () => await goto("/login")
-      );
+      notification.show({
+        type: "success",
+        msg: "Email verificado com sucesso",
+        title: "Sucesso ao verificar",
+        callback: async () => await goto("/login"),
+      });
     }
   });
 </script>

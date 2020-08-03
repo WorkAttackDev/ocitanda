@@ -5,7 +5,6 @@ const fileUpload = require("../../middleware/file-upload");
 const { body, param } = require("express-validator");
 const { handleValidationError, isId } = require("../validations");
 const { throwErrorIf } = require("../util");
-const { format } = require("fecha");
 
 const productValidation = [
   body(["name", "description"]).isString().not().isEmpty(),
@@ -24,8 +23,6 @@ router.get("/", async (req, res, next) => {
     !isNaN(req.query.order) && req.query.order > 0 && req.query.order <= 4
       ? req.query.order
       : 1;
-  const { isAdmin } = req.body;
-  console.log(isAdmin);
 
   const orderTable = {
     1: { col: "name", dir: "asc" },
@@ -40,41 +37,84 @@ router.get("/", async (req, res, next) => {
 
     let products;
 
-    if (isAdmin) {
-      if (category) {
-        products = await Product.query()
-          .where("category_id", category.id)
-          .offset(page * limit)
-          .limit(limit)
-          .orderBy(orderTable[order].col, orderTable[order].dir);
-        res.json(products);
-      } else {
-        products = await Product.query()
-          .offset(page * limit)
-          .limit(limit)
-          .orderBy(orderTable[order].col, orderTable[order].dir);
-        res.json(products);
-      }
+    if (category) {
+      products = await Product.query()
+        .where("deleted", false)
+        .andWhere("category_id", category.id)
+        .offset(page * limit)
+        .limit(limit)
+        .orderBy(orderTable[order].col, orderTable[order].dir);
+      res.json(products);
     } else {
-      if (category) {
-        products = await Product.query()
-          .where("deleted", null)
-          .andWhere("category_id", category.id)
-          .offset(page * limit)
-          .limit(limit)
-          .orderBy(orderTable[order].col, orderTable[order].dir);
-        res.json(products);
-      } else {
-        products = await Product.query()
-          .where("deleted", null)
-          .offset(page * limit)
-          .limit(limit)
-          .orderBy(orderTable[order].col, orderTable[order].dir);
-        res.json(products);
-      }
+      products = await Product.query()
+        .where("deleted", false)
+        .offset(page * limit)
+        .limit(limit)
+        .orderBy(orderTable[order].col, orderTable[order].dir);
+      res.json(products);
     }
   } catch (err) {
     next(err);
+  }
+});
+
+router.get("/admin", async (req, res, next) => {
+  const limit =
+    !isNaN(req.query.limit) && req.query.limit > 2 ? req.query.limit : 10;
+  const page =
+    !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+  const order =
+    !isNaN(req.query.order) && req.query.order > 0 && req.query.order <= 4
+      ? req.query.order
+      : 1;
+
+  const orderTable = {
+    1: { col: "name", dir: "asc" },
+    2: { col: "name", dir: "desc" },
+    3: { col: "price", dir: "asc" },
+    4: { col: "price", dir: "desc" },
+  };
+
+  try {
+    const category = !(req.query.category.toLowerCase() === "todos")
+      ? await Category.query().where({ name: req.query.category }).first()
+      : null;
+
+    let products;
+
+    if (category) {
+      products = await Product.query()
+        .where("category_id", category.id)
+        .offset(page * limit)
+        .limit(limit)
+        .orderBy(orderTable[order].col, orderTable[order].dir);
+      res.json(products);
+    } else {
+      products = await Product.query()
+        .offset(page * limit)
+        .limit(limit)
+        .orderBy(orderTable[order].col, orderTable[order].dir);
+      res.json(products);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:id", [isId], async (req, res, next) => {
+  handleValidationError(req, res, next);
+
+  const { id } = req.params;
+  try {
+    const product = await Product.query().findById(id);
+    if (!product) {
+      res.status(404);
+      res.json({ message: "product not found" });
+    } else {
+      res.json(product);
+    }
+  } catch (error) {
+    next(error);
   }
 });
 
@@ -95,7 +135,7 @@ router.get(
           .orderBy("name", "asc");
       } else {
         products = await Product.query()
-          .where("deleted", null)
+          .where("deleted", false)
           .andWhere("name", "like", `%${slug}%`)
           .limit(100)
           .orderBy("name", "asc");
@@ -108,30 +148,11 @@ router.get(
   }
 );
 
-router.get("/:id", [isId], async (req, res, next) => {
-  handleValidationError(req, res, next);
-
-  const { id } = req.params;
-  try {
-    const product = await Product.query().findById(id);
-    if (!product) {
-      res.status(404);
-      res.json({ message: "product not found" });
-    } else {
-      res.json(product);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post(
   "/",
   fileUpload.single("image"),
   productValidation,
   async (req, res, next) => {
-    // console.log(req.file);
-    console.log(req.body);
     if (handleValidationError(req, res, next)) return null;
     throwErrorIf(res, !req.file, "no image supplied", 401);
     const {
@@ -161,6 +182,52 @@ router.post(
     }
   }
 );
+router.patch(
+  "/",
+  fileUpload.single("image"),
+  productValidation,
+  async (req, res, next) => {
+    console.log(req.file);
+    if (handleValidationError(req, res, next)) return null;
+
+    const {
+      id,
+      name,
+      price,
+      quantity,
+      description,
+      producerId,
+      categoryId,
+    } = req.body;
+
+    try {
+      const prod = {
+        name,
+        price: +price,
+        quantity: +quantity,
+        description,
+        producer_id: +producerId,
+        category_id: +categoryId,
+      };
+
+      if (req.file)
+        prod.image_url = "static/images/products/" + req.file.filename;
+
+      console.log(prod);
+
+      const wasEdited = await Product.query()
+        .findById(id)
+        .patch({ ...prod });
+
+      console.log(wasEdited);
+
+      res.status(200);
+      return res.json({ message: "was edited!" });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 
 router.patch(
   "/invalidate/:id",
@@ -172,14 +239,12 @@ router.patch(
     const { invalidate } = req.body;
 
     try {
-      await Product.query()
-        .findById(id)
-        .patch({
-          deleted: invalidate,
-        });
+      await Product.query().findById(id).patch({
+        deleted: invalidate,
+      });
 
       return res.json({
-        message: date ? "was invalidated" : "was uninvalidated",
+        message: invalidate ? "was invalidated" : "was uninvalidated",
       });
     } catch (error) {
       return next(error);
@@ -191,7 +256,7 @@ router.delete("/:id", [isId], async (req, res, next) => {
   handleValidationError(req, res, next);
   const { id } = req.params;
   try {
-    const wasDeleted = await deleteProduct(id);
+    const wasDeleted = await Product.query().deleteById(id);
     console.log(id, wasDeleted);
     return res.json({ message: "deleted succesfuly!" });
   } catch (error) {

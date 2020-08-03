@@ -6,6 +6,8 @@ export default ({
   qty = 0,
   producer = "",
   img = "",
+  producerId = "",
+  categoryId = "",
   deletedAt = null,
 }) => ({
   id,
@@ -14,6 +16,8 @@ export default ({
   price,
   qty,
   producer,
+  producerId,
+  categoryId,
   img,
   deletedAt,
 });

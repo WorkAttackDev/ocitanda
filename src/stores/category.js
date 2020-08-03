@@ -14,9 +14,39 @@ function createCategory() {
     }
   };
 
+  const createCategory = async (name) => {
+    try {
+      let res = await axiosInstance.post("categories", { name });
+      return res.data.category;
+    } catch (error) {
+      return handleError(error);
+    }
+  };
+
+  const updateCategory = async (id, name) => {
+    try {
+      let res = await axiosInstance.post("categories/" + id, { name });
+      return res.data.category;
+    } catch (error) {
+      return handleError(error);
+    }
+  };
+
+  const deleteCategory = async (id) => {
+    try {
+      let res = await axiosInstance.delete("categories/" + id);
+      return res.data;
+    } catch (error) {
+      return handleError(error);
+    }
+  };
+
   return {
     subscribe,
     getCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
   };
 }
 

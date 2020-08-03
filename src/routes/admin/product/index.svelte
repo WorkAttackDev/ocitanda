@@ -1,7 +1,14 @@
 <script context="module">
   import { category } from "../../../stores/category";
   import { producer } from "../../../stores/producer";
-  export async function preload(page) {
+  export async function preload(page, session) {
+    const init = () =>
+      !session.isAuth || !session.user.isAdmin
+        ? this.redirect(302, "login")
+        : null;
+
+        init();
+
     let categories = await category.getCategories();
     if (categories.error) categories = [];
     let producers = await producer.getProducers();
@@ -16,7 +23,7 @@
 
 <script>
   import { onMount } from "svelte";
-  import { goto } from "@sapper/app";
+  import { goto, stores } from "@sapper/app";
   import { notification } from "../../../stores/notification";
   import { products } from "../../../stores/products";
   import { vNotEmpty, vIsNumeric } from "../../../lib/validation";
@@ -28,32 +35,37 @@
 
   export let categories, producers;
 
-  let name = "Uvas",
-    price = 20000,
-    qty = 200,
-    desc = "Novo produto",
-    img = new File([], ""),
-    producerId = 1,
-    categoryId = 2;
+  const { session } = stores();
+  const init = async () =>
+    !$session.isAuth && $session.user.isAdmin ? await goto("/login") : null;
+  init();
+
+  let name = "",
+    price = 0,
+    qty = 0,
+    desc = "",
+    img,
+    producerId = 0,
+    categoryId = 0;
 
   $: isValid = () =>
     [name, price, qty, desc, img, producerId, categoryId].every(
       (_field) =>
         (typeof _field === "number" && _field > 0) ||
         (typeof _field === "string" && _field.trim() !== "") ||
-        !!_field.size
+        !!_field
     );
 
-  $: console.table({ name, price, qty, desc, img, producerId, categoryId });
-
   onMount(() => {
+    img = new File([], "");
+
     if (!categories[0])
-      notification.show(
-        "error",
-        "Ocorreu um erro ao carregar as categorias!",
-        "Erro de conexão",
-        async () => await goto("/admin")
-      );
+      notification.show({
+        type: "error",
+        msg: "Ocorreu um erro ao carregar as categorias!",
+        title: "Erro de conexão",
+        callback: async () => await goto("/admin"),
+      });
   });
 
   const handleCreateProduct = async () => {
@@ -70,17 +82,18 @@
 
     const res = await products.createProduct(formData);
     if (res.error)
-      return notification.show(
-        "error",
-        "Ocorreu um erro ao Criar este produto",
-        "Erro ao criar Produto"
-      );
+      return notification.show({
+        type: "error",
+        msg: "Ocorreu um erro ao Criar este produto",
+        title: "Erro ao criar Produto",
+      });
 
-    notification.show(
-      "success",
-      name + " foi criado com sucesso",
-      "Produto criado"
-    );
+    notification.show({
+      type: "success",
+      msg: name + " foi criado com sucesso",
+      title: "Produto criado",
+      callback: async ()=> await goto("/admin/products/1/Todos/1")
+    });
   };
 </script>
 

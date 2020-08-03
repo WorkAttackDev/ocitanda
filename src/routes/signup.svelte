@@ -1,3 +1,10 @@
+<script context="module">
+  export async function preload(page, session) {
+    const init = () => (session.isAuth ? this.redirect(302, "/") : null);
+    init();
+  }
+</script>
+
 <script>
   import { notification } from "../stores/notification.js";
   import { onMount } from "svelte";
@@ -29,15 +36,15 @@
       loading.close();
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
-    notification.show(
-      "success",
-      "foi enviado um email de verificação para sua conta de email, abra o seu email e click no link de validação.",
-      "Email de validação enviado com sucesso",
-      async ()=> {
+    notification.show({
+      type: "success",
+      msg: "foi enviado um email de verificação para sua conta de email, abra o seu email e click no link de validação.",
+      title: "Email de validação enviado com sucesso",
+      callback: async ()=> {
         loading.close();
         await goto("/");
       }
-    );
+    });
   };
 
   const onCreateUser = async ({ detail }) => {
@@ -48,12 +55,12 @@
       return (errorMsg = errors[res.msg.toLowerCase()] || res.msg);
     }
     loading.close();
-    notification.show(
-      "success",
-      "agora você precisa valida o seu email",
-      "Conta criada com sucesso",
-      async () => await verifyEmail(detail.email)
-    );
+    notification.show({
+      type: "success",
+      msg: "agora você precisa valida o seu email",
+      title: "Conta criada com sucesso",
+      callback: async () => await verifyEmail(detail.email)
+    });
   };
 </script>
 

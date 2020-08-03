@@ -2,13 +2,21 @@
   import Product from "../models/Product";
   import { currecy } from "../lib/format";
 
-  export let className = "",
+  export let className = "", horizontal = false, admin = false,
     product = Product();
+
+    const href = admin ?  '/admin/product/' + product.id : '/product/' + product.id;
 </script>
 
 <style>
   article {
     scroll-snap-align: center;
+    box-shadow: 0px 2px 5px #00000054;
+    transition: box-shadow .3s ease-out;
+  }
+
+  article:hover{
+    box-shadow: 0px 4px 10px #00000077;
   }
 
   article:first-of-type {
@@ -23,18 +31,25 @@
     min-width: 14rem;
     max-width: 18rem;
   }
+
+  .horizontal {
+    margin-left: .5rem;
+    margin-right: .5rem;
+  }
 </style>
 
-<article class={'prod-w shadow-sm' + ' ' + className}>
-  <img
-    class="w-full h-56 object-cover cursor-pointer"
-    src={product.img}
-    alt={product.name} />
-  <div class="flex flex-col p-4 bg-ocitanda-beige">
-    <h1 class="font-bold text-ocitanda-green tracking-wide mb-4 truncate">
+<article class:horizontal class={'prod-w mx-auto relative overflow-hidden' + ' ' + className}>
+  <a {href}>
+    <img
+      class="w-full h-56 p-1 object-cover cursor-pointer"
+      src={product.img}
+      alt={product.name} />
+  </a>
+  <div class="flex flex-col text-center p-4 bg-gray-200">
+    <h1 class="font-bold text-ocitanda-green tracking-wide  truncate">
       {product.name}
     </h1>
-    <p class="text-ocitanda-gold font-bold mb-4 self-end">
+    <p class="text-ocitanda-gold font-bold mb-2">
       {currecy(product.price)} Kz
     </p>
     <slot />

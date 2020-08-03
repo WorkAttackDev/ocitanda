@@ -14,7 +14,6 @@
   const dispatch = createEventDispatcher();
 
   let name = "",
-    surname = "",
     email = "",
     birthDate = "",
     phone = "",
@@ -25,7 +24,6 @@
   const notEmpty = (...input) => input.every((_i) => _i.trim() !== "");
   $: valid = notEmpty(
     name,
-    surname,
     email,
     phone,
     gender,
@@ -35,14 +33,14 @@
 
   const onCreateUser = () => {
     if (!valid)
-      return notification.show(
-        "error",
-        "preencha todos os campos, porfavor",
-        "Campos vazios"
-      );
+      return notification.show({
+        type: "error",
+        msg: "preencha todos os campos, porfavor",
+        title: "Campos vazios",
+      });
 
     const user = {
-      name: `${name} ${surname}`,
+      name: `${name}`,
       email,
       birthDate: birthDate,
       phone,
@@ -53,7 +51,7 @@
 
     dispatch("create", user);
   };
-  
+
   const isEqualPassword = (otherValue) => ({
     errorMsg: "Palavra-Passes diferentes",
     validator: (value) => value === otherValue,
@@ -72,21 +70,16 @@
     on:submit|preventDefault={() => onCreateUser()}>
     <InputText
       className="mb-8"
-      label="Nome"
+      label="Nome completo"
       value={name}
+      name="name"
       disabled
-      validators={[vNotEmpty, vAlpha]}
+      validators={[vNotEmpty]}
       on:validated={(e) => (name = e.detail)} />
     <InputText
       className="mb-8"
-      label="Sobrenome"
-      value={surname}
-      disabled
-      validators={[vNotEmpty, vAlpha]}
-      on:validated={(e) => (surname = e.detail)} />
-    <InputText
-      className="mb-8"
       label="Email"
+      name="email"
       value={email}
       disabled
       validators={[vNotEmpty, vEmail]}
@@ -95,6 +88,7 @@
       className="mb-8"
       label="Data de Nascimento"
       type="date"
+      name="date"
       value={birthDate}
       disabled
       validators={[vNotEmpty]}
@@ -104,6 +98,7 @@
       label="Número de Telefone"
       disabled
       type="phone"
+      name="phone"
       value={phone}
       validators={[vNotEmpty]}
       on:validated={(e) => (phone = e.detail)} />
@@ -113,10 +108,11 @@
       items={['Masculino', 'Femenino', 'Outro']}
       on:selectitem={(e) => (gender = e.detail)} />
     <InputText
-      className="mb-8"
+      className="mb-8 mt-4"
       type="password"
       label="Palavra-Passe"
       value={password}
+      name="password"
       disabled
       validators={[vNotEmpty, vLength(8)]}
       on:validated={(e) => (password = e.detail)} />
@@ -125,6 +121,7 @@
       type="password"
       label="Verificar Palavra-Passe"
       value={verifPassword}
+      name="verifpassword"
       disabled
       validators={[vNotEmpty, vLength(8), isEqualPassword(password)]}
       on:validated={(e) => (verifPassword = e.detail)} />
@@ -132,27 +129,29 @@
   </form>
 {:else}
   <form class="flex flex-col my-8" action="/auth/ocitanda" method="POST">
-    <InputText
-      value={email}
-      className="mb-8"
-      label="Email"
-      type="email"
-      name="email"
-      disabled
-      validators={[vNotEmpty, vEmail]}
-      on:validated={(e) => (email = e.detail)} />
-    <InputText
-      value={password}
-      className="mb-8"
-      name="password"
-      type="password"
-      label="Palavra-Passe"
-      disabled
-      validators={[vNotEmpty, vLength(8)]}
-      on:validated={(e) => (password = e.detail)} />
-    <span class="flex flex-col lg:flex-row">
-      <Button type="submit" className="mb-4 lg:mr-4">Iniciar Sessão</Button>
-      <Button className="bg-red-600" href={`/auth/google`}>
+    <div class="flex flex-col md:flex-row justify-between">
+      <InputText
+        value={email}
+        className="mb-8 md:mr-4 md:w-1/2"
+        label="Email"
+        type="email"
+        name="email"
+        disabled
+        validators={[vNotEmpty, vEmail]}
+        on:validated={(e) => (email = e.detail)} />
+      <InputText
+        value={password}
+        className="mb-8 md:ml-4 md:w-1/2"
+        name="password"
+        type="password"
+        label="Palavra-Passe"
+        disabled
+        validators={[vNotEmpty, vLength(8)]}
+        on:validated={(e) => (password = e.detail)} />
+    </div>
+    <span class="flex flex-col md:flex-row">
+      <Button type="submit" className="mb-4 md:mr-4 md:w-1/2">Iniciar Sessão</Button>
+      <Button className="bg-red-600 md:ml-4 md:w-1/2" href={`/auth/google`}>
         <img class="mr-2 w-4 h-4" src="/google.svg" alt="google logo" />
         Iniciar com Google
       </Button>

@@ -24,7 +24,7 @@ export const handleError = (err) => {
 
 export const axiosInstance = axios.create({
   baseURL: api,
-  timeout: 3000,
+  timeout: 20000,
   // headers: {'X-Custom-Header': 'foobar'}
 });
 
@@ -56,27 +56,6 @@ export const fetchProducts = async (
           qty: quantity,
         })
     );
-  } catch (error) {
-    return handleError(error);
-  }
-};
-
-export const fetchProductById = async (id) => {
-  try {
-    const res = await axiosInstance.get("products/" + id);
-    const data = res.data;
-
-    const product = Product({
-      id: data.id,
-      name: data.name,
-      desc: data.description,
-      price: data.price,
-      producer: "Ocitanda",
-      img: api + data.image_url,
-      deletedAt: data.deleted
-    });
-
-    return product;
   } catch (error) {
     return handleError(error);
   }

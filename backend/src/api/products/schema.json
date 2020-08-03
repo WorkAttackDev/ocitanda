@@ -98,12 +98,9 @@
         },
         "deleted": {
             "$id": "#/properties/deleted",
-            "type": "string",
+            "type": "boolean",
             "title": "deleted",
-            "description": "The deleted user date",
-            "examples": [
-                "2020-06-02T14:04:36.000Z"
-            ]
+            "description": "check product delition"
         }
     }
 }

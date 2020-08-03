@@ -607,7 +607,7 @@ html {
   }
 }
 
-html,
+html, 
 body,
 #sapper {
   min-height: 100%;

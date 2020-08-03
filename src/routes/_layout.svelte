@@ -4,16 +4,16 @@
   import { notification } from "./../stores/notification";
   import { loading } from "./../stores/loading";
   import { stores } from "@sapper/app";
+  import { AbandonedCartMajorMonotone } from "svelte-polaris-icons";
 
   import ComingSoon from "./../components/coming/ComingSoon.svelte";
   import Header from "../components/Header.svelte";
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import Footer from "../components/Footer.svelte";
   import Notification from "../components/Notification.svelte";
-  import { AbandonedCartMajorMonotone } from "svelte-polaris-icons";
 
   const { preloading, session } = stores();
-  const ready = true;
+  let ready = true;
 
   onMount(async () => {
     if ($session.isAuth) {
@@ -25,8 +25,7 @@
 {#if ready}
   <Header />
   <main
-    class="flex container flex-col max-w-screen-xxl mx-auto pt-12 md:pt-16 pb-10
-    ">
+    class="flex flex-col w-full max-w-screen-xxl mx-auto pt-12 pb-10">
     <slot />
   </main>
   <Footer />
@@ -37,14 +36,14 @@
 {#if $preloading || $loading}
   <LoadingOverlay />
 {/if}
-
 {#if $notification.msg}
   <Notification
+    minimal={$notification.minimal}
     title={$notification.title}
     msg={$notification.msg}
     type={$notification.type}
     href={$notification.button.href}
     buttonText={$notification.button.text}
     on:close={() => notification.close()}
-    on:click={() => $notification.button.onClick ? $notification.button.onClick() : null} />
+    on:click={() => ($notification.button.onClick ? $notification.button.onClick() : null)} />
 {/if}

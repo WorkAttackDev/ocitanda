@@ -15,29 +15,28 @@
     _g.startsWith(consumer.gender)
   );
 
-  let name = consumer.user.name.split(" ")[0] || "",
-    surname = consumer.user.name.split(" ")[1] || "",
+  let name = consumer.user.name,
     birthDate = isoDate.substring(0, 10) || "",
     phone = consumer.user.phone || "",
     gender = parsedGender || "",
     readyToUpdate = false;
 
   const notEmpty = (...input) => input.every((_i) => _i.trim() !== "");
-  $: valid = notEmpty(name, surname, phone, gender);
+  $: valid = notEmpty(name, phone, gender);
 
   const onSubmitForm = () => {
     if (valid) return (readyToUpdate = true);
-    notification.show(
-      "error",
-      "preencha todos os campos para editar.",
-      "Erro ao Atualizar"
-    );
+    notification.show({
+      type: "error",
+      msg: "preencha todos os campos para editar.",
+      title: "Erro ao Atualizar",
+    });
   };
 
   const onUpdateUser = () => {
     if (valid) {
       const user = {
-        name: `${name} ${surname}`,
+        name: `${name}`,
         birthDate,
         phone,
         gender: gender[0],
@@ -57,15 +56,8 @@
     label="Nome"
     value={name}
     disabled
-    validators={[vNotEmpty, vAlpha]}
+    validators={[vNotEmpty]}
     on:validated={(e) => (name = e.detail)} />
-  <InputText
-    className="mb-8"
-    label="Sobrenome"
-    value={surname}
-    disabled
-    validators={[vNotEmpty, vAlpha]}
-    on:validated={(e) => (surname = e.detail)} />
   <InputText
     className="mb-8"
     label="Data de Nascimento"

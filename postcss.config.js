@@ -8,8 +8,10 @@ const purgecss = require("@fullhuman/postcss-purgecss")({
 module.exports = {
   plugins: [
     tailwindcss("./tailwind.js"),
-    require("autoprefixer")({ overrideBrowserslist: "> 0.2%, not dead" }),
-
+    require("autoprefixer")({
+      overrideBrowserslist: "> 0.2%, not dead",
+      flexbox: true,
+    }),
     ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
   ],
 };

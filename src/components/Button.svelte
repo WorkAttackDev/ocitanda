@@ -3,7 +3,8 @@
     disabled = false,
     scrollTop = false,
     href = "",
-    type = "button";
+    type = "button",
+    link = false;
 </script>
 
 <style>
@@ -17,7 +18,8 @@
     @apply bg-gray-400 text-gray-600 cursor-not-allowed pointer-events-none;
   }
 
-  button::before, a::before {
+  button::before,
+  a::before {
     content: "";
     position: absolute;
     top: 0;
@@ -25,11 +27,16 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, #ffffff6c, transparent);
-    transition: .5s ease-out;
+    transition: 0.5s ease-out;
   }
 
-  button:hover::before, a:hover::before {
+  button:hover::before,
+  a:hover::before {
     left: 100%;
+  }
+
+  .link {
+    @apply bg-ocitanda-beige text-ocitanda-green;
   }
 </style>
 
@@ -46,6 +53,7 @@
   <a
     rel="prefetch"
     class:disabled
+    class:link
     href={disabled ? '' : href}
     class={'relative flex items-center justify-center px-4 py-2 bg-ocitanda-green text-ocitanda-beige capitalize hover:bg-ocitanda-khaki hover:text-ocitanda-green hover:shadow overflow-hidden ' + className}>
     <slot>lorem ipum</slot>

@@ -13,6 +13,13 @@ const thanksToSubscribe = `
   <a href="https://ocitanda.com">https://ocitanda.com</a>
 `;
 
+
+const purchaseEmail = `
+  <h1>Esta é a lista de produtos requisitados por si:</h1>
+  <p> Apartir de agora receberá todas as nossas atualizações, desde produtos, promoções e tudo  de bom que a <strong>OCITANDA</strong> tem para o oferecer.</p>
+  <a href="https://ocitanda.com">https://ocitanda.com</a>
+`;
+
 const resetPasswordHTML = (link) => `
   <h1>Este link serve para recuperar a sua password</h1>
   <p>Click no Link para recuperar no link para recuperar a palavra-passe.</p>

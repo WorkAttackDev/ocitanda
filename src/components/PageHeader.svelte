@@ -1,6 +1,6 @@
 <script>
   import { fly, fade } from "svelte/transition";
-  export let title = "O mercado à sua porta", subTitle= "Este é o conceito da OCITANDA", imgAlt = "home delivery", imgSrc = "/ocitanda/8.jpg";
+  export let title = "O mercado à sua porta", subTitle= "Este é o conceito da OCITANDA", imgAlt = "home delivery", imgSrc = "/ocitanda/8.jpg", contrast = false;
 </script>
 
 <style>
@@ -9,9 +9,11 @@
     }
 </style>
 
-<header in:fade class="relative flex flex-col justify-center">
+<header in:fade class="relative flex flex-col justify-center overflow-x-hidden">
   <span
     in:fly={{ x: 500, duration: 1000 }}
+    class:bg-opacity-75={contrast}
+    class:bg-ocitanda-brown={contrast}
     class="relative z-10 flex flex-col p-8 bg-ocitanda-green bg-opacity-50
     text-white">
     <h1 class="text-4xl font-bold">{title}</h1>

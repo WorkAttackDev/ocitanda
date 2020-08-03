@@ -22,19 +22,27 @@
 </script>
 
 <style>
-
+  span {
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+  }
 </style>
 
 <section class="flex justify-center items-center my-2 text-white">
-  <Button disabled={qty <= 1} on:click={onDecrease} className="mx-2">
+  <Button
+    disabled={qty <= 1}
+    on:click={onDecrease}
+    className="mx-1 rounded-tl-md rounded-bl-md">
     <MinusMinor class="w-4 fill-current" />
   </Button>
   <span
-    class="w-auto border-none bg-ocitanda-green bg-opacity-75 px-4 py-2 text-lg
-    mx-2">
+    class="w-auto border-none bg-ocitanda-green bg-opacity-75 px-4 text-lg ">
     {qty}
   </span>
-  <Button disabled={max} on:click={onIncrease} className="mx-2">
+  <Button
+    disabled={max}
+    on:click={onIncrease}
+    className="mx-1 rounded-tr-md rounded-br-md">
     <PlusMinor class="w-4 fill-current" />
   </Button>
 </section>

@@ -12,19 +12,15 @@ function createProducts() {
     order = 1
   ) => {
     try {
-      let res = await axiosInstance.get("products", {
+      let res = await axiosInstance.get("products/admin", {
         params: {
           limit,
           page,
           category,
           order,
         },
-        data: {
-          isAdmin: true,
-        },
       });
-      console.log(res);
-      
+
       return res.data.map(
         ({ name, id, quantity, price, image_url, description, deleted }) =>
           Product({
@@ -43,21 +39,45 @@ function createProducts() {
     }
   };
 
+  const getProductById = async (id) => {
+    try {
+      const res = await axiosInstance.get("products/" + id);
+      const data = res.data;
+
+      const product = Product({
+        id: data.id,
+        name: data.name,
+        desc: data.description,
+        price: data.price,
+        qty: data.quantity,
+        producer: "Ocitanda",
+        img: api + data.image_url,
+        deletedAt: data.deleted,
+        producerId: data.producer_id,
+        categoryId: data.category_id,
+      });
+
+      return product;
+    } catch (error) {
+      return handleError(error);
+    }
+  };
+
   const searchProductsBySlug = async (slug = "") => {
     try {
       let res = await axiosInstance.get("products/search/" + slug);
       return res.data.map(
         ({ name, id, quantity, price, image_url, description, deleted }) =>
-          Product(
+          Product({
             id,
             name,
-            description,
+            desc: description,
             price,
-            quantity,
-            "Ocitanda",
-            api + image_url,
-            deleted
-          )
+            qty: quantity,
+            producer: "Ocitanda",
+            img: api + image_url,
+            deletedAt: deleted,
+          })
       );
     } catch (error) {
       console.error(error);
@@ -68,7 +88,15 @@ function createProducts() {
   const createProduct = async (product = new FormData()) => {
     try {
       let res = await axiosInstance.post("products", product);
-      console.log(res);
+      return res;
+    } catch (error) {
+      return handleError(error);
+    }
+  };
+
+  const editProduct = async (product = new FormData()) => {
+    try {
+      let res = await axiosInstance.patch("products", product);
       return res;
     } catch (error) {
       return handleError(error);
@@ -76,14 +104,19 @@ function createProducts() {
   };
 
   const invalidate = async (id, reverse = false) => {
-    console.log(id, reverse);
-    
     try {
       let res = await axiosInstance.patch("products/invalidate/" + id, {
         invalidate: reverse,
       });
+      return res;
+    } catch (error) {
+      return handleError(error);
+    }
+  };
 
-      console.log(res);
+  const deleteProduct = async (id) => {
+    try {
+      let res = await axiosInstance.delete("products/" + id);
       return res;
     } catch (error) {
       return handleError(error);
@@ -93,9 +126,12 @@ function createProducts() {
   return {
     subscribe,
     searchProductsBySlug,
+    getProductById,
     createProduct,
     invalidate,
     getAsAdmin,
+    editProduct,
+    deleteProduct,
   };
 }
 

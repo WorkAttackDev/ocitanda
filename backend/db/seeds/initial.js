@@ -50,7 +50,7 @@ exports.seed = async (knex) => {
       password: await bcrypt.hash(password, 12),
       phone: "997267270",
       image_url: "/api/static/images/ocitanda.jpg",
-      verified: true
+      verified: true,
     },
     {
       email: "geral@ocitanda.com",
@@ -59,7 +59,7 @@ exports.seed = async (knex) => {
       phone: "993228333",
       image_url: "/api/static/images/ocitanda.jpg",
       verified: true
-    },
+    }
   ];
 
   const address = {
@@ -72,6 +72,8 @@ exports.seed = async (knex) => {
     birth_date: new Date(),
     user_id: 1,
     gender: "M",
+    isAdmin: true
+
   };
 
   const producer = {

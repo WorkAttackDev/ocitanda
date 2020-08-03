@@ -13,6 +13,12 @@
     top: 50%;
     left: 50%;
   }
+
+  @screen md{
+    section{
+      max-width: 90%;
+    }
+  }
 </style>
 
 <section

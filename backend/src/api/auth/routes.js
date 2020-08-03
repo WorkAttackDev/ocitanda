@@ -78,7 +78,6 @@ router.post("/signup", signupValidation, async (req, res, next) => {
       },
     });
 
-    const info = await sendEmail(consumer.user.email);
     await trx.commit();
 
     delete consumer.user.password;
@@ -93,6 +92,8 @@ router.post("/signup", signupValidation, async (req, res, next) => {
 
     res.status(201);
     res.json({ consumer, token });
+    const info = await sendEmail(consumer.user.email);
+    console.log(info);
   } catch (error) {
     await trx.rollback();
     next(error);

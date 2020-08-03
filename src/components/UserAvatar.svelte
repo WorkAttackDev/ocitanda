@@ -36,9 +36,14 @@
     {#if $session.isAuth}
       <img
         class="w-full h-full object-cover rounded-full"
-        on:error={(e) => (e.target.src !== '/user.png' ? (e.target.src = '/user.png') : undefined)}
+        on:error={(e) => e.target.src = '/user.png'}
         src={$session.user.user.image_url}
         alt={$session.user.user.name} />
+    {:else}
+      <img
+        class="w-full h-full object-cover rounded-full"
+        src='/user.png'
+        alt="user icon" />
     {/if}
   </figure>
   {#if $session.isAuth && $page.path === '/consumer'}

@@ -3,18 +3,30 @@
   import { category } from "../../../stores/category";
   import { products as productStore } from "../../../stores/products";
 
-  export async function preload(page) {
+  export async function preload(page, session) {
+    const init = () =>
+      !session.isAuth || !session.user.isAdmin
+        ? this.redirect(302, "login")
+        : null;
+    init();
+
     const [pageNum, currCategory, order] = page.params.data;
 
     if (isNaN(pageNum) || typeof currCategory !== "string")
       throw new Error("Invalid params");
 
     const limit = 10;
-    
-    let categories = ["Todos", ...(await category.getCategories())];
-    if (categories.error) categories = ["Todos"];
 
-    let products = await productStore.getAsAdmin(limit, pageNum, currCategory, order);
+    let categories = [{ name: "Todos" }, ...(await category.getCategories())];
+    if (categories.error) categories = [{ name: "Todos" }];
+
+    let products = await productStore.getAsAdmin(
+      limit,
+      pageNum,
+      currCategory,
+      order
+    );
+
     if (products.error) products = [];
 
     return {
@@ -35,6 +47,7 @@
   import ProductSection from "../../../components/ProductSection.svelte";
   import Pagination from "../../../components/products/Pagination.svelte";
   import Loading from "../../../components/Loading.svelte";
+  import Button from "../../../components/Button.svelte";
 
   export let categories,
     products,
@@ -44,9 +57,9 @@
     page = 1,
     order = 1;
 
-  $: categoriesHref = categories.map((_c) => ({
-    text: _c,
-    href: `/admin/products/${page}/${_c}/${order}`,
+  $: categoriesHref = categories.map(({ name }) => ({
+    text: name,
+    href: `/admin/products/${page}/${name}/${order}`,
   }));
 
   onMount(() => {
@@ -59,13 +72,21 @@
     { text: "Baratos", href: `/admin/products/${page}/${currCategory}/3` },
     { text: "Caros", href: `/admin/products/${page}/${currCategory}/4` },
   ];
+
+  const refreshProducts = async () => {
+    fetching = true;
+    const res = await productStore.getAsAdmin(limit, page, currCategory, order);
+    if (res.error) return (fetching = false);
+    products = res;
+    fetching = false;
+  };
 </script>
 
 <svelte:head>
   <title>Ocitanda - Produtos pagina {page}</title>
 </svelte:head>
 
-<section class="relative flex flex-wrap mb-4 pb-2 bg-ocitanda-green">
+<section class="relative flex flex-wrap mb-4 px-1 bg-ocitanda-green">
   <SelectDropdown
     labelClassName="text-ocitanda-beige"
     items={categoriesHref}
@@ -78,11 +99,17 @@
     items={orders}
     selected={orders[order - 1].text}
     label="Ordenar por" />
+  <Button href="/admin/product" className="m-2 ml-auto bg-ocitanda-gold ">Add Produto</Button>
 </section>
 {#if fetching}
   <Loading />
 {:else}
-  <ProductSection {products} vertical {fetching} />
+  <ProductSection
+    admin
+    {products}
+    vertical
+    {fetching}
+    on:refresh={refreshProducts} />
 {/if}
 <Pagination
   pageCount={page}

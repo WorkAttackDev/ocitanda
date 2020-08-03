@@ -11,7 +11,7 @@
     const limit = 10;
 
     let categories = [{ name: "Todos" }, ...(await category.getCategories())];
-    if (categories.error) categories = ["Todos"];
+    if (categories.error) categories = [{ name: "Todos" }];
 
     let products = await fetchProducts(limit, pageNum, currCategory, order);
     if (products.error) products = [];
@@ -64,7 +64,7 @@
   <title>Ocitanda - Produtos pagina {page}</title>
 </svelte:head>
 
-<section class="relative flex flex-wrap mb-4 pb-2 bg-ocitanda-green">
+<section class="relative flex items-center flex-wrap mb-4 px-1 bg-ocitanda-green">
   <SelectDropdown
     labelClassName="text-ocitanda-beige"
     items={categoriesHref}

@@ -1,37 +1,42 @@
 <!doctype html>
 <html lang='pt'>
 
-	<head>
-		<meta charset='utf-8'>
-		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
-		<meta name='theme-color' content='#333333'>
-		<meta name="description" content="Ocitanda e-commerce oficial">
-		<title>Ocitanda - E-commerce</title>
-		%sapper.base%
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+	<meta name='theme-color' content='#333333'>
+	<meta name="description" content="Somos especializados na distribuição de alimentos orgânicos e frescos,
+		contando para isso, com uma equipa qualificada na busca de soluções
+		adequadas para o bem-estar dos nossos clientes e colaboradores. Prezamos
+		por padrões de qualidade focados na conquista e fidelização dos nossos
+		clientes.">
+	<title>Ocitanda - E-commerce</title>
+	%sapper.base%
 
-		<link rel='stylesheet' href='main.css'>
-		<link rel='manifest' href='manifest.json' crossorigin='use-credentials'>
-		<link rel='icon' type='image/png' href='favicon.png'>
+	<link rel='stylesheet' href='main.css'>
+	<link rel='manifest' href='manifest.json' crossorigin='use-credentials'>
+	<link rel='icon' type='image/png' href='favicon.png'>
 
-		<!-- Sapper generates a <style> tag containing critical CSS
+	<!-- Sapper generates a <style> tag containing critical CSS
 	     for the current page. CSS for the rest of the app is
 	     lazily loaded when it precaches secondary pages -->
-		%sapper.styles%
+	%sapper.styles%
 
-		<!-- This contains the contents of the <svelte:head> component, if
+	<!-- This contains the contents of the <svelte:head> component, if
 	     the current page has one -->
-		%sapper.head%
-	</head>
+	%sapper.head%
+</head>
 
-	<body>
-		<!-- The application will be rendered inside this element,
+<body>
+	<!-- The application will be rendered inside this element,
 	     because `src/client.js` references it -->
-		<div id='sapper' class="flex flex-col">%sapper.html%</div>
+	<div id='sapper' class="flex flex-col">%sapper.html%</div>
 
-		<!-- Sapper creates a <script> tag containing `src/client.js`
+
+	<!-- Sapper creates a <script> tag containing `src/client.js`
 	     and anything else it needs to hydrate the app and
 	     initialise the router -->
-		%sapper.scripts%
-	</body>
+	%sapper.scripts%
+</body>
 
 </html>

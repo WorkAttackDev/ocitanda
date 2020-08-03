@@ -19,17 +19,17 @@
       const res = await sendVerifyEmail(email);
       if (res.error) {
         loading.close();
-        return notification.show(
-          "error",
-          "erro ao enviar o email, tente novamente",
-          "Email não enviado"
-        );
+        return notification.show({
+          type: "error",
+          msg: "erro ao enviar o email, tente novamente",
+          title: "Email não enviado",
+        });
       }
-      notification.show(
-        "success",
-        "O seu email de verificação, foi enviado com sucesso!",
-        "Email enviado"
-      );
+      notification.show({
+        type: "success",
+        msg: "O seu email de verificação, foi enviado com sucesso!",
+        title: "Email enviado",
+      });
       loading.close();
     }
   };
@@ -50,6 +50,8 @@
       value={email}
       className="mb-8"
       label="Email"
+      type="email"
+      name="email"
       disabled
       validators={[vNotEmpty, vEmail]}
       on:validated={(e) => (email = e.detail)} />

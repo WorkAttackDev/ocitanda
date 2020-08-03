@@ -9,6 +9,7 @@ function createNotification() {
     title: "",
     callback: undefined,
     button: buttonOptions,
+    minimal: false,
   };
   const { subscribe, set, update } = writable(initial);
 
@@ -23,14 +24,15 @@ function createNotification() {
     set(initial);
   };
 
-  const show = (
+  const show = ({
     type,
-    msg,
+    msg = "",
     title = "Notificação",
-    callback,
-    button = buttonOptions
-  ) => {
-    set({ type, msg, title, callback, button });
+    callback = Function(),
+    button = buttonOptions,
+    minimal = false,
+  }) => {
+    set({ type, msg, title, callback, button, minimal });
   };
 
   return {
