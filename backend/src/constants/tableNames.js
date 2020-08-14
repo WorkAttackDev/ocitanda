@@ -2,6 +2,7 @@ module.exports = {
 	user: "user",
 	province: "province",
 	address: "address",
+	planting: "planting",
 	consumer: "consumer",
 	producer: "producer",
 	product: "product",

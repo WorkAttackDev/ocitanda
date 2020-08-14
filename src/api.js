@@ -44,7 +44,7 @@ export const fetchProducts = async (
       },
     });
     return res.data.map(
-      ({ name, id, quantity, price, image_url, description, deleted }) =>
+      ({ name, id, quantity, price, image_url, description, deleted, unity }) =>
         Product({
           id,
           deletedAt: deleted,
@@ -52,6 +52,7 @@ export const fetchProducts = async (
           img: api + image_url,
           name,
           price,
+          unity,
           producer: "Ocitanda",
           qty: quantity,
         })
@@ -76,6 +77,7 @@ export const fetchUserCartItems = async (userId, authToken) => {
         _d.product.quantity,
         _d.product.producer_id,
         _d.product.price,
+        _d.product.unity,
         _d.product.name,
         api + _d.product.image_url,
         _d.product.description,

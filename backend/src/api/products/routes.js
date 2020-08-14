@@ -2,12 +2,13 @@ const router = require("express").Router();
 const Product = require("./model");
 const Category = require("../categories/model");
 const fileUpload = require("../../middleware/file-upload");
+const {unlink} = require("fs");
 const { body, param } = require("express-validator");
 const { handleValidationError, isId } = require("../validations");
 const { throwErrorIf } = require("../util");
 
 const productValidation = [
-  body(["name", "description"]).isString().not().isEmpty(),
+  body(["name", "description", "unity"]).isString().not().isEmpty(),
   body("price").isNumeric(),
   body(["producerId", "categoryId", "quantity"]).isInt({ min: 1 }),
 ];
@@ -30,6 +31,7 @@ router.get("/", async (req, res, next) => {
     3: { col: "price", dir: "asc" },
     4: { col: "price", dir: "desc" },
   };
+
   try {
     const category = !(req.query.category.toLowerCase() === "todos")
       ? await Category.query().where({ name: req.query.category }).first()
@@ -162,6 +164,7 @@ router.post(
       description,
       producerId,
       categoryId,
+      unity
     } = req.body;
 
     try {
@@ -173,6 +176,7 @@ router.post(
         image_url: "static/images/products/" + req.file.filename,
         producer_id: +producerId,
         category_id: +categoryId,
+        unity
       });
       console.log(wasCreated);
       res.status(201);
@@ -182,6 +186,7 @@ router.post(
     }
   }
 );
+
 router.patch(
   "/",
   fileUpload.single("image"),
@@ -198,6 +203,7 @@ router.patch(
       description,
       producerId,
       categoryId,
+      unity
     } = req.body;
 
     try {
@@ -208,6 +214,7 @@ router.patch(
         description,
         producer_id: +producerId,
         category_id: +categoryId,
+        unity
       };
 
       if (req.file)
@@ -256,9 +263,14 @@ router.delete("/:id", [isId], async (req, res, next) => {
   handleValidationError(req, res, next);
   const { id } = req.params;
   try {
-    const wasDeleted = await Product.query().deleteById(id);
-    console.log(id, wasDeleted);
-    return res.json({ message: "deleted succesfuly!" });
+    const product = await Product.query().findById(id); 
+    unlink(product.image_url.replace("static/", "src/public/"), (err) => {
+      // throwErrorIf(res, err, "erro ao apagagar produto", 500);
+      if(err) throw err;
+      Product.query().deleteById(id).then(()=> {
+        return res.json({ message: "deleted succesfuly!" });
+      });
+    })
   } catch (error) {
     return next(error);
   }

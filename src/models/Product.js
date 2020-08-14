@@ -9,6 +9,7 @@ export default ({
   producerId = "",
   categoryId = "",
   deletedAt = null,
+  unity = ""
 }) => ({
   id,
   name,
@@ -19,5 +20,6 @@ export default ({
   producerId,
   categoryId,
   img,
+  unity,
   deletedAt,
 });

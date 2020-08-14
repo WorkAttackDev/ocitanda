@@ -2,21 +2,9 @@
 const Knex = require("knex");
 const tableNames = require("../../src/constants/tableNames");
 const orderedTables = require("../../src/constants/orderedTables");
+const {addDefaultColumns, references} = require("../utils");
 
-function addDefaultColumns(table) {
-  table.timestamps(false, true);
-  table.boolean("deleted").defaultTo(false);
-}
 
-function references(table, foringTable, column = "id") {
-  return table
-    .integer(`${foringTable}_${column}`)
-    .unsigned()
-    .references(column)
-    .inTable(foringTable)
-    .onDelete("cascade")
-    .notNullable();
-}
 
 /**
  * @param {Knex} knex
@@ -67,8 +55,8 @@ exports.up = async (knex) => {
 
   await knex.schema.createTable(tableNames.producer, (table) => {
     table.increments().notNullable();
-    table.string("owner", 50).notNullable();
-    references(table, tableNames.user);
+    table.string("name", 50).notNullable();
+    // references(table, tableNames.user);
     addDefaultColumns(table);
   });
 
@@ -79,6 +67,7 @@ exports.up = async (knex) => {
     table.integer("quantity").notNullable();
     table.string("description", 300).notNullable();
     table.string("image_url", 200).notNullable();
+    table.enum("unity", ["unidade", "kg"]).defaultTo("kg");
     references(table, tableNames.producer);
     references(table, tableNames.category);
     addDefaultColumns(table);

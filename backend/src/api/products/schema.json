@@ -8,7 +8,8 @@
         "name",
         "description",
         "image_url",
-        "quantity"
+        "quantity",
+        "unity"
     ],
     "additionalProperties": false,
     "properties": {
@@ -40,6 +41,15 @@
             "examples": [
                 100,
                 1000
+            ]
+        },
+        "unity": {
+            "$id": "#/properties/unity",
+            "type": "string",
+            "description": "the unity of the product",
+            "examples": [
+                "kg",
+                "unidade"
             ]
         },
         "description": {

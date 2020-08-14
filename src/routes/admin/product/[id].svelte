@@ -8,7 +8,7 @@
       !session.isAuth || !session.user.isAdmin
         ? this.redirect(302, "login")
         : null;
-      init();
+    init();
 
     const { id } = page.params;
 
@@ -23,7 +23,7 @@
 
     return {
       categories: categories.map((_c) => ({ ..._c, text: _c.name })),
-      producers: producers.map((_p) => ({ ..._p, text: _p.user.name })),
+      producers: producers.map((_p) => ({ ..._p, text: _p.name })),
       product,
     };
   }
@@ -46,11 +46,12 @@
     producers,
     product = ProductModel();
 
-  let name = product.name || "Uvas",
+  let name = product.name || "",
     price = product.price || 0,
     qty = product.qty || 0,
     desc = product.desc || "",
     img = product.img || new File([], ""),
+    unity = product.unity || "kg",
     producerId = product.producerId,
     categoryId = product.categoryId;
 
@@ -68,7 +69,7 @@
         type: "error",
         msg: "Ocorreu um erro ao carregar as categorias!",
         title: "Erro de conexão",
-        callback: async ()=> await goto("/admin/products/1/Todos/1")
+        callback: async () => await goto("/admin/products/1/Todos/1"),
       });
   });
 
@@ -81,6 +82,7 @@
     formData.append("price", price);
     formData.append("quantity", qty);
     formData.append("description", desc);
+    formData.append("unity", unity);
     if (typeof img === "object") formData.append("image", img);
     formData.append("producerId", producerId);
     formData.append("categoryId", categoryId);
@@ -140,6 +142,12 @@
       value={desc}
       validators={[vNotEmpty]}
       on:validated={({ detail }) => (desc = detail)} />
+    <SelectDropdown
+      className="mb-6"
+      label="Unidade"
+      selected={unity}
+      items={['kg', 'unidade']}
+      on:selectitem={({ detail }) => (unity = detail)} />
     <SelectDropdown
       className="mb-6"
       label="Categoria"

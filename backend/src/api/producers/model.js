@@ -13,14 +13,14 @@ class Producer extends Model {
 
   static get relationMappings() {
     // eslint-disable-next-line global-require
-    const User = require("../users/model");
+    const Planting = require("../plantings/model");
     return {
-      user: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
+      plantings: {
+        relation: Model.HasManyRelation,
+        modelClass: Planting,
         join: {
-          from: `${tableNames.producer}.user_id`,
-          to: `${tableNames.user}.id`,
+          from: `${tableNames.producer}.id`,
+          to: `${tableNames.planting}.producer_id`,
         },
       },
     };

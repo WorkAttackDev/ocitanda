@@ -1,0 +1,2 @@
+// get all producer
+GET http://localhost:5050/api/producers

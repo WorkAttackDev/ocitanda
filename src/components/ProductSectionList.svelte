@@ -96,7 +96,7 @@
                 on:click={() => dispatch('removefromcart', product.cartId)}
                 class="delete-btn absolute bg-ocitanda-brown p-4 rounded-full">
                 <DeleteMajorMonotone
-                  class="w-2 h-auto fill-current text-white" />
+                  class="w-4 min-w-4 h-auto fill-current text-white" />
               </button>
             {:else if productType === 'add' && !product.onCart}
               <Button

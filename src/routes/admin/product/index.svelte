@@ -7,7 +7,7 @@
         ? this.redirect(302, "login")
         : null;
 
-        init();
+    init();
 
     let categories = await category.getCategories();
     if (categories.error) categories = [];
@@ -16,7 +16,7 @@
 
     return {
       categories: categories.map((_c) => ({ ..._c, text: _c.name })),
-      producers: producers.map((_p) => ({ ..._p, text: _p.user.name })),
+      producers: producers.map((_p) => ({ ..._p, text: _p.name })),
     };
   }
 </script>
@@ -46,6 +46,7 @@
     desc = "",
     img,
     producerId = 0,
+    unity = "kg",
     categoryId = 0;
 
   $: isValid = () =>
@@ -75,6 +76,7 @@
     formData.append("name", name);
     formData.append("price", price);
     formData.append("quantity", qty);
+    formData.append("unity", unity);
     formData.append("description", desc);
     formData.append("image", img);
     formData.append("producerId", producerId);
@@ -92,7 +94,7 @@
       type: "success",
       msg: name + " foi criado com sucesso",
       title: "Produto criado",
-      callback: async ()=> await goto("/admin/products/1/Todos/1")
+      callback: async () => await goto("/admin/products/1/Todos/1"),
     });
   };
 </script>
@@ -135,6 +137,12 @@
       value={desc}
       validators={[vNotEmpty]}
       on:validated={({ detail }) => (desc = detail)} />
+    <SelectDropdown
+      className="mb-6"
+      label="Unidade"
+      selected={unity}
+      items={['kg', 'unidade']}
+      on:selectitem={({ detail }) => (unity = detail)} />
     <SelectDropdown
       className="mb-6"
       label="Categoria"

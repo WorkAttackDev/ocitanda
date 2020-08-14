@@ -1,5 +1,5 @@
 <script>
-import {createEventDispatcher} from "svelte";
+  import { createEventDispatcher } from "svelte";
   import { goto } from "@sapper/app";
   import SelectDropdown from "../SelectDropdown.svelte";
   import Button from "../Button.svelte";
@@ -7,7 +7,9 @@ import {createEventDispatcher} from "svelte";
   import Product from "../../models/Product";
   import { currecy } from "../../lib/format";
 
-  export let product = Product(), className = "", isOnCart;
+  export let product = Product(),
+    className = "",
+    isOnCart;
 
   const dispatch = createEventDispatcher();
 </script>
@@ -27,16 +29,17 @@ import {createEventDispatcher} from "svelte";
   </h3>
   <p class="mb-4">{product.desc}</p>
   <span class="flex flex-col">
-    <p class="text-2xl font-bold text-ocitanda-gold mb-4">{currecy(product.price)} Kz</p>
+    <p class="text-2xl font-bold text-ocitanda-gold mb-4">
+      {currecy(product.price)} 
+      <strong >Kz/{product.unity}</strong>
+    </p>
     <!-- <QuantityBox qty={product.count || 1} /> -->
   </span>
   {#if isOnCart}
-  <Button href="/cart">
-    Ir ao Carrinho
-  </Button>
+    <Button href="/cart">Ir ao Carrinho</Button>
   {:else}
-  <Button on:click={()=> dispatch("add")} className="mt-4">
-    Adicionar ao Carrinho
-  </Button>
+    <Button on:click={() => dispatch('add')} className="mt-4">
+      Adicionar ao Carrinho
+    </Button>
   {/if}
 </article>

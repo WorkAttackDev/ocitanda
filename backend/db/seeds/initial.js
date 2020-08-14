@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 const Knex = require("knex");
 const bcrypt = require("bcrypt");
-const crypto = require("crypto");
+// const crypto = require("crypto");
 const orderedTables = require("../../src/constants/orderedTables");
 const tableNames = require("../../src/constants/tableNames");
 
@@ -45,20 +45,13 @@ exports.seed = async (knex) => {
 
   const user = [
     {
+      id: 1,
       email: "denilson2770@gmail.com",
       name: "Denilson Costa",
       password: await bcrypt.hash(password, 12),
       phone: "997267270",
       image_url: "/api/static/images/ocitanda.jpg",
       verified: true,
-    },
-    {
-      email: "geral@ocitanda.com",
-      name: "ocitanda",
-      password: await bcrypt.hash(password, 12),
-      phone: "993228333",
-      image_url: "/api/static/images/ocitanda.jpg",
-      verified: true
     }
   ];
 
@@ -77,8 +70,7 @@ exports.seed = async (knex) => {
   };
 
   const producer = {
-    owner: "The company owner",
-    user_id: 2,
+    name: "The company owner",
   };
 
   const purchase = {

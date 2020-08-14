@@ -43,6 +43,8 @@
       className="mb-8"
       label="Email"
       disabled
+      type="email"
+      name="email"
       validators={[vNotEmpty, vEmail]}
       on:validated={(e) => (email = e.detail)} />
     <Button type="submit">Enviar Email</Button>

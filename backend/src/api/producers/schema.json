@@ -4,24 +4,17 @@
 	"title": "Consumer",
 	"description": "The Consumer Schrema",
 	"required": [
-		"user_id",
-		"owner"
+		"name"
 	],
 	"additionalProperties": false,
 	"properties": {
-		"user_id": {
-			"$id": "#/properties/user_id",
-			"type": "integer",
-			"title": "user id",
-			"description": "the user id"
-		},
-		"owner": {
-			"$id": "#/properties/owner",
+		"name": {
+			"$id": "#/properties/name",
 			"type": "string",
-			"title": "owner",
-			"description": "the owner of the farm",
+			"title": "name",
+			"description": "the name of the farm",
 			"examples": [
-				"Denilson Costa"
+				"Ocitanda"
 			]
 		},
 		"created_at": {

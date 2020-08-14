@@ -11,6 +11,7 @@
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
   import Footer from "../components/Footer.svelte";
   import Notification from "../components/Notification.svelte";
+import { producer } from "../stores/producer";
 
   const { preloading, session } = stores();
   let ready = true;
@@ -18,6 +19,7 @@
   onMount(async () => {
     if ($session.isAuth) {
       await cart.initCart($session.user.id);
+      await producer.initProducers();
     }
   });
 </script>

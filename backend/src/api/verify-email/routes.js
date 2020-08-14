@@ -6,6 +6,10 @@ const { handleValidationError } = require("../validations");
 const crypto = require("crypto");
 const { verifyEmail } = require("../email");
 const User = require("../users/model");
+const site =
+  process.env.NODE_ENV !== "development"
+    ? "https://www.ocitanda.com/"
+    : "http://localhost:3000/";
 
 router.get(
   "/",
@@ -63,11 +67,10 @@ router.post(
 
       const info = await verifyEmail(
         existUser.email,
-        "http://localhost:3000/validate-email/" + token
+        site + "validate-email/" + token
       );
 
       console.log(info);
-      
 
       res.status(200).json({ message: "verify email sent" });
     } catch (error) {
@@ -75,6 +78,5 @@ router.post(
     }
   }
 );
-
 
 module.exports = router;

@@ -8,6 +8,7 @@ module.exports = [
 	tableNames.product,
 	tableNames.producer,
 	tableNames.consumer,
+	// tableNames.planting,
 	tableNames.address,
 	tableNames.province,
 	tableNames.category,

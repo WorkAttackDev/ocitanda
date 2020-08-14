@@ -14,7 +14,7 @@
 
 <section class="flex flex-col overflow-hidden">
   <PageHeader
-    title="Um meio para os fornrcedores"
+    title="Um meio para os fornecedores"
     subTitle="Criamos laços com os nossos fornecedores"
     imgSrc="/greenhouse-X1.jpg"
     imgAlt="greenhouse" />

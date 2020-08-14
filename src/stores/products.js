@@ -22,12 +22,13 @@ function createProducts() {
       });
 
       return res.data.map(
-        ({ name, id, quantity, price, image_url, description, deleted }) =>
+        ({ name, id, quantity, price, image_url, description, deleted, unity }) =>
           Product({
             id,
             name,
             desc: description,
             price,
+            unity,
             qty: quantity,
             producer: "Ocitanda",
             img: api + image_url,
@@ -50,6 +51,7 @@ function createProducts() {
         desc: data.description,
         price: data.price,
         qty: data.quantity,
+        unity: data.unity,
         producer: "Ocitanda",
         img: api + data.image_url,
         deletedAt: data.deleted,
@@ -67,10 +69,11 @@ function createProducts() {
     try {
       let res = await axiosInstance.get("products/search/" + slug);
       return res.data.map(
-        ({ name, id, quantity, price, image_url, description, deleted }) =>
+        ({ name, id, quantity, price, image_url, description, deleted, unity }) =>
           Product({
             id,
             name,
+            unity,
             desc: description,
             price,
             qty: quantity,

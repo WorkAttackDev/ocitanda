@@ -1,0 +1,79 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"title": "Planting",
+	"description": "The Planting Schrema",
+	"required": [
+		"name",
+		"start",
+		"producer_id",
+		"end"
+	],
+	"additionalProperties": false,
+	"properties": {
+		"producer_id": {
+			"$id": "#/properties/producer_id",
+			"type": "number",
+			"title": "producer_id",
+			"description": "the producer of the plating",
+			"examples": [
+				1,
+				2
+			]
+		},
+		"name": {
+			"$id": "#/properties/owner",
+			"type": "string",
+			"title": "name",
+			"description": "the owner of the farm",
+			"examples": [
+				"Ocitanda"
+			]
+		},
+		"start": {
+			"$id": "#/properties/start",
+			"type": "string",
+			"title": "start",
+			"description": "the start date planting",
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		},
+		"end": {
+			"$id": "#/properties/end",
+			"type": "string",
+			"title": "end",
+			"description": "the planting end date",
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		},
+		"created_at": {
+			"$id": "#/properties/created_at",
+			"type": "string",
+			"title": "created_at",
+			"description": "the creation date of user",
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		},
+		"updated_at": {
+			"$id": "#/properties/updated_at",
+			"type": "string",
+			"title": "updated_at",
+			"description": "the user update date",
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		},
+		"deleted": {
+			"$id": "#/properties/deleted",
+			"type": "string",
+			"title": "deleted",
+			"description": "The deleted user date",
+			"examples": [
+				"2020-06-02T14:04:36.000Z"
+			]
+		}
+	}
+}
