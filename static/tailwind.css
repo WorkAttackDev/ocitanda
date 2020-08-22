@@ -18,7 +18,7 @@ html {
 html, 
 body,
 #sapper {
-	@apply min-h-full h-full;
+	@apply min-h-full;
 }
 
 

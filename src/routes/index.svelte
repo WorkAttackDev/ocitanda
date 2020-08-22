@@ -29,6 +29,7 @@
 <ProductSection {products} title="Destaques" {fetching} />
 <ProductSection products={products2} title="Novos" {fetching} />
 <TextBlock title="Quem Somos">
+  <img class="w-56 mx-auto mb-4" src="/logo_vertical.png" alt="vertical ocitanda logo">
   Somos especializados na distribuição de alimentos
   <strong>orgânicos</strong>
   e

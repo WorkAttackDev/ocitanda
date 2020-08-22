@@ -7,6 +7,7 @@
   import { links, adminLinks } from "../data/links";
   import Label from "./Label.svelte";
 import SideBarList from "./SideBarList.svelte";
+import InputText from "./InputText.svelte";
 
   const { page } = stores();
   const dispatch = createEventDispatcher();
@@ -20,15 +21,21 @@ import SideBarList from "./SideBarList.svelte";
   transition:fly={{ x: -window.innerWidth }}
   class="fixed z-50 bg-white left-0 top-0 h-full w-3/4 md:w-2/4 pb-8">
   <header
-    class="flex justify-between items-center w-full h-12 md:h-16 px-4
-    bg-ocitanda-green text-ocitanda-beige">
-    <h1 class="font-bold uppercase md:text-xl">Ocitanda</h1>
+    class="flex justify-between items-center shadow w-full h-12 md:h-16 px-4
+    bg-white text-ocitanda-green">
+    <img class="w-32" src="/logo_horizontal.png" alt="OCITANDA logo">
     <CloseIcon
       on:click={() => dispatch('close')}
       className="md:w-8 md:h-8 fill-current" />
   </header>
   <div class="overflow-y-auto h-full pb-12">
     <UserAvatar on:close />
+    <div class="px-4" on:click={()=> dispatch("search")}>
+      <InputText
+          typeSearch
+          value=""
+          label="Procurar" />
+    </div>
     <h3 class="uppercase font-bold text-ocitanda-green text-center my-4">
       Menu
     </h3>

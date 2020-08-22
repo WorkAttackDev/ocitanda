@@ -9,14 +9,16 @@ module.exports = {
   plugins: [
     tailwindcss("./tailwind.js"),
     require("postcss-preset-env")({
-      browsers: "> 0.2%, ios >= 7, not dead",
-      stage: 2,
       autoprefixer: {
-        overrideBrowserslist: "> 0.2%, ios >= 7, not dead",
-        flexbox: true,
+        flexbox: "no-2009",
+      },
+      stage: 3,
+      features: {
+        "custom-properties": false,
       },
     }),
-    process.env.NODE_ENV === "production" && require("cssnano"),
-    // ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
+    require("postcss-flexbugs-fixes")(),
+    purgecss,
+    require("cssnano")(),
   ],
 };

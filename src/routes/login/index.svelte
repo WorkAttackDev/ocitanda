@@ -30,7 +30,10 @@
 </svelte:head>
 
 <section class="px-4 py-8 mx-auto shadow-lg xs:w-3/4 md:w-8/12">
-  <h1 class="text-3xl text-center text-ocitanda-green">Ocitanda</h1>
+  <img
+    class="w-56 mx-auto mb-4"
+    src="/logo_vertical.png"
+    alt="vertical ocitanda logo" />
   <p class="text-center text-ocitanda-green">
     inicie sessão para poder realizar compras
   </p>

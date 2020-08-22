@@ -47,23 +47,23 @@
 </style>
 
 <header
-  class="fixed z-40 left-0 top-0 w-full shadow h-12 px-4 bg-ocitanda-green
-  text-ocitanda-beige">
+  class="fixed z-40 left-0 top-0 w-full shadow h-12 px-4 bg-white
+  text-ocitanda-green">
   <nav class="container mx-auto h-full flex justify-between items-center">
     {#if $page.path.substring(0, 9) !== '/'}
       <ArrowLeftMinor
         on:click={() => window.history.back()}
-        class="w-6 mr-4 md:w-7 md:mr-8 fill-current hover:text-ocitanda-khaki" />
+        class="w-6 mr-4 md:w-7 md:mr-8 fill-current hover:text-ocitanda-orange" />
     {/if}
     <MenuIcon
       on:click={() => (showSideBar = true)}
-      className="md:w-8 lg:hidden fill-current text-ocitanda-beige
-      hover:text-ocitanda-khaki" />
+      className="md:w-8 lg:hidden fill-current text-ocitanda-green
+      hover:text-ocitanda-orange" />
 
     <a
       href="/"
-      class="font-bold uppercase ml-8 md:ml-auto -mr-8 md:text-xl lg:ml-0 lg:mr-auto">
-      Ocitanda
+      class="font-bold ml-auto md:text-xl lg:ml-0 lg:mr-auto">
+      <img class="w-32" src="/logo_horizontal.png" alt="OCITANDA logo">
     </a>
     <HeaderLinks links={activeLinks} {page} />
     {#if $page.path !== '/consumer'}
@@ -71,15 +71,15 @@
     {/if}
     <CartMajorMonotone
       on:click={onGotoCart}
-      class="w-4 fill-current ml-auto mr-8 md:w-5 hover:text-ocitanda-khaki" />
+      class="w-4 fill-current ml-auto xs:mr-8 md:w-5 hover:text-ocitanda-orange" />
     <SearchMajorMonotone
       on:click={() => (showSearchModal = true)}
-      class="w-4 md:w-5 fill-current hover:text-ocitanda-khaki" />
+      class="w-4 hidden xs:flex md:w-5 fill-current hover:text-ocitanda-orange" />
   </nav>
 </header>
 
 {#if showSideBar}
-  <SideBar on:close={() => (showSideBar = false)} />
+  <SideBar on:search={()=> showSearchModal = true} on:close={() => (showSideBar = false)} />
 {/if}
 
 {#if showSearchModal}

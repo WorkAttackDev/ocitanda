@@ -64,16 +64,16 @@
   <title>Ocitanda - Produtos pagina {page}</title>
 </svelte:head>
 
-<section class="relative flex items-center flex-wrap mb-4 px-1 bg-ocitanda-green">
+<section class="relative flex items-center flex-wrap mb-4 px-1 bg-white border-b-2 border-ocitanda-beige">
   <SelectDropdown
-    labelClassName="text-ocitanda-beige"
+    labelClassName="text-ocitanda-green"
     items={categoriesHref}
     label="Categoria"
     anchor={true}
     selected={currCategory} />
   <SelectDropdown
     anchor={true}
-    labelClassName="text-ocitanda-beige"
+    labelClassName="text-ocitanda-green"
     items={orders}
     selected={orders[order - 1].text}
     label="Ordenar por" />

@@ -50,7 +50,7 @@ exports.seed = async (knex) => {
       name: "Denilson Costa",
       password: await bcrypt.hash(password, 12),
       phone: "997267270",
-      image_url: "/api/static/images/ocitanda.jpg",
+      image_url: "/api/static/images/ocitanda.png",
       verified: true,
     }
   ];

@@ -40,7 +40,7 @@
 </svelte:head>
 
 <section class="p-4 mx-auto xs:w-3/4 md:w-1/2">
-  <h1 class="text-3xl text-center text-ocitanda-green">Ocitanda</h1>
+  <img class="w-56 mx-auto mb-4" src="/logo_vertical.png" alt="vertical ocitanda logo">
   <p class="text-center text-ocitanda-green">
     Verifique o seu email para poder iniciar sessão na OCITANDA, este é um
     mecanismo de segurança para evitar o uso de emails alheios.

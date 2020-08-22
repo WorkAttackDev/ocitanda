@@ -46,7 +46,7 @@
       phone,
       gender: gender[0],
       password,
-      imageUrl: "https://ocitanda.com/api/static/images/ocitanda.jpg",
+      imageUrl: "https://ocitanda.com/api/static/images/ocitanda.png",
     };
 
     dispatch("create", user);

@@ -46,14 +46,14 @@
     role="select">
     <span class="w-full flex justify-between item-center cursor-pointer">
       <p class="mr-4 whitespace-no-wrap text-ocitanda-green">{selected}</p>
-      <SelectMinor class="w-5" />
+      <SelectMinor class="w-5 h-5" />
     </span>
     {#if showlist}
       <ul
         tabindex="0"
         on:blur={() => (showlist = false)}
         transition:slide
-        class="absolute z-30 left-0 flex flex-col w-full bg-ocitanda-beige">
+        class="absolute z-30 left-0 flex flex-col w-full max-h-40 overflow-y-auto bg-ocitanda-beige">
         {#if !anchor}
           {#each items as item}
             <li

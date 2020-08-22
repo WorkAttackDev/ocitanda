@@ -22,9 +22,10 @@ module.exports = {
 
 			ocitanda: {
 				khaki: "#cff691",
-				green: "#2a8e10",
+				green: "#2e8f30",
 				beige: "#f9fbf8",
 				gold: "#deb122",
+				orange: "#ff8d00",
 				brown: "#b8350f",
 			},
 
