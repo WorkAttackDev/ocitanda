@@ -6,8 +6,8 @@
   import UserAvatar from "./UserAvatar.svelte";
   import { links, adminLinks } from "../data/links";
   import Label from "./Label.svelte";
-import SideBarList from "./SideBarList.svelte";
-import InputText from "./InputText.svelte";
+  import SideBarList from "./SideBarList.svelte";
+  import InputText from "./InputText.svelte";
 
   const { page } = stores();
   const dispatch = createEventDispatcher();
@@ -23,18 +23,15 @@ import InputText from "./InputText.svelte";
   <header
     class="flex justify-between items-center shadow w-full h-12 md:h-16 px-4
     bg-white text-ocitanda-green">
-    <img class="w-32" src="/logo_horizontal.png" alt="OCITANDA logo">
+    <img class="w-32" src="/logo_horizontal.png" alt="OCITANDA logo" />
     <CloseIcon
       on:click={() => dispatch('close')}
       className="md:w-8 md:h-8 fill-current" />
   </header>
   <div class="overflow-y-auto h-full pb-12">
     <UserAvatar on:close />
-    <div class="px-4" on:click={()=> dispatch("search")}>
-      <InputText
-          typeSearch
-          value=""
-          label="Procurar" />
+    <div class="px-4" on:click={() => dispatch('search')}>
+      <InputText name="search_place" typeSearch value="" label="Procurar" />
     </div>
     <h3 class="uppercase font-bold text-ocitanda-green text-center my-4">
       Menu
@@ -55,7 +52,7 @@ import InputText from "./InputText.svelte";
         </Label>
       </span>
     {/if}
-     
+
     <SideBarList links={activeLinks} on:close />
   </div>
 </aside>

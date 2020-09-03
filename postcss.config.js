@@ -5,6 +5,9 @@ const purgecss = require("@fullhuman/postcss-purgecss")({
   defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
 });
 
+const mode = process.env.NODE_ENV;
+const dev = mode === "development";
+
 module.exports = {
   plugins: [
     tailwindcss("./tailwind.js"),
@@ -17,8 +20,8 @@ module.exports = {
         "custom-properties": false,
       },
     }),
-    require("postcss-flexbugs-fixes")(),
-    purgecss,
-    require("cssnano")(),
-  ],
+    !dev && require("postcss-flexbugs-fixes")(),
+    !dev && purgecss,
+    !dev && require("cssnano")(),
+  ].filter(Boolean),
 };

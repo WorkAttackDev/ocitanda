@@ -14,6 +14,7 @@
     top: -1rem;
     right: 1rem;
   }
+  
   button:disabled,
   .disabled {
     @apply bg-gray-400 text-gray-600 cursor-not-allowed pointer-events-none;

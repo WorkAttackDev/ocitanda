@@ -6,6 +6,7 @@ const tableNames = require("../../constants/tableNames");
 const { findAll } = require("../globalQueries");
 const { isAuth } = require("../../middleware");
 const Cart = require("./model");
+const { DELETED, CREATED,DONE, UPDATED } = require("../../constants/messages");
 
 router.get("/", async (req, res) => {
 	const cartItem = await findAll(tableNames.cart_item);
@@ -61,6 +62,18 @@ router.delete("/:id", [isId], async (req, res, next) => {
 		await Cart.query().deleteById(id);
 		res.status(200);
 		res.json({ message: "Deleted" });
+	} catch (error) {
+		next(error);
+	}
+});
+
+router.delete("/consumer/:id", [isId], async (req, res, next) => {
+	handleValidationError(req, res, next);
+	const { id } = req.params;
+	try {
+		await Cart.query().where({consumer_id: id}).delete();
+		res.status(200);
+		res.json({ message: DELETED });
 	} catch (error) {
 		next(error);
 	}

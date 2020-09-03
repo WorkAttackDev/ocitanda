@@ -3,7 +3,7 @@
 </script>
 
 <style>
-  /* .lds-ring div {
+  .lds-ring div {
     @apply absolute w-32 h-32 box-border block;
     margin: 8px;
     border: 8px solid theme("colors.ocitanda.green");
@@ -30,18 +30,27 @@
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  /* video {
+    max-width: 10rem;
+    max-height: 10rem;
   } */
+
+  img{
+    width: 20%;
+  }
 </style>
 
-  <span
-    transition:fade
-    class="fixed z-50 top-0 left-0 flex items-center justify-center w-full
-    h-full bg-black bg-opacity-75">
-    <!-- <div transition:scale class="lds-ring relative inline-block w-40 h-40">
+<span
+  transition:fade
+  class="fixed z-50 top-0 left-0 flex items-center justify-center w-full h-full
+  bg-black bg-opacity-75">
+  <!-- <div transition:scale class="lds-ring relative inline-block w-40 h-40"> 
       <div />
       <div />
       <div />
       <div />
     </div> -->
-    <img src="/oc_spinner.gif" alt="ocitanda custom spinner">
-  </span>
+    <img class="max-w-xs" src="/oc_spinner.gif" alt="Ocitanda Spinner">
+</span>

@@ -1,0 +1,86 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "title": "purchase",
+    "description": "The purchase Schrema",
+    "required": [
+        "purchase_date",
+        "quantity",
+        "consumer_id",
+        "code",
+        "paid",
+        "delivered"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "$id": "#/properties/id",
+            "type": "integer",
+            "title": "id",
+            "description": "the purchase id"
+        },
+        "purchase_date": {
+            "$id": "#/properties/purchase_date",
+            "type": "string",
+            "title": "purchase_date",
+            "description": "The purchase purchase_date."
+        },
+        "quantity": {
+            "$id": "#/properties/quantity",
+            "type": "number",
+            "title": "quantity",
+            "description": "The purchase quantity."
+        },
+        "consumer_id": {
+            "$id": "#/properties/consumer_id",
+            "type": "number",
+            "title": "consumer_id",
+            "description": "The purchase consumer_id."
+        },
+        "code": {
+            "$id": "#/properties/code",
+            "type": "string",
+            "title": "code",
+            "description": "The purchase code."
+        },
+        "paid": {
+            "$id": "#/properties/paid",
+            "type": "boolean",
+            "title": "paid",
+            "description": "The purchase paid."
+        },
+        "delivered": {
+            "$id": "#/properties/delivered",
+            "type": "boolean",
+            "title": "delivered",
+            "description": "The purchase delivered."
+        },
+        "created_at": {
+            "$id": "#/properties/created_at",
+            "type": "string",
+            "title": "created_at",
+            "description": "the creation date of purchase",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "updated_at": {
+            "$id": "#/properties/updated_at",
+            "type": "string",
+            "title": "updated_at",
+            "description": "the purchase update date",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        },
+        "deleted": {
+            "$id": "#/properties/deleted",
+            "type": "string",
+            "title": "deleted",
+            "description": "The deleted purchase date",
+            "examples": [
+                "2020-06-02T14:04:36.000Z"
+            ]
+        }
+    }
+}

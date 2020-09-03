@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res, next) => {
   const { name, start, end, producerId } = req.body;
-  console.log(req.body);
   try {
     const planting = await Planting.query().insert({
       name,

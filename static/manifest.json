@@ -1,17 +1,12 @@
 {
 	"background_color": "#ffffff",
-	"theme_color": "#ff811c",
+	"theme_color": "#2e8f30",
 	"name": "Ocitanda",
 	"short_name": "Ocitanda",
-	"description": "Ocitanda powered by dev.to and make you see your articles offline",
+	"description": "Ocitanda E-commerce offial website.",
 	"display": "fullscreen",
 	"start_url": "/",
 	"icons": [
-		{
-			"src": "logo-192.png",
-			"sizes": "192x192",
-			"type": "image/png"
-		},
 		{
 			"src": "logo-512.png",
 			"sizes": "512x512",

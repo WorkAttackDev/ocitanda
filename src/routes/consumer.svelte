@@ -1,3 +1,12 @@
+<script context="module">
+  import { purchase } from "../stores/purchase";
+  export async function preload(page, session) {
+    const purchases = await purchase.getByConsumerId(session.user.id);
+    if (purchases && purchases.error) return { purchases: [] };
+    return { purchases };
+  }
+</script>
+
 <script>
   import Alert from "../components/Alert.svelte";
   import LoadingOverlay from "../components/LoadingOverlay.svelte";
@@ -11,8 +20,12 @@
   import UpdateForm from "../components/consumer/UpdateForm.svelte";
   import { updateConsumer, deleteConsumer } from "../api";
   import { loading } from "../stores/loading";
+  import Purchase from "../models/Purchase";
+  import PurchaseMain from "../components/admin/purchase/PurchaseMain.svelte";
 
   const { session } = stores();
+
+  export let purchases = [];
 
   let errorMsg = "",
     edit = false,
@@ -57,7 +70,7 @@
   <ActionBox
     on:edit={() => (edit = true)}
     on:delete={() => (wantDelete = true)} />
-  <ProductSection title="Histórico de Compra" products={[]} />
+  <PurchaseMain {purchases} />
 </section>
 
 {#if errorMsg}

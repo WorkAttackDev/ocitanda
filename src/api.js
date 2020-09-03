@@ -28,6 +28,11 @@ export const axiosInstance = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
 });
 
+export const axiosInstanceWithoutTimeout = axios.create({
+  baseURL: api,
+  // headers: {'X-Custom-Header': 'foobar'}
+});
+
 export const fetchProducts = async (
   limit = 10,
   page = 1,
@@ -122,7 +127,7 @@ export const signup = async (user) => {
   console.log(user);
 
   try {
-    let res = await axiosInstance.post("auth/signup", {
+    let res = await axiosInstanceWithoutTimeout.post("auth/signup", {
       ...user,
     });
     return res;

@@ -4,7 +4,7 @@
 
 <style>
   .active {
-    @apply border-b-2 border-ocitanda-orange;
+    @apply border-b-2 border-ocitanda-orange text-ocitanda-green;
   }
 </style>
 

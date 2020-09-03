@@ -48,7 +48,7 @@
 
 <header
   class="fixed z-40 left-0 top-0 w-full shadow h-12 px-4 bg-white
-  text-ocitanda-green">
+  text-gray-700">
   <nav class="container mx-auto h-full flex justify-between items-center">
     {#if $page.path.substring(0, 9) !== '/'}
       <ArrowLeftMinor
@@ -57,13 +57,13 @@
     {/if}
     <MenuIcon
       on:click={() => (showSideBar = true)}
-      className="md:w-8 lg:hidden fill-current text-ocitanda-green
+      className="md:w-8 lg:hidden fill-current 
       hover:text-ocitanda-orange" />
 
     <a
       href="/"
       class="font-bold ml-auto md:text-xl lg:ml-0 lg:mr-auto">
-      <img class="w-32" src="/logo_horizontal.png" alt="OCITANDA logo">
+      <img class="w-24" src="/logo_horizontal.svg" alt="OCITANDA logo">
     </a>
     <HeaderLinks links={activeLinks} {page} />
     {#if $page.path !== '/consumer'}

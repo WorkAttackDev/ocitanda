@@ -7,7 +7,7 @@
 </style>
 
 <div
-  class="flex justify-evenly text-ocitanda-green py-2 px-4 rounded-sm shadow-md
+  class="flex justify-evenly items-center text-ocitanda-green py-2 px-4 rounded-sm shadow-md
   mb-4">
   <slot />
   <span>

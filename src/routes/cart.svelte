@@ -7,6 +7,7 @@
   import Notification from "../components/Notification.svelte";
   import Button from "../components/Button.svelte";
   import CheckoutBox from "../components/cart/CheckoutBox.svelte";
+  import CheckoutSection from "../components/cart/CheckoutSection.svelte";
   import Modal from "../components/Modal.svelte";
 
   const {session} = stores();
@@ -26,6 +27,16 @@
     cart.initCart($session.user.id);
     fetching = false;
   }
+
+
+  async function handlePurchase() {
+    if (!$session.isAuth) return (fetching = false);
+    fetching = true;
+    
+    fetching = false;
+  }
+
+
 </script>
 
 <svelte:head>
@@ -33,7 +44,7 @@
 </svelte:head>
 
 <ProductSection title="Meus Produtos" {products} {fetching} />
-<CheckoutBox on:checkout={()=> wantCheckout = true} {total} Subtotal={total} />
+<CheckoutBox on:checkout={()=> (wantCheckout = true)} {total} Subtotal={total} />
 
 {#if !$session.isAuth}
   <Notification
@@ -46,6 +57,6 @@
 
 {#if wantCheckout}
   <Modal on:close={()=> wantCheckout = false}>
-    <h1>Brevemente poderá realizar pagamentos atravéz do nosso site.</h1>
+    <CheckoutSection on:finish={()=> wantCheckout = false} consumerId={$session.user.id} />
   </Modal>
 {/if}

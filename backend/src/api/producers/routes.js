@@ -8,7 +8,6 @@ const Planting = require("../plantings/model");
 router.get("/", async (req, res, next) => {
   try {
     const producers = await Producer.query().withGraphFetched("plantings");
-    console.log(producers);
     res.json(producers);
   } catch (error) {
     next(error);

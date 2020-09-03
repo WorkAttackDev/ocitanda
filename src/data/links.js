@@ -14,4 +14,5 @@ export const adminLinks = [
 	Link("Produtos", `/admin/products/1/Todos/1`),
 	Link("Categorias", "/admin/categories"),
 	Link("Fornecedor", "/admin/producer"),
+	Link("Pagamentos", "/admin/purchase"),
 ];
