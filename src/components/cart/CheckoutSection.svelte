@@ -15,18 +15,11 @@
   const totalQty = 0;
   const titular = "Ocitanda";
 
-  let newPurchase;
+  let newPurchase, location;
 
-  // $:console.log(newPurchase);
+  const handleCheckout = async (e) => {
+    const { methodKey, purchaseLocation } = e.detail;
 
-  const banksInfo = [
-    "Banco BFA Número de Conta - 0000000000000 (Moeda AKZ), IBAN/NIB - AO06 0000 0000 0000 000 00",
-    "Banco BIC Número de Conta - 0000000000000 (Moeda AKZ), IBAN/NIB - AO06 0000 0000 0000 000 00",
-    "Banco BAI Número de Conta - 10130147910 001 (Moeda AKZ), IBAN/NIB - AO06 0000 0000 0000 000 00",
-    "Banco Atlantico Número de Conta - 0000000000000 (Moeda AKZ), IBAN/NIB - AO06 0000 0000 0000 000 00",
-  ];
-
-  const handleCheckout = async () => {
     const cartProducts = $cart.products.map((_p) => ({
       product_id: _p.id,
       count: _p.count,
@@ -35,6 +28,8 @@
     const newP = Purchase({
       consumer_id: consumerId,
       products: cartProducts,
+      purchase_method: methodKey,
+      consumer_location_id: purchaseLocation.id,
       purchase_date: new Date().toISOString(),
       quantity: $cart.total,
     });
@@ -47,6 +42,7 @@
         msg: "Ocorreu um erro tente novamente.",
       });
     }
+    location = purchaseLocation;
     newP.id = res.id;
     newP.code = res.code;
     newPurchase = newP;
@@ -63,8 +59,8 @@
 
 <section class="flex flex-col items-center">
   {#if !newPurchase}
-    <CheckoutStep1 on:next={handleCheckout} />
+    <CheckoutStep1 {consumerId} on:next={handleCheckout} />
   {:else}
-    <CheckoutStep2 on:finish {newPurchase} />
+    <CheckoutStep2 on:finish {newPurchase} {location} />
   {/if}
 </section>

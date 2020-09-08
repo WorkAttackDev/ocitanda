@@ -10,7 +10,7 @@ module.exports = {
 	purchase: "purchase",
 	cart_item: "cart_item",
 	purchase_products: "purchase_products",
-	purchase_location: "purchase_location",
+	consumer_location: "consumer_location",
 	subscriber: "subscriber",
 	api: "api",
 };

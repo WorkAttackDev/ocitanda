@@ -15,7 +15,7 @@ const MESSAGES = require("../../constants/messages");
 
 const validatePurchase = [
   body(["delivered", "paid"]).isBoolean(),
-  body(["quantity", "consumer_id"]).isInt({ allow_leading_zeroes: false }),
+  body(["quantity", "consumer_id", "consumer_location_id"]).isInt({ allow_leading_zeroes: false }),
   body(["purchase_date"]).notEmpty().isString(),
   body("products").isArray({ min: 1 }),
 ];
@@ -75,6 +75,8 @@ router.post("/", validatePurchase, async (req, res, next) => {
     consumer_id,
     products,
     purchase_date,
+    purchase_method,
+    consumer_location_id
   } = req.body;
 
   const newPurchase = {
@@ -82,6 +84,8 @@ router.post("/", validatePurchase, async (req, res, next) => {
     delivered,
     quantity,
     consumer_id,
+    purchase_method,
+    consumer_location_id,
     purchase_date: format(new Date(purchase_date), "YYYY-MM-DD HH:mm:ss"),
     code: uniqid("OC-"),
   };
@@ -113,14 +117,14 @@ router.post("/", validatePurchase, async (req, res, next) => {
       results.push(p);
     }
 
-    await PurchaseEmail({ to: purchase.consumer.user.email, purchase });
+    // await PurchaseEmail({ to: purchase.consumer.user.email, purchase });
 
-    /* process.env.NODE_ENV !== undefined && */ (await trx.commit());
+    process.env.NODE_ENV !== undefined && (await trx.commit());
 
     res.json({ message: MESSAGES.CREATED, value: purchase });
   } catch (error) {
     await trx.rollback();
-    return next(error);
+    next(error);
   }
 });
 
@@ -151,7 +155,7 @@ router.patch("/pay/:id", [body("paid").isBoolean()], async (req, res, next) => {
     res.json({ message: MESSAGES.UPDATED, value: purchase });
   } catch (error) {
     trx.rollback();
-    return next(error);
+    next(error);
   }
 });
 
@@ -184,7 +188,7 @@ router.patch(
       res.json({ message: MESSAGES.UPDATED, purchase });
     } catch (error) {
       trx.rollback();
-      return next(error);
+      next(error);
     }
   }
 );

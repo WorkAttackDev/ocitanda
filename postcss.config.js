@@ -8,6 +8,8 @@ const purgecss = require("@fullhuman/postcss-purgecss")({
 const mode = process.env.NODE_ENV;
 const dev = mode === "development";
 
+console.log("is Developer: " + dev);
+
 module.exports = {
   plugins: [
     tailwindcss("./tailwind.js"),

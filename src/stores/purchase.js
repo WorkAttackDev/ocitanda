@@ -26,7 +26,6 @@ function createPurchase() {
     try {
       const res = await axiosInstance.get("/purchases/consumer/" + consumerId);
       const purchases = res.data.value.map(purchasefromAPI);
-      console.log(purchases);
       return purchases;
     } catch (error) {
       handleError(error);

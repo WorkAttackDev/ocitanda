@@ -4,12 +4,11 @@
     "title": "purchase_location",
     "description": "The purchase location Schema",
     "required": [
-        "purchase_id",
+        "consumer_id",
         "neighborhood",
         "street",
         "house",
-        "count",
-        "detail"
+        "details"
     ],
     "additionalProperties": false,
     "properties": {
@@ -49,11 +48,11 @@
             "title": "extra_phone",
             "description": "The purchase location extra_phone."
         },
-        "purchase_id": {
-            "$id": "#/properties/purchase_id",
+        "consumer_id": {
+            "$id": "#/properties/consumer_id",
             "type": "integer",
-            "title": "purchase_id",
-            "description": "The purchase location purchase_id."
+            "title": "consumer_id",
+            "description": "The purchase location consumer id."
         },
         "created_at": {
             "$id": "#/properties/created_at",
@@ -75,7 +74,7 @@
         },
         "deleted": {
             "$id": "#/properties/deleted",
-            "type": "string",
+            "type": "boolean",
             "title": "deleted",
             "description": "The deleted purchase date",
             "examples": [

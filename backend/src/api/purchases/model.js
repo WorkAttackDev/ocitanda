@@ -13,7 +13,7 @@ class Purchase extends Model {
   static get relationMappings() {
     // eslint-disable-next-line global-require
     const PurchaseProducts = require("../purchase-products/model");
-    const PurchaseLocation = require("../purchase-locations/model");
+    const ConsumerLocation = require("../consumer-locations/model");
     const Consumer = require("../consumers/model");
     return {
       products: {
@@ -24,12 +24,12 @@ class Purchase extends Model {
           to: `${tableNames.purchase}.id`,
         },
       },
-      location: {
+      consumer_location: {
         relation: Model.HasOneRelation,
-        modelClass: PurchaseLocation,
+        modelClass: ConsumerLocation,
         join: {
-          from: `${tableNames.purchase}.id`,
-          to: `${tableNames.purchase_location}.purchase_id`,
+          from: `${tableNames.purchase}.consumer_location_id`,
+          to: `${tableNames.consumer_location}.id`,
         },
       },
       consumer: {

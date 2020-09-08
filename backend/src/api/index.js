@@ -11,6 +11,7 @@ const purchasesRoutes = require("./purchases/routes");
 const cartsRoutes = require("./carts/routes");
 const authRoutes = require("./auth/routes");
 const forgotPasswordRoutes = require("./forgot-password/routes");
+const consumerLocationsRoutes = require("./consumer-locations/routes");
 const subscribersRoutes = require("./subscribers/routes");
 const verifyEmailRoutes = require("./verify-email/routes");
 
@@ -31,6 +32,7 @@ router.use("/carts", cartsRoutes);
 router.use("/auth", authRoutes);
 router.use("/subscribers", subscribersRoutes);
 router.use("/forgot-password", forgotPasswordRoutes);
+router.use("/consumer-locations", consumerLocationsRoutes);
 router.use("/verify-email", verifyEmailRoutes);
 
 module.exports = router;

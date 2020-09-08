@@ -25,6 +25,12 @@
             "title": "purchase_date",
             "description": "The purchase purchase_date."
         },
+        "purchase_method": {
+            "$id": "#/properties/purchase_method",
+            "type": "string",
+            "title": "purchase_method",
+            "description": "The purchase purchase_method."
+        },
         "quantity": {
             "$id": "#/properties/quantity",
             "type": "number",
@@ -36,6 +42,12 @@
             "type": "number",
             "title": "consumer_id",
             "description": "The purchase consumer_id."
+        },
+        "consumer_location_id": {
+            "$id": "#/properties/consumer_location_id",
+            "type": "number",
+            "title": "consumer_location_id",
+            "description": "The purchase consumer_location_id."
         },
         "code": {
             "$id": "#/properties/code",

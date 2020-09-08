@@ -29,6 +29,7 @@
   section {
     top: 0;
     left: 50%;
+    z-index: 60;
   }
 
   section :global(svg) {
@@ -66,7 +67,7 @@
 <section
   transition:slide
   class:minimal
-  class="fixed flex flex-col transform -translate-x-1/2 z-50 bg-white w-full
+  class="fixed flex flex-col transform -translate-x-1/2  bg-white w-full
   text-grey-700 h-auto md:w-auto md:min-h-40 md:rounded shadow-xl p-5">
   <MobileCancelMajorMonotone
     on:click={()=> dispatch("close")}

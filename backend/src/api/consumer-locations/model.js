@@ -2,9 +2,9 @@ const { Model } = require("objection");
 const tableNames = require("../../constants/tableNames");
 const schema = require("./schema.json");
 
-class PurchaseLocation extends Model {
+class ConsumerLocation extends Model {
   static get tableName() {
-    return tableNames.purchase_location;
+    return tableNames.consumer_location;
   }
 
   static get jsonSchema() {
@@ -27,4 +27,4 @@ class PurchaseLocation extends Model {
 //   }
 }
 
-module.exports = PurchaseLocation;
+module.exports = ConsumerLocation;
